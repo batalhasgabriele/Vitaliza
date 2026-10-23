@@ -67,3 +67,9 @@
     ./.venv/bin/jupyter-lab
     ```
 
+## Como trabalhar
+- antes de uma tarefa com mais passos, apresente um plano e espere aprovação
+- após executar uma análise, salvar o racional na pasta notebooks/ para utilizar em cenários de replicação/recálculo
+- estrutura recomendada para o prompt de análises: pergunta, arquivos, regras, formato de saída e definition of done. se alguma dessas informações não tiver clara, pergunte.
+- aspectos de negócios, correções feitas e regras estabelecidas devem ser registradas no arquivo decisoes.md
+
