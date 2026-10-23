@@ -34,3 +34,36 @@
 - **Branch `main`:** É a branch de entrega oficial, estável e de produção. **Nunca comitar ou desenvolver diretamente na `main`**.
 - **Branch `dev`:** É a branch de trabalho ativo. Todas as alterações locais, códigos, notebooks e análises devem ser desenvolvidos e comitados na `dev`.
 - **Merge para `main`:** O avanço ou merge de alterações da `dev` para a `main` só ocorre mediante solicitação e aprovação explícita do usuário.
+
+## 5. Comandos
+
+### Ativação do Ambiente Virtual (`.venv`)
+- **Windows (PowerShell):**
+  ```powershell
+  .\.venv\Scripts\Activate.ps1
+  ```
+  *(Caso haja restrição de execução de scripts no PowerShell: `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`)*
+- **Windows (Prompt de Comando / CMD):**
+  ```cmd
+  .\.venv\Scripts\activate.bat
+  ```
+- **macOS / Linux (Bash/Zsh):**
+  ```bash
+  source .venv/bin/activate
+  ```
+
+### Inicialização do JupyterLab
+- **Com o ambiente ativado:**
+  ```bash
+  jupyter lab
+  ```
+- **Diretamente via interpretador do ambiente (sem ativar manualmente):**
+  - **Windows (PowerShell):**
+    ```powershell
+    .\.venv\Scripts\jupyter-lab.exe
+    ```
+  - **macOS / Linux:**
+    ```bash
+    ./.venv/bin/jupyter-lab
+    ```
+
