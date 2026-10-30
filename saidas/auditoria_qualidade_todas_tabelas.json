@@ -1,0 +1,1352 @@
+{
+  "completude": [
+    {
+      "tabela": "usuarios",
+      "coluna": "user_id",
+      "total_linhas": 64948,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "usuarios",
+      "coluna": "email",
+      "total_linhas": 64948,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "usuarios",
+      "coluna": "data_cadastro",
+      "total_linhas": 64948,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "usuarios",
+      "coluna": "data_nascimento",
+      "total_linhas": 64948,
+      "nulos": 3301,
+      "strings_vazias": 0,
+      "total_ausentes": 3301,
+      "pct_ausente": 5.08,
+      "status": "WARN"
+    },
+    {
+      "tabela": "usuarios",
+      "coluna": "sexo",
+      "total_linhas": 64948,
+      "nulos": 3142,
+      "strings_vazias": 0,
+      "total_ausentes": 3142,
+      "pct_ausente": 4.84,
+      "status": "PASS"
+    },
+    {
+      "tabela": "usuarios",
+      "coluna": "cidade",
+      "total_linhas": 64948,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "usuarios",
+      "coluna": "uf",
+      "total_linhas": 64948,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "usuarios",
+      "coluna": "cep_prefixo",
+      "total_linhas": 64948,
+      "nulos": 1894,
+      "strings_vazias": 0,
+      "total_ausentes": 1894,
+      "pct_ausente": 2.92,
+      "status": "PASS"
+    },
+    {
+      "tabela": "usuarios",
+      "coluna": "canal_aquisicao",
+      "total_linhas": 64948,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "usuarios",
+      "coluna": "sistema",
+      "total_linhas": 64948,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "usuarios",
+      "coluna": "versao_app",
+      "total_linhas": 64948,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "usuarios",
+      "coluna": "relogio_conectado",
+      "total_linhas": 64948,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "assinaturas",
+      "coluna": "assinatura_id",
+      "total_linhas": 32643,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "assinaturas",
+      "coluna": "user_id",
+      "total_linhas": 32643,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "assinaturas",
+      "coluna": "plano_atual",
+      "total_linhas": 32643,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "assinaturas",
+      "coluna": "canal_cobranca",
+      "total_linhas": 32643,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "assinaturas",
+      "coluna": "inicio",
+      "total_linhas": 32643,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "assinaturas",
+      "coluna": "status_atual",
+      "total_linhas": 32643,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "assinaturas",
+      "coluna": "renovacao_automatica",
+      "total_linhas": 32643,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "assinaturas",
+      "coluna": "data_fim",
+      "total_linhas": 32643,
+      "nulos": 14813,
+      "strings_vazias": 0,
+      "total_ausentes": 14813,
+      "pct_ausente": 45.38,
+      "status": "FAIL"
+    },
+    {
+      "tabela": "assinaturas",
+      "coluna": "motivo_fim",
+      "total_linhas": 32643,
+      "nulos": 14813,
+      "strings_vazias": 0,
+      "total_ausentes": 14813,
+      "pct_ausente": 45.38,
+      "status": "FAIL"
+    },
+    {
+      "tabela": "amizades",
+      "coluna": "seguidor_id",
+      "total_linhas": 113480,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "amizades",
+      "coluna": "seguido_id",
+      "total_linhas": 113480,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "amizades",
+      "coluna": "desde",
+      "total_linhas": 113480,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "campanha_ago26",
+      "coluna": "user_id",
+      "total_linhas": 14120,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "campanha_ago26",
+      "coluna": "grupo",
+      "total_linhas": 14120,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "campanha_ago26",
+      "coluna": "enviado_em",
+      "total_linhas": 14120,
+      "nulos": 3579,
+      "strings_vazias": 0,
+      "total_ausentes": 3579,
+      "pct_ausente": 25.35,
+      "status": "FAIL"
+    },
+    {
+      "tabela": "campanha_ago26",
+      "coluna": "canal",
+      "total_linhas": 14120,
+      "nulos": 3579,
+      "strings_vazias": 0,
+      "total_ausentes": 3579,
+      "pct_ausente": 25.35,
+      "status": "FAIL"
+    },
+    {
+      "tabela": "campanha_ago26",
+      "coluna": "titulo_mensagem",
+      "total_linhas": 14120,
+      "nulos": 3579,
+      "strings_vazias": 0,
+      "total_ausentes": 3579,
+      "pct_ausente": 25.35,
+      "status": "FAIL"
+    },
+    {
+      "tabela": "campanha_ago26",
+      "coluna": "oferta",
+      "total_linhas": 14120,
+      "nulos": 10648,
+      "strings_vazias": 0,
+      "total_ausentes": 10648,
+      "pct_ausente": 75.41,
+      "status": "FAIL"
+    },
+    {
+      "tabela": "campanha_ago26",
+      "coluna": "abriu_push",
+      "total_linhas": 14120,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "campanha_ago26",
+      "coluna": "abriu_email",
+      "total_linhas": 14120,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "campanha_ago26",
+      "coluna": "clicou",
+      "total_linhas": 14120,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "eventos_assinatura",
+      "coluna": "user_id",
+      "total_linhas": 275565,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "eventos_assinatura",
+      "coluna": "data_hora",
+      "total_linhas": 275565,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "eventos_assinatura",
+      "coluna": "evento",
+      "total_linhas": 275565,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "eventos_assinatura",
+      "coluna": "plano",
+      "total_linhas": 275565,
+      "nulos": 72873,
+      "strings_vazias": 0,
+      "total_ausentes": 72873,
+      "pct_ausente": 26.44,
+      "status": "FAIL"
+    },
+    {
+      "tabela": "eventos_assinatura",
+      "coluna": "canal_cobranca",
+      "total_linhas": 275565,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "eventos_assinatura",
+      "coluna": "detalhe",
+      "total_linhas": 275565,
+      "nulos": 269494,
+      "strings_vazias": 0,
+      "total_ausentes": 269494,
+      "pct_ausente": 97.8,
+      "status": "FAIL"
+    },
+    {
+      "tabela": "pagamentos",
+      "coluna": "pagamento_id",
+      "total_linhas": 165548,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "pagamentos",
+      "coluna": "user_id",
+      "total_linhas": 165548,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "pagamentos",
+      "coluna": "data_hora",
+      "total_linhas": 165548,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "pagamentos",
+      "coluna": "valor",
+      "total_linhas": 165548,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "pagamentos",
+      "coluna": "metodo",
+      "total_linhas": 165548,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "pagamentos",
+      "coluna": "status",
+      "total_linhas": 165548,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "pagamentos",
+      "coluna": "tentativa",
+      "total_linhas": 165548,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "uso_mensal",
+      "coluna": "user_id",
+      "total_linhas": 591662,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "uso_mensal",
+      "coluna": "mes",
+      "total_linhas": 591662,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "uso_mensal",
+      "coluna": "atividades",
+      "total_linhas": 591662,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "uso_mensal",
+      "coluna": "atividades_ar_livre",
+      "total_linhas": 591662,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "uso_mensal",
+      "coluna": "atividades_video",
+      "total_linhas": 591662,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "uso_mensal",
+      "coluna": "minutos",
+      "total_linhas": 591662,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "uso_mensal",
+      "coluna": "dias_ativos",
+      "total_linhas": 591662,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "uso_mensal",
+      "coluna": "sessoes_app",
+      "total_linhas": 591662,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "atividades",
+      "coluna": "atividade_id",
+      "total_linhas": 1254475,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "atividades",
+      "coluna": "user_id",
+      "total_linhas": 1254475,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "atividades",
+      "coluna": "inicio",
+      "total_linhas": 1254475,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "atividades",
+      "coluna": "tipo",
+      "total_linhas": 1254475,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "atividades",
+      "coluna": "duracao_min",
+      "total_linhas": 1254475,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "atividades",
+      "coluna": "distancia_km",
+      "total_linhas": 1254475,
+      "nulos": 574835,
+      "strings_vazias": 0,
+      "total_ausentes": 574835,
+      "pct_ausente": 45.82,
+      "status": "FAIL"
+    },
+    {
+      "tabela": "atividades",
+      "coluna": "ritmo_min_km",
+      "total_linhas": 1254475,
+      "nulos": 582290,
+      "strings_vazias": 0,
+      "total_ausentes": 582290,
+      "pct_ausente": 46.42,
+      "status": "FAIL"
+    },
+    {
+      "tabela": "atividades",
+      "coluna": "fc_media",
+      "total_linhas": 1254475,
+      "nulos": 764987,
+      "strings_vazias": 0,
+      "total_ausentes": 764987,
+      "pct_ausente": 60.98,
+      "status": "FAIL"
+    },
+    {
+      "tabela": "atividades",
+      "coluna": "origem",
+      "total_linhas": 1254475,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "atividades",
+      "coluna": "gps_ok",
+      "total_linhas": 1254475,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "atividades",
+      "coluna": "treino_com",
+      "total_linhas": 1254475,
+      "nulos": 0,
+      "strings_vazias": 1240338,
+      "total_ausentes": 1240338,
+      "pct_ausente": 98.87,
+      "status": "FAIL"
+    },
+    {
+      "tabela": "onboarding",
+      "coluna": "onboarding_id",
+      "total_linhas": 63929,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "onboarding",
+      "coluna": "user_id",
+      "total_linhas": 63929,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "onboarding",
+      "coluna": "respondido_em",
+      "total_linhas": 63929,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "onboarding",
+      "coluna": "objetivo_texto",
+      "total_linhas": 63929,
+      "nulos": 5467,
+      "strings_vazias": 0,
+      "total_ausentes": 5467,
+      "pct_ausente": 8.55,
+      "status": "WARN"
+    },
+    {
+      "tabela": "onboarding",
+      "coluna": "como_conheceu",
+      "total_linhas": 63929,
+      "nulos": 4586,
+      "strings_vazias": 0,
+      "total_ausentes": 4586,
+      "pct_ausente": 7.17,
+      "status": "WARN"
+    },
+    {
+      "tabela": "onboarding",
+      "coluna": "nivel",
+      "total_linhas": 63929,
+      "nulos": 4513,
+      "strings_vazias": 0,
+      "total_ausentes": 4513,
+      "pct_ausente": 7.06,
+      "status": "WARN"
+    },
+    {
+      "tabela": "onboarding",
+      "coluna": "dias_por_semana",
+      "total_linhas": 63929,
+      "nulos": 6368,
+      "strings_vazias": 0,
+      "total_ausentes": 6368,
+      "pct_ausente": 9.96,
+      "status": "WARN"
+    },
+    {
+      "tabela": "pesquisa_saida",
+      "coluna": "resposta_id",
+      "total_linhas": 643,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "pesquisa_saida",
+      "coluna": "user_id",
+      "total_linhas": 643,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "pesquisa_saida",
+      "coluna": "respondido_em",
+      "total_linhas": 643,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "pesquisa_saida",
+      "coluna": "motivo_principal",
+      "total_linhas": 643,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "pesquisa_saida",
+      "coluna": "comentario",
+      "total_linhas": 643,
+      "nulos": 183,
+      "strings_vazias": 0,
+      "total_ausentes": 183,
+      "pct_ausente": 28.46,
+      "status": "FAIL"
+    },
+    {
+      "tabela": "feed_posts",
+      "coluna": "post_id",
+      "total_linhas": 119309,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "feed_posts",
+      "coluna": "user_id",
+      "total_linhas": 119309,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "feed_posts",
+      "coluna": "data_hora",
+      "total_linhas": 119309,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "feed_posts",
+      "coluna": "texto",
+      "total_linhas": 119309,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "feed_posts",
+      "coluna": "curtidas",
+      "total_linhas": 119309,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "tickets_suporte",
+      "coluna": "ticket_id",
+      "total_linhas": 4422,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "tickets_suporte",
+      "coluna": "user_id",
+      "total_linhas": 4422,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "tickets_suporte",
+      "coluna": "aberto_em",
+      "total_linhas": 4422,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "tickets_suporte",
+      "coluna": "canal",
+      "total_linhas": 4422,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "tickets_suporte",
+      "coluna": "texto_cliente",
+      "total_linhas": 4422,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "tickets_suporte",
+      "coluna": "categoria_atendente",
+      "total_linhas": 4422,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "tickets_suporte",
+      "coluna": "status",
+      "total_linhas": 4422,
+      "nulos": 0,
+      "strings_vazias": 0,
+      "total_ausentes": 0,
+      "pct_ausente": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "tickets_suporte",
+      "coluna": "resolvido_em",
+      "total_linhas": 4422,
+      "nulos": 1505,
+      "strings_vazias": 0,
+      "total_ausentes": 1505,
+      "pct_ausente": 34.03,
+      "status": "FAIL"
+    }
+  ],
+  "unicidade": [
+    {
+      "tabela": "usuarios",
+      "total_linhas": 64948,
+      "linhas_duplicadas": 0,
+      "pct_linhas_duplicadas": 0.0,
+      "pk_coluna": "user_id",
+      "pk_duplicadas": 0,
+      "pct_pk_duplicadas": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "assinaturas",
+      "total_linhas": 32643,
+      "linhas_duplicadas": 0,
+      "pct_linhas_duplicadas": 0.0,
+      "pk_coluna": "assinatura_id",
+      "pk_duplicadas": 0,
+      "pct_pk_duplicadas": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "amizades",
+      "total_linhas": 113480,
+      "linhas_duplicadas": 0,
+      "pct_linhas_duplicadas": 0.0,
+      "pk_coluna": "seguidor_id + seguido_id",
+      "pk_duplicadas": 0,
+      "pct_pk_duplicadas": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "campanha_ago26",
+      "total_linhas": 14120,
+      "linhas_duplicadas": 0,
+      "pct_linhas_duplicadas": 0.0,
+      "pk_coluna": "user_id",
+      "pk_duplicadas": 0,
+      "pct_pk_duplicadas": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "eventos_assinatura",
+      "total_linhas": 275565,
+      "linhas_duplicadas": 0,
+      "pct_linhas_duplicadas": 0.0,
+      "pk_coluna": "user_id + data_hora + evento",
+      "pk_duplicadas": 0,
+      "pct_pk_duplicadas": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "pagamentos",
+      "total_linhas": 165548,
+      "linhas_duplicadas": 0,
+      "pct_linhas_duplicadas": 0.0,
+      "pk_coluna": "pagamento_id",
+      "pk_duplicadas": 0,
+      "pct_pk_duplicadas": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "uso_mensal",
+      "total_linhas": 591662,
+      "linhas_duplicadas": 0,
+      "pct_linhas_duplicadas": 0.0,
+      "pk_coluna": "user_id + mes",
+      "pk_duplicadas": 0,
+      "pct_pk_duplicadas": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "atividades",
+      "total_linhas": 1254475,
+      "linhas_duplicadas": 0,
+      "pct_linhas_duplicadas": 0.0,
+      "pk_coluna": "atividade_id",
+      "pk_duplicadas": 0,
+      "pct_pk_duplicadas": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "onboarding",
+      "total_linhas": 63929,
+      "linhas_duplicadas": 0,
+      "pct_linhas_duplicadas": 0.0,
+      "pk_coluna": "onboarding_id",
+      "pk_duplicadas": 0,
+      "pct_pk_duplicadas": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "pesquisa_saida",
+      "total_linhas": 643,
+      "linhas_duplicadas": 0,
+      "pct_linhas_duplicadas": 0.0,
+      "pk_coluna": "resposta_id",
+      "pk_duplicadas": 0,
+      "pct_pk_duplicadas": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "feed_posts",
+      "total_linhas": 119309,
+      "linhas_duplicadas": 0,
+      "pct_linhas_duplicadas": 0.0,
+      "pk_coluna": "post_id",
+      "pk_duplicadas": 0,
+      "pct_pk_duplicadas": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "tickets_suporte",
+      "total_linhas": 4422,
+      "linhas_duplicadas": 0,
+      "pct_linhas_duplicadas": 0.0,
+      "pk_coluna": "ticket_id",
+      "pk_duplicadas": 0,
+      "pct_pk_duplicadas": 0.0,
+      "status": "PASS"
+    }
+  ],
+  "integridade_referencial": [
+    {
+      "relacao": "assinaturas.user_id -> usuarios.user_id",
+      "filha_linhas_nao_nulas": 32643,
+      "orfaos": 0,
+      "pct_orfaos": 0.0,
+      "status": "PASS"
+    },
+    {
+      "relacao": "amizades.seguidor_id -> usuarios.user_id",
+      "filha_linhas_nao_nulas": 113480,
+      "orfaos": 0,
+      "pct_orfaos": 0.0,
+      "status": "PASS"
+    },
+    {
+      "relacao": "amizades.seguido_id -> usuarios.user_id",
+      "filha_linhas_nao_nulas": 113480,
+      "orfaos": 0,
+      "pct_orfaos": 0.0,
+      "status": "PASS"
+    },
+    {
+      "relacao": "campanha_ago26.user_id -> usuarios.user_id",
+      "filha_linhas_nao_nulas": 14120,
+      "orfaos": 0,
+      "pct_orfaos": 0.0,
+      "status": "PASS"
+    },
+    {
+      "relacao": "eventos_assinatura.user_id -> usuarios.user_id",
+      "filha_linhas_nao_nulas": 275565,
+      "orfaos": 0,
+      "pct_orfaos": 0.0,
+      "status": "PASS"
+    },
+    {
+      "relacao": "pagamentos.user_id -> usuarios.user_id",
+      "filha_linhas_nao_nulas": 165548,
+      "orfaos": 0,
+      "pct_orfaos": 0.0,
+      "status": "PASS"
+    },
+    {
+      "relacao": "uso_mensal.user_id -> usuarios.user_id",
+      "filha_linhas_nao_nulas": 591662,
+      "orfaos": 0,
+      "pct_orfaos": 0.0,
+      "status": "PASS"
+    },
+    {
+      "relacao": "atividades.user_id -> usuarios.user_id",
+      "filha_linhas_nao_nulas": 1254475,
+      "orfaos": 0,
+      "pct_orfaos": 0.0,
+      "status": "PASS"
+    },
+    {
+      "relacao": "onboarding.user_id -> usuarios.user_id",
+      "filha_linhas_nao_nulas": 63929,
+      "orfaos": 0,
+      "pct_orfaos": 0.0,
+      "status": "PASS"
+    },
+    {
+      "relacao": "pesquisa_saida.user_id -> usuarios.user_id",
+      "filha_linhas_nao_nulas": 643,
+      "orfaos": 0,
+      "pct_orfaos": 0.0,
+      "status": "PASS"
+    },
+    {
+      "relacao": "feed_posts.user_id -> usuarios.user_id",
+      "filha_linhas_nao_nulas": 119309,
+      "orfaos": 0,
+      "pct_orfaos": 0.0,
+      "status": "PASS"
+    },
+    {
+      "relacao": "tickets_suporte.user_id -> usuarios.user_id",
+      "filha_linhas_nao_nulas": 4422,
+      "orfaos": 0,
+      "pct_orfaos": 0.0,
+      "status": "PASS"
+    }
+  ],
+  "consistencia_logica": [
+    {
+      "tabela": "assinaturas",
+      "regra": "data_fim >= inicio",
+      "violacoes": 0,
+      "pct_violacoes": 0.0,
+      "detalhe": "Data de término anterior à data de início"
+    },
+    {
+      "tabela": "assinaturas",
+      "regra": "status_atual == ativa -> motivo_fim nulo",
+      "violacoes": 0,
+      "pct_violacoes": 0.0,
+      "detalhe": "Assinaturas ativas com motivo de término preenchido"
+    },
+    {
+      "tabela": "pagamentos",
+      "regra": "valor > 0 e conversível para numérico",
+      "violacoes": 368,
+      "pct_violacoes": 0.22,
+      "detalhe": "0 não conversíveis, 368 negativos"
+    },
+    {
+      "tabela": "pagamentos",
+      "regra": "formato numérico padrão (sem prefixo textual R$)",
+      "violacoes": 19750,
+      "pct_violacoes": 11.93,
+      "detalhe": "Valores formatados como texto em reais nas vendas web"
+    },
+    {
+      "tabela": "atividades",
+      "regra": "duracao_min > 0 e distancia_km >= 0",
+      "violacoes": 3649,
+      "pct_violacoes": 0.29,
+      "detalhe": "3649 durações <= 0, 0 distâncias < 0"
+    },
+    {
+      "tabela": "atividades",
+      "regra": "treino solo codificado como string vazia em vez de NaN",
+      "violacoes": 1240338,
+      "pct_violacoes": 98.87,
+      "detalhe": "98,87% das atividades possuem string vazia em treino_com"
+    },
+    {
+      "tabela": "tickets_suporte",
+      "regra": "resolvido_em >= aberto_em",
+      "violacoes": 0,
+      "pct_violacoes": 0.0,
+      "detalhe": "Chamado resolvido antes da data de abertura"
+    }
+  ],
+  "validade": [
+    {
+      "tabela": "assinaturas",
+      "coluna": "plano_atual",
+      "regra": "in ['mensal', 'anual']",
+      "violacoes": 60,
+      "pct_violacoes": 0.18,
+      "valores_encontrados": {
+        "mensal": 19556,
+        "anual": 13027,
+        "cortesia": 60
+      }
+    },
+    {
+      "tabela": "assinaturas",
+      "coluna": "status_atual",
+      "regra": "in ['ativa', 'cancelada']",
+      "violacoes": 17830,
+      "pct_violacoes": 54.62,
+      "valores_encontrados": {
+        "expirada": 17758,
+        "ativa": 14813,
+        "reembolsada": 72
+      }
+    },
+    {
+      "tabela": "assinaturas",
+      "coluna": "canal_cobranca",
+      "regra": "lojas e web",
+      "violacoes": 0,
+      "pct_violacoes": 0.0,
+      "valores_encontrados": {
+        "app_store": 11170,
+        "google_play": 10948,
+        "web_cartao": 7087,
+        "web_pix": 3378,
+        "interno": 60
+      }
+    },
+    {
+      "tabela": "pagamentos",
+      "coluna": "status",
+      "regra": "status de transação válidos",
+      "violacoes": 296,
+      "pct_violacoes": 0.18,
+      "valores_encontrados": {
+        "aprovado": 161930,
+        "recusado": 3250,
+        "chargeback": 296,
+        "estornado": 72
+      }
+    },
+    {
+      "tabela": "atividades",
+      "coluna": "tipo",
+      "regra": "modalidades esportivas válidas",
+      "violacoes": 0,
+      "pct_violacoes": 0.0,
+      "valores_encontrados": {
+        "corrida": 223818,
+        "run": 162108,
+        "funcional": 145476,
+        "caminhada": 118024,
+        "yoga": 113849,
+        "forca": 112704,
+        "hiit": 109934,
+        "walk": 88509,
+        "strength": 85548,
+        "pedal": 53740,
+        "ride": 40765
+      }
+    },
+    {
+      "tabela": "tickets_suporte",
+      "coluna": "categoria_atendente",
+      "regra": "categorias de suporte válidas",
+      "violacoes": 0,
+      "pct_violacoes": 0.0,
+      "valores_encontrados": {
+        "tecnico": 961,
+        "cancelamento": 913,
+        "conta": 757,
+        "cobranca": 651,
+        "conteudo": 588,
+        "duvida_geral": 552
+      }
+    }
+  ],
+  "temporalidade": [
+    {
+      "tabela": "usuarios",
+      "coluna_tempo": "data_cadastro",
+      "data_minima": "2020-09-01 12:00:00",
+      "data_maxima": "2027-04-04 10:44:09",
+      "registros_pos_corte": 119,
+      "pct_pos_corte": 0.18,
+      "status": "WARN"
+    },
+    {
+      "tabela": "assinaturas",
+      "coluna_tempo": "inicio",
+      "data_minima": "2020-09-08 00:00:00",
+      "data_maxima": "2026-09-30 00:00:00",
+      "registros_pos_corte": 0,
+      "pct_pos_corte": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "assinaturas",
+      "coluna_tempo": "data_fim",
+      "data_minima": "2024-07-07 00:00:00",
+      "data_maxima": "2026-09-30 00:00:00",
+      "registros_pos_corte": 0,
+      "pct_pos_corte": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "amizades",
+      "coluna_tempo": "desde",
+      "data_minima": "2020-09-05 00:00:00",
+      "data_maxima": "2026-10-09 00:00:00",
+      "registros_pos_corte": 273,
+      "pct_pos_corte": 0.24,
+      "status": "WARN"
+    },
+    {
+      "tabela": "campanha_ago26",
+      "coluna_tempo": "enviado_em",
+      "data_minima": "2026-08-10 10:00:00",
+      "data_maxima": "2026-08-10 10:00:00",
+      "registros_pos_corte": 0,
+      "pct_pos_corte": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "eventos_assinatura",
+      "coluna_tempo": "data_hora",
+      "data_minima": "2024-07-01 10:10:08",
+      "data_maxima": "2026-10-01 01:59:33",
+      "registros_pos_corte": 44,
+      "pct_pos_corte": 0.02,
+      "status": "WARN"
+    },
+    {
+      "tabela": "pagamentos",
+      "coluna_tempo": "data_hora",
+      "data_minima": "2024-07-02 09:18:58",
+      "data_maxima": "2026-10-01 01:50:25",
+      "registros_pos_corte": 30,
+      "pct_pos_corte": 0.03,
+      "status": "WARN"
+    },
+    {
+      "tabela": "atividades",
+      "coluna_tempo": "inicio",
+      "data_minima": "2026-01-01 05:00:00",
+      "data_maxima": "2026-10-01 00:59:00",
+      "registros_pos_corte": 34,
+      "pct_pos_corte": 0.0,
+      "status": "WARN"
+    },
+    {
+      "tabela": "pesquisa_saida",
+      "coluna_tempo": "respondido_em",
+      "data_minima": "2026-06-01 00:00:00",
+      "data_maxima": "2026-09-30 00:00:00",
+      "registros_pos_corte": 0,
+      "pct_pos_corte": 0.0,
+      "status": "PASS"
+    },
+    {
+      "tabela": "feed_posts",
+      "coluna_tempo": "data_hora",
+      "data_minima": "2025-07-01 06:07:55",
+      "data_maxima": "2026-10-07 18:52:16",
+      "registros_pos_corte": 122,
+      "pct_pos_corte": 0.1,
+      "status": "WARN"
+    },
+    {
+      "tabela": "tickets_suporte",
+      "coluna_tempo": "aberto_em",
+      "data_minima": "2025-07-01 08:15:00",
+      "data_maxima": "2026-09-30 21:46:00",
+      "registros_pos_corte": 0,
+      "pct_pos_corte": 0.0,
+      "status": "PASS"
+    }
+  ]
+}
