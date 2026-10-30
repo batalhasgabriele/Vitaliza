@@ -14,7 +14,8 @@
 - `notebooks/`: Notebooks de análise exploratória, modelagem e validação.
 - `src/`: Scripts Python reutilizáveis (funções de limpeza, engenharia de atributos, modelagem).
 - `saidas/`: Relatórios gerados, predições ordenadas para CRM, gráficos e artefatos de entrega.
-- `decisoes.md`: Log de decisões de negócios e de modelagem adotadas pela equipe.
+- `decisoes/`: Arquivos individuais de decisões no padrão ADR (`NNN-titulo.md`), garantindo isolamento entre branches e rastreabilidade de autoria.
+- `decisoes.md`: Sumário executivo e índice consolidado com tabela de todas as decisões tomadas.
 
 ## 3. Premissas de Negócio e Métricas
 - **Preço Mensal:** R$ 39,90 (desde 01/03/2026; era R$ 34,90 antes).
@@ -71,5 +72,5 @@
 - antes de uma tarefa com mais passos, apresente um plano e espere aprovação
 - após executar uma análise, salvar o racional na pasta notebooks/ para utilizar em cenários de replicação/recálculo
 - estrutura recomendada para o prompt de análises: pergunta, arquivos, regras, formato de saída e definition of done. se alguma dessas informações não tiver clara, pergunte.
-- aspectos de negócios, correções feitas e regras estabelecidas devem ser registradas no arquivo decisoes.md
+- aspectos de negócios, correções feitas e regras estabelecidas devem ser registradas em um novo arquivo em `decisoes/NNN-titulo.md` (seguindo `decisoes/TEMPLATE.md` com autor e branch) e referenciadas na tabela índice de `decisoes.md`.
 
