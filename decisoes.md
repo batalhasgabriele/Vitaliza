@@ -17,6 +17,8 @@ Como o projeto é desenvolvido de forma concorrente por **5 integrantes e múlti
 | **005** | Diretrizes Metodológicas de Modelagem Preditiva e Hipóteses | 25/10/2026 | Gabriele Batalha / Equipe | `dev` | Aprovada | [ADR 005](decisoes/005-diretrizes-modelagem-e-hipoteses.md) |
 | **006** | Metodologia e Resultados da EDA e Portfólio de Hipóteses MECE | 25/10/2026 | Gabriele Batalha / Equipe | `dev` | Aprovada | [ADR 006](decisoes/006-eda-e-portfolio-hipoteses-mece.md) |
 | **007** | Diretrizes Técnicas da Auditoria de Qualidade de Dados (12 Tabelas) | 29/10/2026 | Gabriele Batalha / Agente 2 | `cluster-v1` | Aprovada | [ADR 007](decisoes/007-auditoria-qualidade-12-tabelas.md) |
+| **008** | Consolidação do Guia de Artefatos (Semanas 5 e 10) e Premissas Oficiais do Case | 01/11/2026 | Gabriele Batalha / Gemininha | `dev` | Aprovada | [ADR 008](decisoes/008-guia-artefatos-e-premissas-oficiais-case.md) |
+| **009** | Pipeline de Limpeza pelas 5 Dimensões da Qualidade de Dados e Reconciliação da Aula 2 de Tecnologia | 01/11/2026 | Gabriele Batalha / Antigravity AI | `dev` | Aprovada | [ADR 009](decisoes/009-pipeline-5-dimensoes-qualidade-aula2.md) |
 
 ---
 

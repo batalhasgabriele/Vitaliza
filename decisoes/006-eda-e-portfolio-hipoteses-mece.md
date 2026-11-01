@@ -1,6 +1,6 @@
 # ADR 006: Metodologia e Resultados da EDA e Portfólio de Hipóteses MECE
 
-- **Data:** 25/10/2026
+- **Data:** 25/10/2026 *(Revisada e sincronizada pós-limpeza Etapa 1 em 01/11/2026)*
 - **Autor(a) / Responsável:** Gabriele Batalha / Equipe Vitaliza
 - **Branch / Worktree:** `dev`
 - **Status:** Aprovada / Implementada
@@ -8,20 +8,25 @@
 ---
 
 ## 1. Contexto e Motivação
-Executar uma Análise Exploratória de Dados (EDA) quantitativa e estruturada sobre os usuários elegíveis da Vitaliza no corte de 30/09/2026 para responder às causas da subida do churn mensal e criar o portfólio de hipóteses testáveis.
+Executar uma Análise Exploratória de Dados (EDA) quantitativa e estruturada sobre os usuários elegíveis da Vitaliza no corte de 30/09/2026 para responder às causas da subida do churn mensal e criar o portfólio de hipóteses testáveis. Em `01/11/2026`, todos os cálculos, gráficos e tabelas foram reexecutados sobre as bases higienizadas pelas 5 Dimensões da Qualidade ([ADR 009](009-pipeline-5-dimensoes-qualidade-aula2.md)).
 
 ## 2. Decisão Adotada
-1. **Adoção de Mediana e IQR para Tendência Central:** Em virtude da assimetria extrema das métricas de uso digital e presença de caudas longas, rejeitou-se a média aritmética. A frequência mensal de treino típica cai de 5,39 (ativos) para 1,50 treino/mês (cancelados), uma queda de -72,2%, enquanto a duração por treino permanece estável (~41 min).
+1. **Adoção de Mediana e IQR na Vigência e nas Janelas Relativas (`D-30` e `D-60` Antes do Cancelamento) Sem Vazamento Pós-Cancelamento:**
+   - Todas as métricas de uso mensal são calculadas estritamente dentro da janela de vigência de cada assinatura (`inicio` até a data de cancelamento — ou até `30/09/2026` para os ativos), expurgando meses inativos posteriores ao cancelamento.
+   - Durante a vigência, a frequência mensal mediana é de `4,79` treinos/mês nos ativos (`média 6,41`, IQR `7,38`) contra `2,54` treinos/mês nos cancelados (`média 4,66`, IQR `6,67`, queda de `-46,9%`).
+   - Nas janelas móveis anteriores ao cancelamento (`D-60` e `D-30`), os ativos mantêm mediana de `8,00` treinos, enquanto os cancelados despencam para mediana de `0,00` treino (`média 2,99` em `D-60` e `1,78` em `D-30`, queda de `-100,0%` na mediana).
+   - A duração individual do treino na base limpa (`atividades_limpas.parquet`) permanece estável (`40,70 min` nos ativos vs. `41,15 min` nos cancelados).
 2. **Identificação do Vale da Morte Contratual (M2/M3):**
-   - Assinantes do plano mensal sofrem evasão massiva: 76,55% de churn no 2º mês e 79,29% no 3º mês de vida, atingindo 67,91% de churn geral acumulado.
-   - Assinantes do plano anual registram apenas 34,92% de churn no mesmo horizonte.
+   - Assinantes do plano mensal sofrem evasão massiva: `64,71%` no 1º mês, `76,55%` de churn no 2º mês e `79,29%` no 3º mês de vida, atingindo `67,91%` de churn geral acumulado.
+   - Assinantes do plano anual registram apenas `34,92%` de churn no mesmo horizonte.
 3. **Mapeamento do Ponto Cego dos Cancelamentos:**
-   - 98,02% de todos os cancelamentos ocorrem sem qualquer interação com a pesquisa de saída do aplicativo.
-   - 100% dos cancelamentos originários das lojas Apple e Google não passam pelo app.
-   - 9,05% dos cancelamentos são involuntários (falhas definitivas de cartão, expiração de Pix e chargeback).
-4. **Ranking Univariado de Sinais Preditivos (AUC-ROC):**
-   - Maior sinal preditivo: Desaceleração de treinos em set/2026 (AUC 0,9158) e ago/2026 (AUC 0,8760), seguido de desligamento de auto-renovação (AUC 0,8485).
-   - Menor sinal / descartadas: Demográficas (idade, sexo, smartwatch) com AUC próximo a 0,50.
+   - `98,02%` de todos os cancelamentos históricos (`17.477` de `17.830`) ocorrem sem qualquer interação com a pesquisa de saída do aplicativo (`353` respostas = `1,98%`).
+   - `100%` dos cancelamentos originários das lojas Apple (`5.775`) e Google (`5.984`) não passam pela pesquisa do app.
+   - `9,05%` dos cancelamentos são involuntários (`1.321` falhas definitivas de pagamento = `7,41%` e `292` chargebacks = `1,64%`).
+4. **Ranking Univariado de Sinais Preditivos Sem Vazamento Pós-Cancelamento (AUC-ROC):**
+   - Foram expurgadas variáveis fixas no calendário de fim de período (`atividades_set26`, `atividades_ago26`) — que mediam inatividade *após* o cancelamento para quem havia saído antes — e o próprio evento de saída (`desligou_renovacao`).
+   - Maiores sinais preditivos reais: Diversidade de modalidades canônicas (`n_modalidades_distintas`, `AUC 0,8653`), treinos nos últimos 30 dias antes do cancelamento (`atividades_ultimos_30d`, `AUC 0,8488`), razão de uso recente `D-30` vs. média da vigência (`razao_uso_ultimo_mes`, `AUC 0,8458`), treinos entre 31 e 60 dias antes do cancelamento (`atividades_31_a_60d`, `AUC 0,7636`), posts no feed (`AUC 0,7315`), LTV pago bruto (`AUC 0,7267`) e curtidas recebidas (`AUC 0,7131`).
+   - Menores sinais / descartadas como preditoras: Demográficas e de entrada (`idade` higienizada com `AUC 0,5088`, `dias_semana_pretendidos` com `AUC 0,5050` e `tem_relogio` com `AUC 0,5009`).
 5. **Artefatos Entregues:**
    - Notebook reprodutível em `notebooks/02_eda_e_hipoteses.ipynb`.
    - Feature store tratada em `dados/processados/features_eda_corte_set2026.parquet`.
