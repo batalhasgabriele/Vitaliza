@@ -16,7 +16,7 @@ plt.rcParams["figure.dpi"] = 300
 
 df = pd.read_parquet("dados/processados/features_eda_corte_set2026.parquet")
 
-# Imprimir tabela completa de perfilamento (Média, DP, Mediana, IQR) sem vazamento pós-cancelamento
+# Imprimir tabela completa de perfilamento (Média, DP, Mediana, IQR) sem vazamento pós-cancelamento e normalizada por vigência
 metricas_tabela = [
     ("atividades_ultimos_30d", "Treinos nos Últimos 30d Antes do Cancelamento/Corte (D-30)"),
     ("atividades_31_a_60d", "Treinos entre 31d e 60d Antes do Cancelamento/Corte (D-60)"),
@@ -28,9 +28,11 @@ metricas_tabela = [
     ("media_sessoes_mes", "Sessões no App/Mês (Na Vigência)"),
     ("prop_meses_ativos_vigencia", "Proporção de Meses Ativos na Vigência"),
     ("n_modalidades_distintas", "Modalidades Canônicas Distintas (7 máx)"),
-    ("total_pago_bruto", "Total Pago Bruto (R$)"),
-    ("total_posts", "Posts Publicados no Feed"),
-    ("total_curtidas", "Curtidas Recebidas"),
+    ("receita_bruta_mensal", "Valor Médio Pago/Mês na Vigência (R$)"),
+    ("media_posts_mes", "Média de Posts no Feed/Mês (Na Vigência)"),
+    ("media_curtidas_mes", "Média de Curtidas Recebidas/Mês (Na Vigência)"),
+    ("media_treinos_dupla_mes", "Média de Treinos em Dupla/Mês (Na Vigência)"),
+    ("num_seguidores", "Número de Seguidores na Comunidade"),
     ("duracao_mediana", "Duração do Treino (min - Base Limpa)"),
     ("distancia_mediana", "Distância do Treino (km - Base Limpa)"),
     ("idade", "Idade (Higienizada)"),
@@ -115,7 +117,7 @@ axes[1, 0].set_ylabel("Sessões / Mês")
 sns.boxplot(
     data=df,
     x="status_label",
-    y="total_curtidas",
+    y="media_curtidas_mes",
     ax=axes[1, 1],
     palette=palette,
     hue="status_label",
@@ -123,10 +125,10 @@ sns.boxplot(
     showfliers=False,
 )
 axes[1, 1].set_title(
-    "Total de Curtidas Recebidas no Feed (Sem Outliers)", fontsize=13, fontweight="bold"
+    "Média de Curtidas Recebidas/Mês na Vigência (Sem Outliers)", fontsize=13, fontweight="bold"
 )
 axes[1, 1].set_xlabel("")
-axes[1, 1].set_ylabel("Curtidas")
+axes[1, 1].set_ylabel("Curtidas / Mês")
 
 plt.suptitle(
     "Perfilamento Estatístico Robusto: Comparação Ativos vs. Cancelados (Durante a Vigência)",
@@ -225,7 +227,7 @@ plt.savefig("saidas/ponto_cego_cancelamentos.png", bbox_inches="tight")
 plt.close()
 print("Gráfico 3 salvo: saidas/ponto_cego_cancelamentos.png")
 
-# 4. Gráfico de AUC-ROC Univariado (100% Sem Vazamento Pós-Cancelamento!)
+# 4. Gráfico de AUC-ROC Univariado (100% Sem Vazamento Pós-Cancelamento e Normalizado por Vigência!)
 variaveis_auc = [
     ("atividades_ultimos_30d", "Treinos nos Últimos 30d Antes do Cancelamento (D-30)", "Uso"),
     ("razao_uso_ultimo_mes", "Razão de Uso Recente (D-30 vs Média Vigência)", "Uso"),
@@ -235,18 +237,18 @@ variaveis_auc = [
     ("media_dias_ativos_mes", "Média de Dias Ativos/Mês (Na Vigência)", "Uso"),
     ("media_atividades_mes", "Média de Atividades/Mês (Na Vigência)", "Uso"),
     ("media_minutos_mes", "Média de Minutos/Mês (Na Vigência)", "Uso"),
-    ("total_posts", "Posts Publicados no Feed", "Social"),
-    ("total_pago_bruto", "Total Pago Bruto (LTV Histórico)", "Contrato"),
-    ("total_curtidas", "Curtidas Recebidas no Feed", "Social"),
     ("media_sessoes_mes", "Média de Sessões no App/Mês (Na Vigência)", "Uso"),
-    ("total_video_mensal", "Total Atividades Vídeo Guiado", "Uso"),
-    ("total_ar_livre_mensal", "Total Atividades Ar Livre (GPS)", "Uso"),
-    ("num_seguidores", "Número de Seguidores", "Social"),
-    ("total_renovacoes", "Total de Renovações Efetuadas", "Contrato"),
-    ("treinos_em_dupla", "Treinos em Dupla/Grupo", "Social"),
+    ("media_video_mes", "Média de Treinos Vídeo Guiado/Mês (Na Vigência)", "Uso"),
+    ("media_ar_livre_mes", "Média de Treinos Ar Livre/Mês (Na Vigência)", "Uso"),
+    ("media_posts_mes", "Média de Posts no Feed/Mês (Na Vigência)", "Social"),
+    ("media_curtidas_mes", "Média de Curtidas no Feed/Mês (Na Vigência)", "Social"),
+    ("num_seguidores", "Número de Seguidores na Comunidade", "Social"),
+    ("media_treinos_dupla_mes", "Média de Treinos em Dupla/Mês (Na Vigência)", "Social"),
+    ("eh_plano_anual", "Tipo de Plano (Anual vs. Mensal)", "Contrato"),
+    ("receita_bruta_mensal", "Valor Médio Pago/Mês (R$ na Vigência)", "Contrato"),
     ("teve_carencia", "Entrou em Período de Carência", "Contrato"),
     ("pagamentos_recusados", "Cobranças Recusadas", "Contrato"),
-    ("lifetime_dias", "Lifetime em Dias", "Contrato"),
+    ("eh_canal_loja", "Canal de Cobrança (Lojas vs. Web)", "Contrato"),
     ("idade", "Idade do Usuário (Higienizada)", "Entrada"),
     ("dias_semana_pretendidos", "Dias Pretendidos (Onboarding)", "Entrada"),
     ("tem_relogio", "Smartwatch Conectado", "Entrada"),

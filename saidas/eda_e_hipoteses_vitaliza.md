@@ -51,9 +51,11 @@ Esta Análise Exploratória de Dados (EDA) auditou integralmente as **32.583 ass
 | **Sessões no App/Mês (Na Vigência)** | 10,72 (±8,60) | **8,29 (10,92)** | 10,61 (±11,51) | **6,80 (14,00)** | **-17,9%** |
 | **Proporção de Meses Ativos na Vigência** | 0,84 (±0,25) | **1,00 (0,25)** | 0,64 (±0,40) | **0,81 (0,75)** | **-18,8%** |
 | **Modalidades Canônicas Distintas (7 máx)** | 4,71 (±1,28) | **5,00 (2,00)** | 1,60 (±2,10) | **0,00 (4,00)** | **-100,0%** |
-| **Total Pago Bruto (R$)** | 409,03 (±241,76) | **299,90 (359,90)** | 231,27 (±171,51) | **209,40 (195,20)** | **-30,2%** |
-| **Posts Publicados no Feed** | 5,14 (±4,18) | **4,00 (6,00)** | 2,24 (±2,84) | **1,00 (4,00)** | **-75,0%** |
-| **Curtidas Recebidas** | 36,04 (±30,16) | **30,00 (43,00)** | 17,10 (±21,89) | **7,00 (29,00)** | **-76,7%** |
+| **Valor Médio Pago/Mês na Vigência (R$)** | 30,48 (±7,25) | **24,99 (13,80)** | 32,93 (±5,16) | **34,90 (9,91)** | **+39,6%** |
+| **Média de Posts no Feed/Mês (Na Vigência)** | 0,49 (±0,39) | **0,43 (0,46)** | 0,31 (±0,42) | **0,14 (0,50)** | **-67,6%** |
+| **Média de Curtidas Recebidas/Mês (Na Vigência)** | 3,37 (±2,80) | **2,95 (3,45)** | 2,34 (±3,26) | **0,92 (3,70)** | **-68,9%** |
+| **Média de Treinos em Dupla/Mês (Na Vigência)** | 0,09 (±0,38) | **0,00 (0,00)** | 0,02 (±0,20) | **0,00 (0,00)** | **0,0%** |
+| **Número de Seguidores na Comunidade** | 1,66 (±1,51) | **1,00 (2,00)** | 1,67 (±1,47) | **1,00 (2,00)** | **0,0%** |
 | **Duração do Treino (min - Base Limpa)** | 43,78 (±14,54) | **40,70 (7,70)** | 44,86 (±16,57) | **41,15 (10,35)** | **+1,1%** |
 | **Distância do Treino (km - Base Limpa)** | 8,02 (±7,86) | **5,69 (2,21)** | 8,57 (±8,59) | **5,99 (2,74)** | **+5,3%** |
 | **Idade (Higienizada)** | 47,99 (±11,08) | **46,99 (15,44)** | 48,39 (±11,23) | **47,30 (15,48)** | **+0,7%** |
@@ -97,7 +99,7 @@ Esta Análise Exploratória de Dados (EDA) auditou integralmente as **32.583 ass
 
 ---
 
-### 2.4 Ranking de Poder Discriminatório Univariado (AUC-ROC — Sem Vazamento Pós-Cancelamento)
+### 2.4 Ranking de Poder Discriminatório Univariado (AUC-ROC — Sem Vazamento Pós-Cancelamento e Normalizado por Vigência)
 
 | Galho MECE | Variável Preditora | Descrição Operacional | AUC-ROC | Direção do Efeito |
 | :--- | :--- | :--- | :---: | :--- |
@@ -105,24 +107,24 @@ Esta Análise Exploratória de Dados (EDA) auditou integralmente as **32.583 ass
 | **Uso** | `atividades_ultimos_30d` | Treinos nos últimos 30 dias antes do cancelamento (`D-30`) | **0,8488** | Reduz Churn (Protetor) |
 | **Uso** | `razao_uso_ultimo_mes` | Razão de uso recente (`D-30` vs. média da vigência) | **0,8458** | Reduz Churn (Protetor) |
 | **Uso** | `atividades_31_a_60d` | Treinos entre 31 e 60 dias antes do cancelamento (`D-60`) | **0,7636** | Reduz Churn (Protetor) |
-| **Social** | `total_posts` | Posts de corrida/treino no feed da comunidade | **0,7315** | Reduz Churn (Protetor) |
-| **Contrato** | `total_pago_bruto` | LTV monetário acumulado pago à Vitaliza | **0,7267** | Reduz Churn (Protetor) |
-| **Social** | `total_curtidas` | Curtidas recebidas de outros corredores | **0,7131** | Reduz Churn (Protetor) |
-| **Uso** | `total_video_mensal` | Treinos guiados em vídeo realizados na vigência | **0,6515** | Reduz Churn (Protetor) |
+| **Social** | `media_posts_mes` | Média mensal de posts no feed durante a vigência | **0,6753** | Reduz Churn (Protetor) |
+| **Contrato** | `eh_plano_anual` | Tipo de plano contratado (`Anual` vs. `Mensal`) | **0,6598** | Reduz Churn (Protetor) |
+| **Social** | `media_curtidas_mes` | Média mensal de curtidas recebidas no feed na vigência | **0,6592** | Reduz Churn (Protetor) |
 | **Uso** | `prop_meses_ativos_vigencia` | Proporção de meses com treino ativo durante a vigência | **0,6322** | Reduz Churn (Protetor) |
 | **Uso** | `media_dias_ativos_mes` | Frequência média mensal de dias ativos na vigência | **0,6287** | Reduz Churn (Protetor) |
 | **Uso** | `media_atividades_mes` | Média mensal de sessões de treino na vigência | **0,6272** | Reduz Churn (Protetor) |
+| **Uso** | `media_video_mes` | Média mensal de treinos guiados em vídeo na vigência | **0,6243** | Reduz Churn (Protetor) |
 | **Uso** | `media_minutos_mes` | Minutos médios de exercício por mês na vigência | **0,6237** | Reduz Churn (Protetor) |
-| **Uso** | `total_ar_livre_mensal` | Treinos ao ar livre com GPS na vigência | **0,6208** | Reduz Churn (Protetor) |
-| **Social** | `num_seguidores` | Conexões recebidas na rede social | **0,5702** | Neutro / Leve dispersão |
-| **Contrato** | `total_renovacoes` | Total de renovações efetuadas | **0,5615** | Neutro / Leve dispersão |
+| **Uso** | `media_ar_livre_mes` | Média mensal de treinos ao ar livre com GPS na vigência | **0,5887** | Reduz Churn (Protetor) |
 | **Uso** | `media_sessoes_mes` | Aberturas do aplicativo por mês na vigência | **0,5585** | Reduz Churn (Protetor) |
-| **Social** | `treinos_em_dupla` | Treinos realizados com parceiro (`treino_com`) | **0,5408** | Reduz Churn (Protetor) |
+| **Social** | `media_treinos_dupla_mes` | Média mensal de treinos realizados com parceiro na vigência | **0,5404** | Reduz Churn (Protetor) |
+| **Contrato** | `receita_bruta_mensal` | Valor médio mensal pago na vigência (ticket mensal equivalente) | **0,5386** | Aumenta Churn |
 | **Contrato** | `teve_carencia` | Usuário entrou em grace period de cobrança | **0,5362** | Aumenta Churn |
 | **Contrato** | `pagamentos_recusados` | Histórico de tentativas de cobrança recusadas | **0,5309** | Aumenta Churn |
-| **Contrato** | `lifetime_dias` | Tempo de vida acumulado em dias | **0,5200** | Reduz Churn (Protetor) |
+| **Contrato** | `eh_canal_loja` | Canal de cobrança (`Lojas Mobile` vs. `Meios Próprios Web`) | **0,5213** | Reduz Churn (Protetor) |
 | **Entrada** | `idade` | Idade cronológica do assinante (higienizada) | **0,5088** | Nulo / Ruído |
 | **Entrada** | `dias_semana_pretendidos` | Meta semanal autodeclarada no onboarding | **0,5050** | Nulo / Ruído |
+| **Social** | `num_seguidores` | Conexões recebidas na rede social | **0,5042** | Nulo / Ruído |
 | **Entrada** | `tem_relogio` | Integração ativa com Apple Watch / Garmin | **0,5009** | Nulo / Ruído |
 
 ---
@@ -276,7 +278,7 @@ Características    Comportamento de                      Ciclo de Vida       Co
   $$\text{Interações Sociais} = \text{Total Posts} \times 2 + \text{Total Curtidas Recebidas}$$
   AUC-ROC da métrica em relação ao churn.
 - **5. Critério de Refutação Pré-estabelecido:**
-  > **Cai se:** O AUC-ROC de curtidas e posts for inferior a **0,65**, indicando que conexões sociais no feed são neutras em relação à longevidade do contrato. (Na nossa EDA, `total_posts` atingiu AUC de **0,7315** e `total_curtidas` **0,7131**, confirmando o efeito protetor).
+  > **Cai se:** O AUC-ROC de curtidas e posts por mês na vigência for inferior a **0,65**, indicando que conexões sociais no feed são neutras em relação à longevidade do contrato. (Na nossa EDA normalizada pela vigência, `media_posts_mes` atingiu AUC de **0,6753** e `media_curtidas_mes` **0,6592**, confirmando o efeito protetor mesmo descontando o tempo de casa).
 - **6. O que a variável NÃO mede:** Não mede interações em grupos de WhatsApp externos ao app Vitaliza.
 - **7. Riscos e Governança:**
   - *Viés de Confundimento:* Usuários mais disciplinados postam mais (efeito seleção). Necessário pareamento por escore de propensão (Propensity Score Matching).

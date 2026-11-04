@@ -68,8 +68,8 @@ c6 = nbf.v4.new_code_cell("""metricas_robustas = [
     'media_minutos_mes', 'media_minutos_mes_ativo',
     'media_dias_ativos_mes', 'media_sessoes_mes',
     'prop_meses_ativos_vigencia', 'n_modalidades_distintas',
-    'total_pago_bruto', 'num_seguidores', 'total_posts', 'total_curtidas',
-    'duracao_mediana', 'distancia_mediana', 'idade'
+    'receita_bruta_mensal', 'num_seguidores', 'media_posts_mes', 'media_curtidas_mes',
+    'media_treinos_dupla_mes', 'duracao_mediana', 'distancia_mediana', 'idade'
 ]
 
 perfil_rows = []
@@ -113,9 +113,9 @@ sns.boxplot(data=df, x='status_label', y='media_sessoes_mes', ax=axes[1, 0], pal
 axes[1, 0].set_title('Média de Sessões no App/Mês na Vigência (Sem Outliers)', fontsize=12, fontweight='bold')
 axes[1, 0].set_ylabel('Sessões / Mês')
 
-sns.boxplot(data=df, x='status_label', y='total_curtidas', ax=axes[1, 1], palette=palette, hue='status_label', legend=False, showfliers=False)
-axes[1, 1].set_title('Total de Curtidas Recebidas no Feed (Sem Outliers)', fontsize=12, fontweight='bold')
-axes[1, 1].set_ylabel('Curtidas')
+sns.boxplot(data=df, x='status_label', y='media_curtidas_mes', ax=axes[1, 1], palette=palette, hue='status_label', legend=False, showfliers=False)
+axes[1, 1].set_title('Média de Curtidas Recebidas/Mês na Vigência (Sem Outliers)', fontsize=12, fontweight='bold')
+axes[1, 1].set_ylabel('Curtidas / Mês')
 
 plt.suptitle('Perfilamento Estatístico Robusto: Comparação Ativos vs. Cancelados (Durante a Vigência)', fontsize=15, fontweight='bold', y=1.02)
 plt.tight_layout()
@@ -198,21 +198,21 @@ c13 = nbf.v4.new_code_cell("""variaveis_preditoras = [
     ('media_atividades_mes', 'Média de Atividades/Mês (Na Vigência)', 'Uso'),
     ('media_minutos_mes', 'Média de Minutos de Treino/Mês (Na Vigência)', 'Uso'),
     ('media_sessoes_mes', 'Média de Sessões no App/Mês (Na Vigência)', 'Uso'),
-    ('total_ar_livre_mensal', 'Total Atividades Ar Livre (GPS)', 'Uso'),
-    ('total_video_mensal', 'Total Atividades Vídeo Guiado', 'Uso'),
+    ('media_ar_livre_mes', 'Média de Treinos Ar Livre/Mês (Na Vigência)', 'Uso'),
+    ('media_video_mes', 'Média de Treinos Vídeo Guiado/Mês (Na Vigência)', 'Uso'),
     ('prop_gps_ok', 'Proporção Treinos com GPS Válido', 'Uso'),
-    ('lifetime_dias', 'Lifetime em Dias', 'Contrato'),
-    ('total_pago_bruto', 'Total Pago Bruto (LTV Histórico)', 'Contrato'),
-    ('total_renovacoes', 'Total de Renovações Efetuadas', 'Contrato'),
+    ('eh_plano_anual', 'Tipo de Plano (Anual vs. Mensal)', 'Contrato'),
+    ('receita_bruta_mensal', 'Valor Médio Pago/Mês (R$ na Vigência)', 'Contrato'),
     ('teve_carencia', 'Entrou em Período de Carência', 'Contrato'),
     ('pagamentos_recusados', 'Cobranças Recusadas', 'Contrato'),
+    ('eh_canal_loja', 'Canal de Cobrança (Lojas vs. Web)', 'Contrato'),
     ('total_tickets', 'Total de Tickets de Suporte', 'Contrato'),
-    ('treinos_em_dupla', 'Treinos com Parceiro/Grupo', 'Social'),
+    ('media_treinos_dupla_mes', 'Média de Treinos em Dupla/Mês (Na Vigência)', 'Social'),
     ('prop_treinos_dupla', 'Proporção Treinos em Dupla', 'Social'),
-    ('num_seguidores', 'Número de Seguidores', 'Social'),
+    ('num_seguidores', 'Número de Seguidores na Comunidade', 'Social'),
     ('num_seguindo', 'Número de Usuários que Segue', 'Social'),
-    ('total_posts', 'Posts Publicados no Feed', 'Social'),
-    ('total_curtidas', 'Curtidas Recebidas no Feed', 'Social'),
+    ('media_posts_mes', 'Média de Posts no Feed/Mês (Na Vigência)', 'Social'),
+    ('media_curtidas_mes', 'Média de Curtidas no Feed/Mês (Na Vigência)', 'Social'),
     ('idade', 'Idade do Usuário (Higienizada)', 'Entrada'),
     ('tem_relogio', 'Possui Smartwatch Conectado', 'Entrada'),
     ('dias_semana_pretendidos', 'Dias/Semana Pretendidos (Onboarding)', 'Entrada'),

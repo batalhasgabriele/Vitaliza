@@ -200,6 +200,7 @@ pag_user = df_pag_aprov_limpo.groupby("user_id").agg(
     total_pago_bruto=("valor_num", "sum"),
     total_pago_liq=("valor_liq", "sum"),
     qtd_pagamentos=("pagamento_id", "count"),
+    ticket_medio_transacao=("valor_num", "mean"),
 )
 
 pag_falhas = (
@@ -276,27 +277,44 @@ atv_user = df_atv.groupby("user_id").agg(
     prop_gps_ok=("gps_ok", "mean"),
 )
 
-# 8. Carregar Amizades e Comunidade
+# 8. Carregar Amizades e Comunidade (até data_desfecho da assinatura)
 df_amiz = pd.read_csv("dados/brutos/amizades.csv")
 df_amiz["desde_dt"] = pd.to_datetime(df_amiz["desde"])
 df_amiz = df_amiz[df_amiz["desde_dt"] <= DATA_CORTE].copy()
 
-seguidores = df_amiz.groupby("seguido_id").size().rename("num_seguidores")
-seguindo = df_amiz.groupby("seguidor_id").size().rename("num_seguindo")
+df_amiz_segd = df_amiz.merge(
+    janela_user[["user_id", "data_desfecho"]], left_on="seguido_id", right_on="user_id", how="inner"
+)
+df_amiz_segd = df_amiz_segd[df_amiz_segd["desde_dt"] <= df_amiz_segd["data_desfecho"]]
+seguidores = df_amiz_segd.groupby("seguido_id").size().rename("num_seguidores")
 
-# 9. Feed posts (até data_desfecho)
+df_amiz_segr = df_amiz.merge(
+    janela_user[["user_id", "data_desfecho"]], left_on="seguidor_id", right_on="user_id", how="inner"
+)
+df_amiz_segr = df_amiz_segr[df_amiz_segr["desde_dt"] <= df_amiz_segr["data_desfecho"]]
+seguindo = df_amiz_segr.groupby("seguidor_id").size().rename("num_seguindo")
+
+# 9. Feed posts (até data_desfecho da assinatura)
 df_feed = pd.read_csv("dados/brutos/feed_posts.csv")
 df_feed["data_hora_dt"] = pd.to_datetime(df_feed["data_hora"])
 df_feed = df_feed[df_feed["data_hora_dt"] <= DATA_CORTE].copy()
+df_feed = df_feed.merge(
+    janela_user[["user_id", "data_desfecho"]], on="user_id", how="inner"
+)
+df_feed = df_feed[df_feed["data_hora_dt"] <= df_feed["data_desfecho"]].copy()
 
 feed_user = df_feed.groupby("user_id").agg(
     total_posts=("post_id", "count"), total_curtidas=("curtidas", "sum")
 )
 
-# 10. Suporte
+# 10. Suporte (até data_desfecho da assinatura)
 df_sup = pd.read_csv("dados/brutos/tickets_suporte.csv")
 df_sup["aberto_em_dt"] = pd.to_datetime(df_sup["aberto_em"])
 df_sup = df_sup[df_sup["aberto_em_dt"] <= DATA_CORTE].copy()
+df_sup = df_sup.merge(
+    janela_user[["user_id", "data_desfecho"]], on="user_id", how="inner"
+)
+df_sup = df_sup[df_sup["aberto_em_dt"] <= df_sup["data_desfecho"]].copy()
 
 sup_user = df_sup.groupby("user_id").agg(
     total_tickets=("ticket_id", "count"),
@@ -378,7 +396,7 @@ for col in fill_zero_cols:
     if col in df_master.columns:
         df_master[col] = df_master[col].fillna(0)
 
-# Calcular médias mensais na vigência da assinatura (harmonizando 2025 e 2026 sem vazamento pós-saída!)
+# Calcular médias mensais na vigência da assinatura (harmonizando 2025 e 2026 sem vazamento pós-saída e sem viés de tempo acumulado!)
 df_master["media_atividades_mes"] = (
     df_master["total_atividades_mensal"] / df_master["meses_vigencia"]
 )
@@ -391,10 +409,35 @@ df_master["media_dias_ativos_mes"] = (
 df_master["media_sessoes_mes"] = (
     df_master["total_sessoes_app"] / df_master["meses_vigencia"]
 )
+df_master["media_ar_livre_mes"] = (
+    df_master["total_ar_livre_mensal"] / df_master["meses_vigencia"]
+)
+df_master["media_video_mes"] = (
+    df_master["total_video_mensal"] / df_master["meses_vigencia"]
+)
+df_master["media_posts_mes"] = (
+    df_master["total_posts"] / df_master["meses_vigencia"]
+)
+df_master["media_curtidas_mes"] = (
+    df_master["total_curtidas"] / df_master["meses_vigencia"]
+)
+df_master["media_treinos_dupla_mes"] = (
+    df_master["treinos_em_dupla"] / df_master["meses_vigencia"]
+)
+# Ticket mensal equivalente (R$/mês): divide por 12 para plano anual (R$ 24,99 ou R$ 19,99 c/ cupom) e mantém valor mensal (R$ 34,90 ou R$ 39,90) para plano mensal
+df_master["receita_bruta_mensal"] = np.where(
+    df_master["plano_atual"] == "anual",
+    df_master["ticket_medio_transacao"].fillna(299.90) / 12.0,
+    df_master["ticket_medio_transacao"].fillna(39.90),
+)
+df_master["eh_plano_anual"] = (df_master["plano_atual"] == "anual").astype(int)
+df_master["eh_canal_loja"] = (
+    df_master["canal_cobranca"].isin(["app_store", "google_play"]).astype(int)
+)
 df_master["prop_meses_ativos_vigencia"] = (
     df_master["meses_com_uso"] / df_master["meses_vigencia"]
 ).clip(upper=1.0)
-# Razão de aceleração/desaceleração no último mês antes do desfecho vs média da vigência
+# Razão de aceleração/desaceleração no último mês antes do cancelamento vs média da vigência
 df_master["razao_uso_ultimo_mes"] = df_master["atividades_ultimos_30d"] / (
     df_master["media_atividades_mes"] + 1.0
 )
