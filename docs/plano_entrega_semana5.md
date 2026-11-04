@@ -16,18 +16,41 @@
 
 ## 2. Quadro Geral de Status das Etapas (Checklist Mestre)
 
-| Etapa | Trilha | Nome da Etapa | Status Atual | Arquivos Principais Gerados / Atualizados | ADR Associado |
+| Etapa | Trilha / Responsável | Nome da Etapa | Status Atual | Arquivos Principais (Isolados por Frente) | ADR Associado |
 | :---: | :---: | :--- | :---: | :--- | :---: |
-| **Etapa 1** | 💻 Tech | **Inventário, Auditoria e Pipeline das 5 Dimensões da Qualidade de Dados + Reconciliação Contábil** | ✅ **Concluído** | `src/limpeza_qualidade_dados.py`<br>`notebooks/01_inventario_dados.ipynb`<br>`dados/processados/*_limpo(s).*` | [ADR 001](../decisoes/001-politica-imutabilidade-dados-brutos.md), [003](../decisoes/003-metodologia-faturamento-setembro-2026.md), [004](../decisoes/004-auditoria-dados-brutos-inconsistencias.md), [007](../decisoes/007-auditoria-qualidade-12-tabelas.md), [009](../decisoes/009-pipeline-5-dimensoes-qualidade-aula2.md) |
-| **Etapa 2** | 💻 Tech & 📊 Negócios | **EDA Parte 1: Perfilamento Robusto (Mediana/IQR), Curva de Sobrevivência (Vale da Morte M2/M3), Ponto Cego das Lojas e Ranking AUC-ROC + Árvore MECE Inicial** | ✅ **Concluído** | `src/processar_eda.py`<br>`src/gerar_graficos_eda.py`<br>`notebooks/02_eda_e_hipoteses.ipynb`<br>`saidas/eda_e_hipoteses_vitaliza.md`<br>4 gráficos em `saidas/` | [ADR 005](../decisoes/005-diretrizes-modelagem-e-hipoteses.md), [ADR 006](../decisoes/006-eda-e-portfolio-hipoteses-mece.md) |
-| **Etapa 3** | 💻 Tech & 📊 Negócios | **EDA Parte 2: Investigação da Subida do Churn em 2026, Análise dos 3 Marcos (`01/03`, `01/06`, `10/08`), Correlações com Variáveis de Controle e Padrão *"1 Tabela + 1 Gráfico + 3 Frases"*** | ⏳ **Próxima Etapa (A Iniciar)** | Atualização de `notebooks/02_eda_e_hipoteses.ipynb`<br>Novos gráficos dos marcos e controle em `saidas/`<br>Atualização de `saidas/eda_e_hipoteses_vitaliza.md` | `ADR 010` *(a criar)* |
-| **Etapa 4** | 💻 Tech & 📊 Negócios | **Engenharia de Atributos dos `14.753` Pagantes Ativos e Clusterização Não Supervisionada (3 a 4 Segmentos sem Target)** *(Alinhado com Aula 3 de Negócios e Aula 3 de Tech)* | 🔲 **Pendente** | `src/segmentacao_clientes.py`<br>`notebooks/03_segmentacao_clusters.ipynb`<br>`dados/processados/features_segmentacao_ativos_set2026.parquet`<br>Gráficos de perfil dos clusters em `saidas/` | `ADR 011` *(a criar)* |
-| **Etapa 5** | 📊 Negócios | **Redação Executiva do *Customer Segmentation Report* (Semana 5)** *(Cartões de Persona, Hipóteses de Drivers por Segmento, Priorização de Canais/Tetos, Visualizações da EDA e Limitações/LGPD)* | 🔲 **Pendente** | `saidas/customer_segmentation_report_semana5.md` | `ADR 012` *(a criar)* |
-| **Etapa 6** | 💻 Tech | **Construção do *Mini Deck de EDA* e Revisão Final de Qualidade (QA) para Entrega da Semana 5** *(Alinhado com Aula 4 de Tech)* | 🔲 **Pendente** | `saidas/mini_deck_eda_semana5.md`<br>Checklist final de reprodutibilidade dos notebooks | `ADR 013` *(a criar)* |
+| **Etapa 1** | 💻 Tech *(Base Comum)* | **Inventário, Auditoria e Pipeline das 5 Dimensões da Qualidade de Dados + Reconciliação Contábil** | ✅ **Concluído** | `src/limpeza_qualidade_dados.py`<br>`notebooks/01_inventario_dados.ipynb`<br>`dados/processados/*_limpo(s).*` | [ADR 001](../decisoes/001-politica-imutabilidade-dados-brutos.md), [003](../decisoes/003-metodologia-faturamento-setembro-2026.md), [004](../decisoes/004-auditoria-dados-brutos-inconsistencias.md), [007](../decisoes/007-auditoria-qualidade-12-tabelas.md), [009](../decisoes/009-pipeline-5-dimensoes-qualidade-aula2.md) |
+| **Etapa 2** | 💻 Tech & 📊 Negócios *(Base Comum)* | **EDA Parte 1: Perfilamento Robusto (Mediana/IQR), Curva de Sobrevivência (Vale da Morte M2/M3), Ponto Cego das Lojas e Ranking AUC-ROC + Árvore MECE Inicial** | ✅ **Concluído** | `src/processar_eda.py`<br>`src/gerar_graficos_eda.py`<br>`notebooks/02_eda_e_hipoteses.ipynb`<br>`saidas/eda_e_hipoteses_vitaliza.md`<br>4 gráficos em `saidas/` | [ADR 005](../decisoes/005-diretrizes-modelagem-e-hipoteses.md), [ADR 006](../decisoes/006-eda-e-portfolio-hipoteses-mece.md) |
+| **Etapa 3** | 💻 **Dupla Tech** (Código/Gráficos)<br>+ 📊 **Trio Negócios** (Análise Marcos/LGPD) | **EDA Parte 2: Investigação da Subida do Churn em 2026, Análise dos 3 Marcos (`01/03`, `01/06`, `10/08`), Correlações com Variáveis de Controle e Padrão *"1 Tabela + 1 Gráfico + 3 Frases"*** | ⏳ **Próxima Etapa (A Iniciar)** | **Tech:** `notebooks/02_eda_e_hipoteses.ipynb`, `src/`, gráficos `.png` em `saidas/` e `saidas/eda_e_hipoteses_vitaliza.md`<br>**Negócios:** Rascunho de marcos e limitações em `saidas/customer_segmentation_report_semana5.md` | `ADR 010` *(a criar)* |
+| **Etapa 4** | 🤝 **Ponte Tech + Negócios**<br>*(Sincronização Obrigatória)* | **Engenharia de Atributos dos `14.753` Pagantes Ativos e Clusterização Não Supervisionada (3 a 4 Segmentos sem Target)** *(Alinhado com Aula 3 de Negócios e Aula 3 de Tech)* | 🔲 **Pendente** | **Tech:** `src/segmentacao_clientes.py`, `notebooks/03_segmentacao_clusters.ipynb`, `dados/processados/features_segmentacao_ativos_set2026.parquet`, gráficos em `saidas/`<br>**Negócios:** Validação nos 5 Critérios e nomes das Personas | `ADR 011` *(a criar)* |
+| **Etapa 5** | 📊 **Trio Negócios** *(Líder)*<br>+ 💻 Tech *(Apoio Gráficos)* | **Redação Executiva do *Customer Segmentation Report* (Semana 5)** *(Cartões de Persona, Hipóteses de Drivers por Segmento, Priorização de Canais/Tetos, Visualizações da EDA e Limitações/LGPD)* | 🔲 **Pendente** | **Exclusivo Negócios:**<br>`saidas/customer_segmentation_report_semana5.md` | `ADR 012` *(a criar)* |
+| **Etapa 6** | 💻 **Dupla Tech** *(Líder)*<br>+ 📊 Negócios *(Revisão QA)* | **Construção do *Mini Deck de EDA* e Revisão Final de Qualidade (QA) para Entrega da Semana 5** *(Alinhado com Aula 4 de Tech)* | 🔲 **Pendente** | **Exclusivo Tech:**<br>`saidas/mini_deck_eda_semana5.md`<br>Checklist final dos notebooks `01`, `02` e `03` | `ADR 013` *(a criar)* |
 
 ---
 
-## 3. Detalhamento de Cada Etapa e Critérios de Pronto (*Definition of Done*)
+## 3. Organização do Grupo (Dupla Tech vs. Trio Negócios) e Pontos de Atenção contra Conflitos
+
+O grupo está dividido em duas frentes complementares:
+- **💻 Dupla de Tecnologia (2 integrantes):** Responsável pelo pipeline de dados, notebooks (`01`, `02` e `03`), geração de gráficos em `saidas/` e construção do **Mini Deck de EDA** (`saidas/mini_deck_eda_semana5.md`).
+- **📊 Trio de Negócios (3 integrantes):** Responsável pela interpretação estratégica dos dados, validação dos segmentos nos 5 critérios de negócio, construção dos Cartões de Persona, hipóteses de *drivers* de churn, matriz de alocação de canais/orçamento (`R$ 40.000/mês`), seção de limitações/LGPD e redação do **Customer Segmentation Report** (`saidas/customer_segmentation_report_semana5.md`).
+
+### ⚠️ Os 3 Pontos Críticos de Atenção para Evitar Conflitos
+
+1. **Conflito 1 — Desalinhamento de Segmentos e Personas (Etapa 4 é o Ponto de Encontro):**
+   - **Risco:** O Trio de Negócios criar personas hipotéticas "no papel" antes ou separadamente dos clusters gerados pelo código da Dupla de Tech, gerando contradição entre o *Customer Segmentation Report* e a *EDA*.
+   - **Regra de Blindagem:** As Personas de Negócios **devem nascer exatamente dos 3 a 4 clusters gerados na Etapa 4** sobre os `14.753` pagantes ativos. A Dupla de Tech roda o algoritmo e entrega a tabela com o perfil estatístico de cada cluster (tamanho $n$ e %, mediana de treinos, modalidade, plano, canal, engajamento social); o Trio de Negócios batiza cada grupo, monta os Cartões de Persona e desenha a estratégia de retenção.
+2. **Conflito 2 — Divergência de Números entre o Relatório de Negócios e o Mini Deck de Tech:**
+   - **Risco:** Integrantes fazerem contas paralelas (ex.: em planilhas separadas sobre dados brutos sem aplicar o expurgo das 60 contas de cortesia, deduplicação de cobranças/treinos ou fuso horário) e reportarem percentuais diferentes nos dois entregáveis.
+   - **Regra de Blindagem (Fonte Única da Verdade):** Nenhum número deve ser calculado fora das bases limpas em `dados/processados/`. Todos os números citados no relatório de Negócios e no Mini Deck de Tech devem vir das tabelas oficiais geradas nos notebooks e documentadas em `saidas/` e nos ADRs em `decisoes/`.
+3. **Conflito 3 — Conflitos de Merge no Git (Edição Simultânea do Mesmo Arquivo):**
+   - **Risco:** Duas pessoas editarem o mesmo arquivo `.md` ou `.ipynb` simultaneamente na branch `dev`.
+   - **Regra de Blindagem (Isolamento de Arquivos):**
+     - **Arquivos exclusivos da Dupla Tech:** `src/*.py`, `notebooks/*.ipynb`, `saidas/*.png`, `saidas/eda_e_hipoteses_vitaliza.md` e `saidas/mini_deck_eda_semana5.md`.
+     - **Arquivos exclusivos do Trio Negócios:** `saidas/customer_segmentation_report_semana5.md`.
+     - **ADRs (`decisoes/NNN-titulo.md`):** Cada subgrupo cria seu próprio arquivo numerado individual quando registrar uma decisão nova.
+
+---
+
+## 4. Detalhamento de Cada Etapa e Critérios de Pronto (*Definition of Done*)
 
 ### ✅ Etapa 1 — Inventário, Auditoria e Pipeline das 5 Dimensões da Qualidade de Dados
 - **Status:** **Concluído em 01/11/2026**
@@ -60,40 +83,47 @@
 
 ### ⏳ Etapa 3 — EDA Parte 2: Subida do Churn em 2026, 3 Marcos, Correlações Controladas e Formato *"1 Tabela + 1 Gráfico + 3 Frases"*
 - **Status:** **Próxima Etapa (Plano elaborado, aguardando início da execução)**
-- **Escopo Obrigatório:**
-  1. Reconstruir e plotar a série mensal de perda (jan/2025 a set/2026) com denominador correto ($\text{perdas no mês} / \text{ativos no início do mês}$), validando `5,6%/mês` em 2025, `6,6%/mês` em 2026 e o pico de **`8,1%` (`1.154` saídas) em abril/2026** (`5,9%` em ago, `5,0%` em set).
-  2. Investigar empiricamente os **3 Marcos de 2026**:
-     - `01/03/2026`: Reajuste do plano mensal (`R$ 34,90` $\rightarrow$ `R$ 39,90`) e fim de primeiro ano de cupom (`R$ 239,90` $\rightarrow$ `R$ 299,90`);
-     - `01/06/2026`: Pesquisa de saída (`pesquisa_saida.csv`) nas `3.389` saídas de jun–set/2026 (`2.271` lojas vs. `1.118` web; `641` respondentes 100% Web: `68% Cartão` e `32% Pix`);
-     - `10/08/2026`: Experimento A/B (`campanha_ago26.csv`, `14.120` sorteados entre `desafio`, `cupom`, `conteudo` e `controle`), medindo efeito na retenção e identificando *Persuadíveis* vs. *Sleeping Dogs*.
-  3. Analisar outliers por modalidade (`corrida` vs. `pedal`, onde `73.120` dos `81.775` treinos acima de $Q_3 + 1,5 \times IQR = 17,08\text{ km}$ são ciclismo) e correlações controladas por terceira variável (`sessoes_app` $\times$ `minutos` controlado pelo número exato de `atividades`: `0,88` $\rightarrow$ `0,02`).
-  4. Consolidar todas as seções em `notebooks/02_eda_e_hipoteses.ipynb` e `saidas/eda_e_hipoteses_vitaliza.md` no formato **"1 Tabela + 1 Gráfico + 3 Frases"**.
+- **Divisão de Trabalho sem Conflito:**
+  - **💻 Dupla Tech (2 pessoas):**
+    1. Reconstruir e plotar a série mensal de perda (jan/2025 a set/2026) com denominador correto ($\text{perdas no mês} / \text{ativos no início do mês}$), validando `5,6%/mês` em 2025, `6,6%/mês` em 2026 e o pico de **`8,1%` (`1.154` saídas) em abril/2026** (`5,9%` em ago, `5,0%` em set).
+    2. Calcular e plotar os números dos **3 Marcos de 2026**: `01/03/2026` (reajuste mensal `R$ 34,90` $\rightarrow$ `R$ 39,90` e fim do 1º ano de cupom `R$ 239,90` $\rightarrow$ `R$ 299,90`), `01/06/2026` (`pesquisa_saida.csv`: `3.389` saídas jun–set/2026, sendo `2.271` lojas vs. `1.118` web; `641` respondentes 100% Web: `68% Cartão` e `32% Pix`) e `10/08/2026` (`campanha_ago26.csv`: `14.120` sorteados entre `desafio`, `cupom`, `conteudo` e `controle`).
+    3. Executar a análise de outliers por modalidade (`corrida` vs. `pedal`, onde `73.120` dos `81.775` treinos acima de $Q_3 + 1,5 \times IQR = 17,08\text{ km}$ são ciclismo) e correlações controladas por terceira variável (`sessoes_app` $\times$ `minutos` controlado pelo número exato de `atividades`: `0,88` $\rightarrow$ `0,02`).
+    4. Atualizar `notebooks/02_eda_e_hipoteses.ipynb` e `saidas/eda_e_hipoteses_vitaliza.md` no formato **"1 Tabela + 1 Gráfico + 3 Frases"**.
+  - **📊 Trio Negócios (3 pessoas — em paralelo):**
+    1. Analisar as implicações estratégicas dos 3 marcos para retenção (elasticidade ao preço, cegueira da pesquisa de saída nas lojas e separação entre *Persuadíveis* e *Não Perturbe / Sleeping Dogs* no experimento de agosto).
+    2. Redigir a seção de **Limitações da Análise e Governança (LGPD)** em `saidas/customer_segmentation_report_semana5.md`.
 
 ---
 
-### 🔲 Etapa 4 — Engenharia de Atributos dos `14.753` Pagantes Ativos e Clusterização (Sem Target)
+### 🔲 Etapa 4 — Engenharia de Atributos dos `14.753` Pagantes Ativos e Clusterização (Sem Target) — 🤝 *Ponto de Encontro Obrigatório*
 - **Status:** **Pendente (iniciar após Etapa 3 e/ou Aula 3 de Tech)**
-- **Escopo Obrigatório:**
-  1. Construir a matriz de atributos comportamentais, contratuais e sociais exclusivamente para os **`14.753` assinantes pagantes ativos em `30/09/2026`**, **sem utilizar nenhuma variável de desfecho/saída** (aprendizado não supervisionado puro).
-  2. Selecionar e padronizar variáveis com alto sinal e baixo ruído (excluindo demografia pura com AUC ~ 0,50 e variáveis colineares identificadas na Etapa 3).
-  3. Executar clusterização para encontrar **3 a 4 segmentos acionáveis**, validando coesão/separação técnica e os **5 Critérios de Segmentação de Negócios** (*Acionabilidade, Diferenciação de Resposta, Estabilidade no Tempo, Viabilidade Econômica e Mensurabilidade*).
+- **Divisão de Trabalho e Sincronização:**
+  - **💻 Dupla Tech (2 pessoas):**
+    1. Construir a matriz de atributos comportamentais, contratuais e sociais exclusivamente para os **`14.753` assinantes pagantes ativos em `30/09/2026`**, **sem utilizar nenhuma variável de desfecho/saída** (aprendizado não supervisionado puro).
+    2. Selecionar e padronizar variáveis com alto sinal e baixo ruído (excluindo demografia pura com AUC ~ 0,50 e variáveis colineares identificadas na Etapa 3).
+    3. Rodar a clusterização para encontrar **3 a 4 segmentos**, gerando a tabela oficial de perfil estatístico de cada cluster e os gráficos em `saidas/`.
+  - **📊 Trio Negócios (3 pessoas):**
+    1. Validar os 3 a 4 clusters gerados por Tech frente aos **5 Critérios de Segmentação de Negócios** (*Acionabilidade, Diferenciação de Resposta, Estabilidade no Tempo, Viabilidade Econômica e Mensurabilidade*).
+    2. Definir em conjunto com Tech os nomes executivos e a interpretação de negócio de cada segmento (garantindo que os mesmos 3–4 segmentos sejam usados tanto no relatório de Negócios quanto no Mini Deck de Tech).
 
 ---
 
 ### 🔲 Etapa 5 — Redação do *Customer Segmentation Report* (Artefato de Negócios da Semana 5)
 - **Status:** **Pendente (iniciar após Etapa 4)**
+- **Responsável Principal:** **📊 Trio de Negócios (3 pessoas)** *(editando exclusivamente `saidas/customer_segmentation_report_semana5.md`)*
 - **Escopo Obrigatório:**
-  1. Descrição executiva dos **3 a 4 segmentos** com **Cartões de Persona** completos (quem são, tamanho $n$ e %, receita líquida representada, comportamento de uso, canal e vínculo contratual).
+  1. Descrição executiva dos **3 a 4 segmentos** com **Cartões de Persona** completos (quem são, tamanho $n$ e %, receita líquida representada, comportamento de uso, canal e vínculo contratual — usando os números exatos da Etapa 4).
   2. **Hipóteses de *drivers* de churn por segmento** estruturadas em 3 partes (*Ação + Público + Resultado Esperado*) e organizadas pela Árvore MECE.
   3. **Matriz de Priorização Preliminar** (*Intervenção Imediata vs. Monitoramento vs. Não Perturbe*), alocando os canais (300 atendimentos CS, 1.500 msgs WhatsApp, E-mail e Push) dentro do teto de R$ 40.000/mês.
-  4. Integração das **visualizações da EDA** geradas nas Etapas 2, 3 e 4.
+  4. Integração das **visualizações da EDA** geradas pela Dupla Tech nas Etapas 2, 3 e 4.
   5. **Seção de Limitações da Análise e Governança (LGPD):** Ponto cego dos 70% em lojas, viés Web da pesquisa de saída, mudança de regra em `uso_mensal.csv`, risco de confundimento/causalidade reversa e princípios da LGPD.
 
 ---
 
 ### 🔲 Etapa 6 — Construção do *Mini Deck de EDA* (Artefato de Tecnologia) e QA Final da Semana 5
 - **Status:** **Pendente (iniciar após Etapa 5 e/ou Aula 4 de Tech)**
+- **Responsável Principal:** **💻 Dupla de Tecnologia (2 pessoas)** *(editando exclusivamente `saidas/mini_deck_eda_semana5.md`)* + **Revisão Cruzada com Negócios**
 - **Escopo Obrigatório:**
   1. Estruturar o **Mini Deck analítico** contando a história completa dos dados (Qualidade e Limpeza $\rightarrow$ Subida do Churn em 2026 e os 3 Marcos $\rightarrow$ Padrões de Comportamento e Correlações Controladas $\rightarrow$ Sustentação Empírica dos Segmentos).
-  2. Aplicar o checklist de QA (reprodutibilidade dos notebooks `01`, `02` e `03`, conferência cruzada de todos os números entre relatório, deck e `decisoes.md`).
+  2. Aplicar o checklist de QA entre Dupla Tech e Trio Negócios: reprodutibilidade dos notebooks `01`, `02` e `03` e conferência cruzada garantindo que todos os números citados no *Customer Segmentation Report* e no *Mini Deck* sejam idênticos.
 
