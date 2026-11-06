@@ -29,7 +29,7 @@ Executar uma Análise Exploratória de Dados (EDA) quantitativa e estruturada so
    - Menores sinais / descartadas como preditoras: Demográficas e de entrada (`idade` higienizada com `AUC 0,5088`, `dias_semana_pretendidos` com `AUC 0,5050` e `tem_relogio` com `AUC 0,5009`).
 5. **Artefatos Entregues:**
    - Notebook reprodutível em `notebooks/02_eda_e_hipoteses.ipynb`.
-   - Feature store tratada em `dados/processados/features_eda_corte_set2026.parquet`.
+- Feature store analítica em `dados/processados/ouro/features_eda_corte_set2026.parquet`.
    - Relatório executivo completo em `saidas/eda_e_hipoteses_vitaliza.md` com 4 gráficos comprobatórios.
 
 ## 3. Consequências e Impacto no Case

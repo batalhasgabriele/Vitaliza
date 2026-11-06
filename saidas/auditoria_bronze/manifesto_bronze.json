@@ -1,0 +1,995 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-11-04T23:04:53-03:00",
+  "raw_dir": "dados/brutos",
+  "policy": "somente leitura; nenhum conteúdo de linha é exportado",
+  "contracts": [
+    {
+      "filename": "usuarios.csv",
+      "expected_rows": 64948,
+      "key_columns": [
+        "user_id"
+      ],
+      "date_columns": [
+        "data_cadastro",
+        "data_nascimento"
+      ]
+    },
+    {
+      "filename": "assinaturas.csv",
+      "expected_rows": 32643,
+      "key_columns": [
+        "assinatura_id"
+      ],
+      "date_columns": [
+        "inicio",
+        "data_fim"
+      ]
+    },
+    {
+      "filename": "amizades.csv",
+      "expected_rows": 113480,
+      "key_columns": [
+        "seguidor_id",
+        "seguido_id"
+      ],
+      "date_columns": [
+        "desde"
+      ]
+    },
+    {
+      "filename": "campanha_ago26.csv",
+      "expected_rows": 14120,
+      "key_columns": [
+        "user_id"
+      ],
+      "date_columns": [
+        "enviado_em"
+      ]
+    },
+    {
+      "filename": "eventos_assinatura.csv",
+      "expected_rows": 275565,
+      "key_columns": [
+        "user_id",
+        "data_hora",
+        "evento",
+        "plano",
+        "canal_cobranca",
+        "detalhe"
+      ],
+      "date_columns": [
+        "data_hora"
+      ]
+    },
+    {
+      "filename": "pagamentos.csv",
+      "expected_rows": 165548,
+      "key_columns": [
+        "pagamento_id"
+      ],
+      "date_columns": [
+        "data_hora"
+      ]
+    },
+    {
+      "filename": "uso_mensal.csv",
+      "expected_rows": 591662,
+      "key_columns": [
+        "user_id",
+        "mes"
+      ],
+      "date_columns": [
+        "mes"
+      ]
+    },
+    {
+      "filename": "atividades.parquet",
+      "expected_rows": 1254475,
+      "key_columns": [
+        "atividade_id"
+      ],
+      "date_columns": [
+        "inicio"
+      ]
+    },
+    {
+      "filename": "onboarding.csv",
+      "expected_rows": 63929,
+      "key_columns": [
+        "onboarding_id"
+      ],
+      "date_columns": [
+        "respondido_em"
+      ]
+    },
+    {
+      "filename": "pesquisa_saida.csv",
+      "expected_rows": 643,
+      "key_columns": [
+        "resposta_id"
+      ],
+      "date_columns": [
+        "respondido_em"
+      ]
+    },
+    {
+      "filename": "feed_posts.csv",
+      "expected_rows": 119309,
+      "key_columns": [
+        "post_id"
+      ],
+      "date_columns": [
+        "data_hora"
+      ]
+    },
+    {
+      "filename": "tickets_suporte.csv",
+      "expected_rows": 4422,
+      "key_columns": [
+        "ticket_id"
+      ],
+      "date_columns": [
+        "aberto_em",
+        "resolvido_em"
+      ]
+    }
+  ],
+  "tables": [
+    {
+      "arquivo": "usuarios.csv",
+      "presente": true,
+      "bytes": 7857980,
+      "sha256": "c016416ec00362b0dc866d39ad51dce46692508a037a2228c778337728af7550",
+      "linhas": 64948,
+      "linhas_esperadas": 64948,
+      "contagem_confere": true,
+      "colunas": [
+        "user_id",
+        "email",
+        "data_cadastro",
+        "data_nascimento",
+        "sexo",
+        "cidade",
+        "uf",
+        "cep_prefixo",
+        "canal_aquisicao",
+        "sistema",
+        "versao_app",
+        "relogio_conectado"
+      ],
+      "schema": [
+        {
+          "coluna": "user_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "email",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "data_cadastro",
+          "tipo_inferido": "TIMESTAMP"
+        },
+        {
+          "coluna": "data_nascimento",
+          "tipo_inferido": "DATE"
+        },
+        {
+          "coluna": "sexo",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "cidade",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "uf",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "cep_prefixo",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "canal_aquisicao",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "sistema",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "versao_app",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "relogio_conectado",
+          "tipo_inferido": "VARCHAR"
+        }
+      ],
+      "nulos_por_coluna": {
+        "data_nascimento": 3301,
+        "sexo": 3142,
+        "cep_prefixo": 1894
+      },
+      "chave_candidata": [
+        "user_id"
+      ],
+      "colunas_chave_ausentes": [],
+      "duplicidades_chave": 0,
+      "colunas_data_ausentes": [],
+      "intervalos_datas": {
+        "data_cadastro": {
+          "minimo_bruto": "2020-09-01 12:00:00",
+          "maximo_bruto": "2027-04-04 10:44:09",
+          "valores_nao_convertiveis": 0
+        },
+        "data_nascimento": {
+          "minimo_bruto": "1900-01-01",
+          "maximo_bruto": "2031-05-12",
+          "valores_nao_convertiveis": 0
+        }
+      }
+    },
+    {
+      "arquivo": "assinaturas.csv",
+      "presente": true,
+      "bytes": 2529914,
+      "sha256": "29db4d815a99a5435325ab927c0224b7b2fe6bd5bf4e2e97bf4413ae8b97c390",
+      "linhas": 32643,
+      "linhas_esperadas": 32643,
+      "contagem_confere": true,
+      "colunas": [
+        "assinatura_id",
+        "user_id",
+        "plano_atual",
+        "canal_cobranca",
+        "inicio",
+        "status_atual",
+        "renovacao_automatica",
+        "data_fim",
+        "motivo_fim"
+      ],
+      "schema": [
+        {
+          "coluna": "assinatura_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "user_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "plano_atual",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "canal_cobranca",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "inicio",
+          "tipo_inferido": "DATE"
+        },
+        {
+          "coluna": "status_atual",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "renovacao_automatica",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "data_fim",
+          "tipo_inferido": "DATE"
+        },
+        {
+          "coluna": "motivo_fim",
+          "tipo_inferido": "VARCHAR"
+        }
+      ],
+      "nulos_por_coluna": {
+        "data_fim": 14813,
+        "motivo_fim": 14813
+      },
+      "chave_candidata": [
+        "assinatura_id"
+      ],
+      "colunas_chave_ausentes": [],
+      "duplicidades_chave": 0,
+      "colunas_data_ausentes": [],
+      "intervalos_datas": {
+        "inicio": {
+          "minimo_bruto": "2020-09-08",
+          "maximo_bruto": "2026-09-30",
+          "valores_nao_convertiveis": 0
+        },
+        "data_fim": {
+          "minimo_bruto": "2024-07-07",
+          "maximo_bruto": "2026-09-30",
+          "valores_nao_convertiveis": 0
+        }
+      }
+    },
+    {
+      "arquivo": "amizades.csv",
+      "presente": true,
+      "bytes": 3744869,
+      "sha256": "103029d4dd434912b1b36c91275b94802a8d9f65f93436707c28dd198b2f707c",
+      "linhas": 113480,
+      "linhas_esperadas": 113480,
+      "contagem_confere": true,
+      "colunas": [
+        "seguidor_id",
+        "seguido_id",
+        "desde"
+      ],
+      "schema": [
+        {
+          "coluna": "seguidor_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "seguido_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "desde",
+          "tipo_inferido": "DATE"
+        }
+      ],
+      "nulos_por_coluna": {},
+      "chave_candidata": [
+        "seguidor_id",
+        "seguido_id"
+      ],
+      "colunas_chave_ausentes": [],
+      "duplicidades_chave": 0,
+      "colunas_data_ausentes": [],
+      "intervalos_datas": {
+        "desde": {
+          "minimo_bruto": "2020-09-05",
+          "maximo_bruto": "2026-10-09",
+          "valores_nao_convertiveis": 0
+        }
+      }
+    },
+    {
+      "arquivo": "campanha_ago26.csv",
+      "presente": true,
+      "bytes": 1336466,
+      "sha256": "f635ad72be0453839708ce696f4bb1de3f47d17b52d4354fb119e1d664206a4d",
+      "linhas": 14120,
+      "linhas_esperadas": 14120,
+      "contagem_confere": true,
+      "colunas": [
+        "user_id",
+        "grupo",
+        "enviado_em",
+        "canal",
+        "titulo_mensagem",
+        "oferta",
+        "abriu_push",
+        "abriu_email",
+        "clicou"
+      ],
+      "schema": [
+        {
+          "coluna": "user_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "grupo",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "enviado_em",
+          "tipo_inferido": "TIMESTAMP"
+        },
+        {
+          "coluna": "canal",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "titulo_mensagem",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "oferta",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "abriu_push",
+          "tipo_inferido": "BOOLEAN"
+        },
+        {
+          "coluna": "abriu_email",
+          "tipo_inferido": "BOOLEAN"
+        },
+        {
+          "coluna": "clicou",
+          "tipo_inferido": "BOOLEAN"
+        }
+      ],
+      "nulos_por_coluna": {
+        "enviado_em": 3579,
+        "canal": 3579,
+        "titulo_mensagem": 3579,
+        "oferta": 10648
+      },
+      "chave_candidata": [
+        "user_id"
+      ],
+      "colunas_chave_ausentes": [],
+      "duplicidades_chave": 0,
+      "colunas_data_ausentes": [],
+      "intervalos_datas": {
+        "enviado_em": {
+          "minimo_bruto": "2026-08-10 10:00:00",
+          "maximo_bruto": "2026-08-10 10:00:00",
+          "valores_nao_convertiveis": 0
+        }
+      }
+    },
+    {
+      "arquivo": "eventos_assinatura.csv",
+      "presente": true,
+      "bytes": 17673808,
+      "sha256": "64032d95b6ca3aad422ba3e11fd71684975d244be02320f854ae28adf4ac5ecd",
+      "linhas": 275565,
+      "linhas_esperadas": 275565,
+      "contagem_confere": true,
+      "colunas": [
+        "user_id",
+        "data_hora",
+        "evento",
+        "plano",
+        "canal_cobranca",
+        "detalhe"
+      ],
+      "schema": [
+        {
+          "coluna": "user_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "data_hora",
+          "tipo_inferido": "TIMESTAMP WITH TIME ZONE"
+        },
+        {
+          "coluna": "evento",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "plano",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "canal_cobranca",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "detalhe",
+          "tipo_inferido": "VARCHAR"
+        }
+      ],
+      "nulos_por_coluna": {
+        "plano": 72873,
+        "detalhe": 269494
+      },
+      "chave_candidata": [
+        "user_id",
+        "data_hora",
+        "evento",
+        "plano",
+        "canal_cobranca",
+        "detalhe"
+      ],
+      "colunas_chave_ausentes": [],
+      "duplicidades_chave": 0,
+      "colunas_data_ausentes": [],
+      "intervalos_datas": {
+        "data_hora": {
+          "minimo_bruto": "2024-07-01 06:11:50-03",
+          "maximo_bruto": "2026-09-30 22:59:33-03",
+          "valores_nao_convertiveis": 0
+        }
+      }
+    },
+    {
+      "arquivo": "pagamentos.csv",
+      "presente": true,
+      "bytes": 11586603,
+      "sha256": "28b12716caea413b7fd9e16c6bf10a15835b8a443881526818a8395533911b84",
+      "linhas": 165548,
+      "linhas_esperadas": 165548,
+      "contagem_confere": true,
+      "colunas": [
+        "pagamento_id",
+        "user_id",
+        "data_hora",
+        "valor",
+        "metodo",
+        "status",
+        "tentativa"
+      ],
+      "schema": [
+        {
+          "coluna": "pagamento_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "user_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "data_hora",
+          "tipo_inferido": "TIMESTAMP WITH TIME ZONE"
+        },
+        {
+          "coluna": "valor",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "metodo",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "status",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "tentativa",
+          "tipo_inferido": "BIGINT"
+        }
+      ],
+      "nulos_por_coluna": {},
+      "chave_candidata": [
+        "pagamento_id"
+      ],
+      "colunas_chave_ausentes": [],
+      "duplicidades_chave": 0,
+      "colunas_data_ausentes": [],
+      "intervalos_datas": {
+        "data_hora": {
+          "minimo_bruto": "2024-07-02 06:14:11-03",
+          "maximo_bruto": "2026-09-30 22:54:51-03",
+          "valores_nao_convertiveis": 0
+        }
+      }
+    },
+    {
+      "arquivo": "uso_mensal.csv",
+      "presente": true,
+      "bytes": 19138870,
+      "sha256": "844db26847fb785af5befc94dbdb575df348fce54124be0c9877f0345ba9ad6c",
+      "linhas": 591662,
+      "linhas_esperadas": 591662,
+      "contagem_confere": true,
+      "colunas": [
+        "user_id",
+        "mes",
+        "atividades",
+        "atividades_ar_livre",
+        "atividades_video",
+        "minutos",
+        "dias_ativos",
+        "sessoes_app"
+      ],
+      "schema": [
+        {
+          "coluna": "user_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "mes",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "atividades",
+          "tipo_inferido": "BIGINT"
+        },
+        {
+          "coluna": "atividades_ar_livre",
+          "tipo_inferido": "BIGINT"
+        },
+        {
+          "coluna": "atividades_video",
+          "tipo_inferido": "BIGINT"
+        },
+        {
+          "coluna": "minutos",
+          "tipo_inferido": "BIGINT"
+        },
+        {
+          "coluna": "dias_ativos",
+          "tipo_inferido": "BIGINT"
+        },
+        {
+          "coluna": "sessoes_app",
+          "tipo_inferido": "BIGINT"
+        }
+      ],
+      "nulos_por_coluna": {},
+      "chave_candidata": [
+        "user_id",
+        "mes"
+      ],
+      "colunas_chave_ausentes": [],
+      "duplicidades_chave": 0,
+      "colunas_data_ausentes": [],
+      "intervalos_datas": {
+        "mes": {
+          "minimo_bruto": "2025-01",
+          "maximo_bruto": "2026-09",
+          "valores_nao_convertiveis": 0
+        }
+      }
+    },
+    {
+      "arquivo": "atividades.parquet",
+      "presente": true,
+      "bytes": 19148353,
+      "sha256": "b5269feac894938c2abc696992cd83857f2217db1830fa5a8a6d9ff3c9b860b3",
+      "linhas": 1254475,
+      "linhas_esperadas": 1254475,
+      "contagem_confere": true,
+      "colunas": [
+        "atividade_id",
+        "user_id",
+        "inicio",
+        "tipo",
+        "duracao_min",
+        "distancia_km",
+        "ritmo_min_km",
+        "fc_media",
+        "origem",
+        "gps_ok",
+        "treino_com"
+      ],
+      "schema": [
+        {
+          "coluna": "atividade_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "user_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "inicio",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "tipo",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "duracao_min",
+          "tipo_inferido": "DOUBLE"
+        },
+        {
+          "coluna": "distancia_km",
+          "tipo_inferido": "DOUBLE"
+        },
+        {
+          "coluna": "ritmo_min_km",
+          "tipo_inferido": "DOUBLE"
+        },
+        {
+          "coluna": "fc_media",
+          "tipo_inferido": "DOUBLE"
+        },
+        {
+          "coluna": "origem",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "gps_ok",
+          "tipo_inferido": "BOOLEAN"
+        },
+        {
+          "coluna": "treino_com",
+          "tipo_inferido": "VARCHAR"
+        }
+      ],
+      "nulos_por_coluna": {
+        "distancia_km": 574835,
+        "ritmo_min_km": 582290,
+        "fc_media": 764987
+      },
+      "chave_candidata": [
+        "atividade_id"
+      ],
+      "colunas_chave_ausentes": [],
+      "duplicidades_chave": 0,
+      "colunas_data_ausentes": [],
+      "intervalos_datas": {
+        "inicio": {
+          "minimo_bruto": "2026-01-01 05:00:00",
+          "maximo_bruto": "2026-10-01 00:59:00",
+          "valores_nao_convertiveis": 0
+        }
+      }
+    },
+    {
+      "arquivo": "onboarding.csv",
+      "presente": true,
+      "bytes": 5730014,
+      "sha256": "03a91268b659d20828761094e6626a90120f82960b867ebee385e94cda9aed0b",
+      "linhas": 63929,
+      "linhas_esperadas": 63929,
+      "contagem_confere": true,
+      "colunas": [
+        "onboarding_id",
+        "user_id",
+        "respondido_em",
+        "objetivo_texto",
+        "como_conheceu",
+        "nivel",
+        "dias_por_semana"
+      ],
+      "schema": [
+        {
+          "coluna": "onboarding_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "user_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "respondido_em",
+          "tipo_inferido": "DATE"
+        },
+        {
+          "coluna": "objetivo_texto",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "como_conheceu",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "nivel",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "dias_por_semana",
+          "tipo_inferido": "VARCHAR"
+        }
+      ],
+      "nulos_por_coluna": {
+        "objetivo_texto": 5467,
+        "como_conheceu": 4586,
+        "nivel": 4513,
+        "dias_por_semana": 6368
+      },
+      "chave_candidata": [
+        "onboarding_id"
+      ],
+      "colunas_chave_ausentes": [],
+      "duplicidades_chave": 0,
+      "colunas_data_ausentes": [],
+      "intervalos_datas": {
+        "respondido_em": {
+          "minimo_bruto": "2020-09-01",
+          "maximo_bruto": "2026-09-30",
+          "valores_nao_convertiveis": 0
+        }
+      }
+    },
+    {
+      "arquivo": "pesquisa_saida.csv",
+      "presente": true,
+      "bytes": 41561,
+      "sha256": "5534d6bf683564d34a699125faa827395fc1840d1fd30591b74b1b269ecd5c0e",
+      "linhas": 643,
+      "linhas_esperadas": 643,
+      "contagem_confere": true,
+      "colunas": [
+        "resposta_id",
+        "user_id",
+        "respondido_em",
+        "motivo_principal",
+        "comentario"
+      ],
+      "schema": [
+        {
+          "coluna": "resposta_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "user_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "respondido_em",
+          "tipo_inferido": "DATE"
+        },
+        {
+          "coluna": "motivo_principal",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "comentario",
+          "tipo_inferido": "VARCHAR"
+        }
+      ],
+      "nulos_por_coluna": {
+        "comentario": 183
+      },
+      "chave_candidata": [
+        "resposta_id"
+      ],
+      "colunas_chave_ausentes": [],
+      "duplicidades_chave": 0,
+      "colunas_data_ausentes": [],
+      "intervalos_datas": {
+        "respondido_em": {
+          "minimo_bruto": "2026-06-01",
+          "maximo_bruto": "2026-09-30",
+          "valores_nao_convertiveis": 0
+        }
+      }
+    },
+    {
+      "arquivo": "feed_posts.csv",
+      "presente": true,
+      "bytes": 8895084,
+      "sha256": "0f819ad3d3254a803aeb0e24b65b46158fc5228d7f2ccac354123825ee25a223",
+      "linhas": 119309,
+      "linhas_esperadas": 119309,
+      "contagem_confere": true,
+      "colunas": [
+        "post_id",
+        "user_id",
+        "data_hora",
+        "texto",
+        "curtidas"
+      ],
+      "schema": [
+        {
+          "coluna": "post_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "user_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "data_hora",
+          "tipo_inferido": "TIMESTAMP"
+        },
+        {
+          "coluna": "texto",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "curtidas",
+          "tipo_inferido": "BIGINT"
+        }
+      ],
+      "nulos_por_coluna": {},
+      "chave_candidata": [
+        "post_id"
+      ],
+      "colunas_chave_ausentes": [],
+      "duplicidades_chave": 0,
+      "colunas_data_ausentes": [],
+      "intervalos_datas": {
+        "data_hora": {
+          "minimo_bruto": "2025-07-01 06:07:55",
+          "maximo_bruto": "2026-10-07 18:52:16",
+          "valores_nao_convertiveis": 0
+        }
+      }
+    },
+    {
+      "arquivo": "tickets_suporte.csv",
+      "presente": true,
+      "bytes": 494580,
+      "sha256": "6b56d21caaebeb52bc9a045e8a1ec3c56c4817da7db49805ed9d3c8df259155a",
+      "linhas": 4422,
+      "linhas_esperadas": 4422,
+      "contagem_confere": true,
+      "colunas": [
+        "ticket_id",
+        "user_id",
+        "aberto_em",
+        "canal",
+        "texto_cliente",
+        "categoria_atendente",
+        "status",
+        "resolvido_em"
+      ],
+      "schema": [
+        {
+          "coluna": "ticket_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "user_id",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "aberto_em",
+          "tipo_inferido": "TIMESTAMP"
+        },
+        {
+          "coluna": "canal",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "texto_cliente",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "categoria_atendente",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "status",
+          "tipo_inferido": "VARCHAR"
+        },
+        {
+          "coluna": "resolvido_em",
+          "tipo_inferido": "DATE"
+        }
+      ],
+      "nulos_por_coluna": {
+        "resolvido_em": 1505
+      },
+      "chave_candidata": [
+        "ticket_id"
+      ],
+      "colunas_chave_ausentes": [],
+      "duplicidades_chave": 0,
+      "colunas_data_ausentes": [],
+      "intervalos_datas": {
+        "aberto_em": {
+          "minimo_bruto": "2025-07-01 08:15:00",
+          "maximo_bruto": "2026-09-30 21:46:00",
+          "valores_nao_convertiveis": 0
+        },
+        "resolvido_em": {
+          "minimo_bruto": "2025-07-03",
+          "maximo_bruto": "2026-10-07",
+          "valores_nao_convertiveis": 0
+        }
+      }
+    }
+  ],
+  "heatmaps": [
+    {
+      "arquivo": "heatmaps_2026-07-31.zip",
+      "presente": true,
+      "bytes": 51684439,
+      "sha256": "19942958c3f445b094c1ddb0128f1fed3b7c26cd5689efe13ab2cc4aa5476d8b",
+      "arquivos": 12431,
+      "arquivos_esperados": 12426,
+      "contagem_confere": false,
+      "bytes_descompactados": 49169189,
+      "maior_arquivo_bytes": 9122
+    },
+    {
+      "arquivo": "heatmaps_2026-09-30.zip",
+      "presente": true,
+      "bytes": 54266271,
+      "sha256": "f4ecf41b1810d3b78800d8a8f772c5b277cb7549e54e5f278e707daeb41d5b96",
+      "arquivos": 13047,
+      "arquivos_esperados": 13047,
+      "contagem_confere": true,
+      "bytes_descompactados": 51626234,
+      "maior_arquivo_bytes": 8634
+    }
+  ],
+  "unexpected_files": [],
+  "missing_expected_files": [],
+  "blocking_issues": [],
+  "warnings": [
+    "Contagem divergente em heatmaps_2026-07-31.zip: 12431 arquivos vs. 12426 esperados."
+  ],
+  "status": "atencao"
+}

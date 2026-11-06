@@ -14,7 +14,7 @@ plt.rcParams["font.sans-serif"] = "Arial"
 plt.rcParams["font.family"] = "sans-serif"
 plt.rcParams["figure.dpi"] = 300
 
-df = pd.read_parquet("dados/processados/features_eda_corte_set2026.parquet")
+df = pd.read_parquet("dados/processados/ouro/features_eda_corte_set2026.parquet")
 
 # Imprimir tabela completa de perfilamento (Média, DP, Mediana, IQR) sem vazamento pós-cancelamento e normalizada por vigência
 metricas_tabela = [
