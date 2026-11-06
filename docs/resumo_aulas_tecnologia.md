@@ -276,5 +276,187 @@ Toda inspeção de tabela na EDA deve passar pelas 5 dimensões abaixo. Diante d
 
 ---
 
-*Nota de governança: Sempre que novos arquivos `Tech_M2_MBA_IA_Dados_AulaX.pdf` forem adicionados em `materiais-aulas/`, adicione uma nova seção correspondente abaixo mantendo a numeração e o padrão analítico deste guia.*
+## Aula 3 — Clusterização com k-Means (`29/10/2026`)
+**Fonte:** `materiais-aulas/Tech_M2_MBA_IA_Dados_Aula3.pdf` (Prof. Cesar Almiñana — 107 slides) + Notas de Aula
+
+> **Objetivos de Aprendizagem da Aula 3:**
+> 1. Descrever a base pela qualidade, pela granularidade e pela estatística descritiva;
+> 2. Explicar o k-means passo a passo e preparar/padronizar as variáveis que entram nele;
+> 3. Avaliar um agrupamento por **quatro lentes**: **inércia**, **silhueta**, **estabilidade** e **leitura de negócio**;
+> 4. Transformar *cluster* em *segmento*, com perfil em medianas, tamanho e consequência prática.
+
+---
+
+### 1. Governança de Código e Git para Experimentos de Modelagem (Slides 6–12)
+1. **Git como Rede de Segurança ("Um commit antes de cada pedido grande"):**
+   - Um commit é uma foto do projeto inteiro. Antes de cada comando grande ao agente, fazer um commit permite voltar à foto anterior caso o agente estrague algo (*Caso real citado: Replit, julho de 2025, onde o agente apagou o banco de produção por falta de ponto de volta e ambiente isolado*).
+2. **Branch Dedicado e Worktrees (`cluster-v1`):**
+   - A `main` (ou `dev` consolidada) preserva a base limpa e a análise exploratória intocadas; o experimento do k-means nasce num branch paralelo (`cluster-v1`) com um commit por passo.
+   - Com `git worktree` (ex.: `claude --worktree cluster-v1`), cada branch pode ter sua própria pasta para dois agentes trabalharem em paralelo sem pisar um no outro.
+3. **Pull Request (PR) e Papel do Auditor:**
+   - O branch só volta para a branch principal via Pull Request revisado pelo **Auditor** do grupo (alguém que não escreveu o código lê, pergunta, confere contagens/sementes e aprova).
+
+---
+
+### 2. Capítulo 1 da Aula 3: Revisão da Descrição da Base (Slides 13–50)
+*(Consolida na prática os conceitos da Aula 2 aplicáveis antes de agrupar)*
+- **Detetive antes do Juiz (Tukey, 1977):** Análise exploratória (*o detetive*) procura o que os dados mostram; análise confirmatória (*o juiz*) testa o que já se suspeita. O agente acelera a parte mecânica (`Dado` $\rightarrow$ `Resposta`), mas escolher a `Pergunta` e julgar a `Pergunta seguinte` continua 100% com o grupo.
+- **5 Dimensões da Qualidade (Wang & Strong, 1996) e Gabaritos Oficiais:**
+  - *Completude (`onboarding.csv`):* `63.929` respostas; `objetivo_texto` tem `5.467` vazias (`8,6%`), todas nulas (opcional no dicionário junto com `como_conheceu`). Armadilha: `nivel` (`7,1%`) e `dias_por_semana` (`10,0%`) também têm vazios não marcados como opcionais.
+  - *Validade (`atividades.parquet`):* `1.254.475` treinos (`679.640` com distância; os `574.835` sem distância não são erro, são treinos sem GPS). Mediana `6,47 km`; `951` acima de `200 km` (maior: `10.012,75 km`, pedal de 160 min do `apple_health`); `3.649` com duração zero (nenhum negativo).
+  - *Consistência (`atividades.parquet`):* `11` valores para `7` tipos canônicos (`corrida`/`run`, `caminhada`/`walk`, `forca`/`strength`, `pedal`/`ride`). Os `376.930` nomes em inglês (`30%`) vêm todos da origem `app`. Contar só `corrida` deixa de fora `162.108` corridas (`run`).
+  - *Unicidade (`atividades.parquet`):* `9.383` pares em dobro (mesma conta, tipo, duração e distância, início em até 5 min): `4.184` com `apple_health` e `5.199` com `garmin` (que grava 3h à frente em UTC).
+  - *Temporalidade (`uso_mensal.csv`):* Em 2025 nenhum mês tem linha zerada (`dez/2025` tem `13.624` linhas); em `jan/2026` são `41.130` linhas (`25.697` com zero), derrubando a média aparente de `265` para `118` minutos (contando só quem treinou, `jan/2026` dá `314` min).
+- **Granularidade e Junção ("Juntar sem multiplicar", Wickham, 2014):**
+  - `usuarios.csv` (`64.948` contas) + `atividades.parquet` (`1.254.475` treinos): juntar direto gera `1.282.872` linhas repetidas; resumindo antes por `user_id`, mantém `64.948` linhas (`36.551` com treino e `28.397` com zero).
+- **Amostra, Centro, Dispersão e Correlação:**
+  - *Sorteio vs. Viés de Seleção:* 20 sorteios aleatórios de 500 contas em `set/2026` (`56.565` contas, $\mu = 82,6\text{ min}$) variam entre `60,2` e `109,5 min` (fixar a semente *fora* do laço!). Já a pesquisa de saída (`jun–set/2026`, `3.389` fins de assinatura: `36,2%` Google Play, `30,8%` App Store, `22,3%` Cartão, `10,7%` Pix) teve `641` respostas **100% Web** (`68,0%` Cartão e `32,0%` Pix; `0%` das lojas, que são `67%` dos fins).
+  - *Centro e Posição (`set/2026`):* `72,3%` das contas têm zero treino $\rightarrow$ `mediana = 0 min`, `moda = 0 min`, `média = 82,6 min` ($p75 = 40$, $p90 = 284$, $p99 = 1.074$, máx `4.294 min`). *"A média sozinha descreve uma conta que quase não existe."*
+  - *Desvio Padrão e CV (`set/2026`):* Base inteira tem $s = 221,3\text{ min}$ e $CV = 268\%$; só quem treinou (`15.685` contas) tem média `298 min`, mediana `173 min`, $s = 335,2\text{ min}$ e $CV = 112\%$. Em `atividades.parquet`, duração tem $CV = 51\%$ (`46,4 ± 23,8 min`) e frequência cardíaca tem $CV = 17\%$ (`130,3 ± 22,3 bpm`).
+  - *Quartis e Extremos (`679.640` treinos com GPS):* $Q_1 = 4,58\text{ km}$, mediana $= 6,47\text{ km}$, $Q_3 = 9,58\text{ km}$, $IQR = 5,00\text{ km}$. Acima de $Q_3 + 1,5 \times IQR = 17,08\text{ km}$ há `81.775` treinos (`12,0%`), sendo **`73.120` de pedal** (`8.355` corrida, `300` caminhada). Por $|z| > 3$ (acima de `191,6 km`), há `956` treinos. *"A regra marca; o grupo decide."*
+  - *Correlação e Terceira Variável:* Nas corridas, os `555` treinos impossíveis `> 200 km` derrubam o $r$ de `0,88` para `0,12`. Em `set/2026` (`15.685` contas ativas), `sessoes_app` $\times$ `minutos` tem $r = 0,88$ (`0,92` na base toda), mas controlando pelo número exato de `atividades` (ou $r$ parcial), cai para **`r = 0,02`** (faixas largas deixam a 3ª variável vazar com $r$ de `0,36` a `0,67`).
+
+---
+
+### 3. Capítulo 2 da Aula 3: CRISP-DM, Paradigmas de Aprendizado e o K-Means Passo a Passo (Slides 51–78)
+
+#### A. O CRISP-DM no Módulo 2 (Chapman et al., 2000; Wirth & Hipp, 2000)
+Ciclo iterativo de 6 fases que vão e voltam em torno dos Dados:
+1. **Entendimento do negócio:** A pergunta e o critério de sucesso (*Aulas 1 e 10*);
+2. **Entendimento dos dados:** Limpeza, descrição e exploração (*Aulas 2 e 4*);
+3. **Preparação dos dados:** Integração, corte, rótulo e variáveis (*Aulas 2 e 5*);
+4. **Modelagem:** Segmentos e modelos preditivos (*Aulas 3, 6, 7 e 8*);
+5. **Avaliação:** Métricas e o desfecho real (*Aulas 3, 7 e 8*);
+6. **Implantação:** O modelo disponibilizado na rotina da empresa (*Aula 9 · entrega final*).
+
+#### B. Paradigmas de Aprendizado de Máquina (Hastie, Tibshirani & Friedman, 2009)
+- **Supervisionado ("aprende com a resposta"):** Exemplos do passado já trazem o rótulo (`saiu` vs. `ficou`). Traça uma fronteira de decisão (*Regressão logística e árvores na Aula 6; Avaliação na Aula 7; Bagging e boosting na Aula 8*).
+- **Não Supervisionado ("acha grupos sem resposta"):** Sem rótulo de quem saiu; os pontos parecidos se juntam sozinhos apenas pela distância (*Clusterização na Aula 3*).
+- **Outros dois (para o mapa conceitual):** *Por reforço* (tentativa e recompensa — Sutton & Barto, 2018) e *Autossupervisionado* (o próprio texto vira gabarito: *"Quem treina não [cancela]"* — base dos LLMs).
+
+#### C. Exemplo Didático: 12 Assinantes (`A` a `L`) Agrupados por Comportamento (Slides 58–59)
+Olhando para `treinos/semana`, `% ar livre`, `dias parado` e `tempo de casa` (sem usar idade nem plano), 12 assinantes em `31/07/2026` se separam naturalmente em 4 perfis:
+1. **Ativos, Ar Livre (`A, E, G`):** `2,1 a 3,4 treinos/sem`, `79% a 84% ar livre`, `0–1 dia parado`;
+2. **Ativos, Fechado (`B, C, L`):** `1,1 a 2,4 treinos/sem`, `4% a 27% ar livre`, `0–7 dias parado`;
+3. **Parados (`F, H, K`):** `0 treinos/sem`, `0% ar livre`, `200 dias parado`;
+4. **Veteranos (`D, I, J`):** `2,4 a 3,3 treinos/sem`, alto tempo de casa.
+
+#### D. As Três Decisões Humanas Antes do Algoritmo e a Geometria da Distância (Slides 60–64)
+1. **Três decisões do grupo antes de rodar (e Hierarquia de Impacto):**
+   - **(1) Quais variáveis (O fator de MAIOR impacto):** Cadastro ou comportamento? Cada escolha conta uma história diferente sobre as mesmas pessoas.
+     > **Regras de Ouro sobre Escolha de Variáveis e Escopo da Semana 5 vs. Semana 10 (Destaques do Professor em Aula):**
+     > 1. **Hierarquia de impacto:** O que mais impacta a qualidade da clusterização são as **variáveis escolhidas** para criar os clusters. O método específico de padronização importa menos — o fundamental é **SEMPRE lembrar de padronizar os dados quando houver diferença de escala**.
+     > 2. **Foco da Entrega da Semana 5 (`13/11`) vs. Semana 10 (`18/12`):**
+     >    - **Na Semana 5 (`13/11` — "Até a segmentação"):** O foco principal **não é prever/otimizar o churn**, e sim **criar ótimos clusters comportamentais** (bem separados, estáveis, interpretáveis pelas medianas e acionáveis, independentemente de explicarem ou não o churn neste primeiro momento; a taxa de saída histórica entra apenas como leitura descritiva de cada grupo formado).
+     >    - **Na Semana 10 (`18/12` — "O modelo preditivo de saída"):** Aí sim o foco passa a ser selecionar as variáveis que mais explicam/impactam o churn para treinar, avaliar e disponibilizar o modelo supervisionado de saída.
+     >    - **Os 3 pilares exigidos nas duas entregas de Tech:** (1) **Repositório** (código do grupo versionado), (2) **Documentação** (as decisões e o motivo de cada uma em `decisoes.md`) e (3) **Apresentação executiva** (o processo analítico e os insights).
+   - **(2) O que é parecido:** Uma régua de distância entre dois assinantes (depende da unidade de cada variável).
+   - **(3) Quantos grupos ($k$):** O algoritmo forma os grupos; quantos, o grupo decide.
+2. **Objetivo do Agrupamento e Distância Euclidiana:**
+   - **Objetivo:** Indivíduos próximos entre si dentro de cada grupo (baixa distância interna) e grupos distantes entre si (alta distância entre grupos).
+   - **Distância Euclidiana:** $d = \sqrt{\Delta x^2 + \Delta y^2}$ (com 4 variáveis, é a mesma raiz com 4 diferenças ao quadrado: $\sqrt{\Delta x_1^2 + \Delta x_2^2 + \Delta x_3^2 + \Delta x_4^2}$). O K-Means só enxerga essa distância.
+3. **Obrigação de Padronizar antes de Calcular a Distância Euclidiana:**
+   - **O problema das escalas diferentes:** `Treinos por semana` vai de `0 a 6`; `Treinos ao ar livre` vai de `0 a 1`; `Tempo de casa` vai de `0 a 2.152 dias`. Na mesma régua, 1 treino/semana pesa igual a 1 dia de casa.
+   - **Evidência empírica ("Sem padronizar, o tempo de casa decide sozinho"):** Com $k=4$ nas unidades originais, **`Tempo de casa` responde por `94,1%`** da separação (`Dias sem treino` `2,6%`, `Treinos/semana` `0,2%`, `Treinos ao ar livre` `0,2%`), criando apenas 4 faixas de antiguidade (`até 343d`, `338–876d`, `879–1.554d`, `1.552–2.152d`).
+   - **Padronização Z-Score (`StandardScaler`):** Coloca cada variável em desvios-padrão a partir da própria média ($z = \frac{x - \text{média}}{\text{desvio}}$, tipicamente entre $-3$ e $+3$).
+   - **Tratamento prévio de cauda longa (`decisoes.md`):** Aplicar `log` ou teto (*capping*) em variáveis de cauda longa (`dias sem treino`, `km`) antes do Z-score é decisão do grupo e deve ir para `decisoes.md`.
+
+#### E. Funcionamento Interno do K-Means (Algoritmo de Lloyd, 1982) e seus Limites (Slides 65–78)
+1. **Passo a Passo Iterativo (Exemplo de 240 assinantes e $k=3$):**
+   - **Início:** Escolhemos $k=3$ e sorteamos 3 centros iniciais.
+   - **Passo 1 (Atribuir):** Cada ponto é atribuído ao centro mais próximo (inércia inicial = `613,7`).
+   - **Passo 2 (Mover):** Cada centro desliza para a **média** dos pontos que ficaram com ele.
+   - **Volta 2 em diante (Repetir até convergir):** Com os centros no lugar novo, alguns pontos trocam de grupo e a inércia cai para `182,1`. O algoritmo repete até nenhum ponto trocar de grupo (na **volta 11**, para com inércia = `167,8`).
+   - **Inércia:** $\text{inércia} = \sum \|x - c\|^2$ (soma das distâncias ao quadrado de cada ponto $x$ ao centro $c$ do próprio grupo). Ela nunca sobe entre uma volta e a seguinte.
+2. **Mínimo Local, `k-means++` e Reprodutibilidade:**
+   - **Mínimo local:** O algoritmo para onde não consegue melhorar, não necessariamente no melhor resultado global (30 sorteios iniciais nos mesmos 240 pontos geram 8 inércias finais diferentes, de `166,8` a `194,1`).
+   - **`k-means++` (Arthur & Vassilvitskii, 2007):** Sorteia o 1º centro e escolhe os seguintes longe dos já escolhidos (converge em 7 voltas em vez de 11 e acha a menor inércia; é o padrão do `scikit-learn`).
+   - **`n_init = 10` e `random_state = 0`:** Roda 10 sorteios independentes e guarda o de menor inércia; o `random_state` fixo deve ser registrado em `decisoes.md` para qualquer pessoa repetir o exato mesmo resultado.
+3. **Dois Limites Estruturais do K-Means (Slide 76):**
+   - **Valores extremos:** Um único treino de `10.013 km` puxa o centro do grupo para longe de todos (exige limpeza, teto ou log antes de agrupar).
+   - **Variáveis binárias (`0/1`) e formato dos grupos:** Uma variável `0/1` padronizada pesa demais na distância euclidiana, forçando os grupos a coincidirem com a categoria binária. Além disso, o K-Means só enxerga grupos redondos (esféricos) em torno de médias.
+4. **Como Ler o Resultado ("O k-means devolve um número; o perfil sai das medianas"):**
+   - O algoritmo devolve apenas `Grupo 1, 2, 3...`. O perfil de cada grupo deve ser lido pelas **medianas nas unidades originais** (nunca em z-score!), e a **taxa de saída em 60 dias** — que o algoritmo nunca viu — é a **primeira leitura de negócio**.
+5. **Quatro das Seis Etapas são Decisões do Grupo (Slide 77):**
+   - `1. Escolher variáveis` (**Decisão**) $\rightarrow$ `2. Transformar (teto/log, 0/1)` (**Decisão**) $\rightarrow$ `3. Padronizar (StandardScaler)` (Código) $\rightarrow$ `4. Rodar KMeans (k=2..8, n_init=10, random_state=0)` (Código) $\rightarrow$ `5. Escolher o k` (**Decisão**) $\rightarrow$ `6. Registrar no decisoes.md` (**Decisão**).
+
+---
+
+### 4. Capítulo 3 da Aula 3: Avaliar o Agrupamento pelas Quatro Lentes (Slides 79–92)
+
+Nenhuma métrica decide sozinha o número de grupos $k$; a escolha combina **4 lentes** e vai para o `decisoes.md`:
+
+#### Lente 1 — Inércia e Método do Cotovelo (Slides 80–82)
+- A inércia sempre cai quando $k$ aumenta (com $k = N$, cada ponto é seu próprio centro e a inércia é zero). Inércia menor não significa agrupamento melhor.
+- **O Cotovelo:** É onde a curva dobra e o próximo grupo reduz pouco a inércia.
+- **Números na base da Vitaliza (`11.688` pagantes ativos em `31/07/2026`, 4 variáveis padronizadas):**
+  - $k=2$: `34.009` $\rightarrow$ $k=3$: cai `-9.940` $\rightarrow$ $k=4$: cai `-7.520` (para `16.549`) $\rightarrow$ $k=5$: cai `-4.331` $\rightarrow$ $k=6$: cai `-1.811`.
+  - Na Vitaliza, **a dobra fica entre $k=4$ e $k=5$** (*"A inércia sugere; não decide"*).
+
+#### Lente 2 — Coeficiente de Silhueta (Rousseeuw, 1987; Kaufman & Rousseeuw, 1990 — Slides 83–85)
+- Compara a distância média do ponto ao próprio grupo ($a$) com a distância média ao grupo vizinho mais próximo ($b$):
+  $$s = \frac{b - a}{\max(a, b)} \quad \in [-1, +1]$$
+  - Perto de `+1`: bem colocado no próprio grupo; Perto de `0`: na fronteira entre dois grupos; `Negativo`: provavelmente no grupo errado.
+- **Régua de Kaufman & Rousseeuw (1990):** Até `0,25` = sem estrutura substancial; `0,25 a 0,50` = estrutura fraca; `0,50 a 0,70` = razoável; acima de `0,70` = forte.
+- **Números na Vitaliza (`11.688` pagantes):**
+  - Em $k=2$, a silhueta é a maior (**`0,61`**, razoável), mas divide a base apenas no óbvio: *quem treina vs. quem parou*.
+  - Em **$k=4$, a silhueta média é `0,44`** (faixa fraca/moderada na régua pura, mas separa 4 grupos que o negócio trata de forma distinta).
+
+#### Lente 3 — Estabilidade por Reamostragem / Índice de Rand Ajustado (Hubert & Arabie, 1985 — Slide 86)
+- **Como funciona:** Sorteia a base de novo com reposição (*bootstrap*, ex.: 5 a 10 reamostras), roda o K-Means novamente e compara cada partição com a original pelo **Índice de Rand Ajustado (`adjusted_rand_score`)**, onde `1,00` = idêntico à original e `0,00` = puro acaso.
+- **Números na Vitaliza (10 reamostras):**
+  - $k=3$: Rand médio = **`1,000`** (mín. `1,000`)
+  - **$k=4$: Rand médio = `0,999` (mín. `0,998`)** $\rightarrow$ até $k=4$, os cortes se repetem quase sempre!
+  - $k=5$: Rand médio = `0,970` (mín. `0,931`) e $k=6$: `0,984` (mín. `0,960`) $\rightarrow$ a partir de $k=5$, a partição começa a oscilar entre sorteios.
+
+#### Comparação com Outras Réguas de Distância em $k=4$ (Slide 87)
+- **Euclidiana ($\sqrt{\sum(x-y)^2}$ — escolhida na aula):** Eleva diferenças ao quadrado (diferença grande pesa muito). Separa nitidamente os **Parados (`28,6%` de saída)** e os **Veteranos (`5,5%` de saída)**, com estabilidade **Rand = `0,999`**.
+- **Manhattan ($\sum|x-y|$ — K-Medianas):** O extremo pesa menos; divide o ar livre em intenso (`11,2%` saída) e leve (`14,6%`), mas **some com os veteranos** e derruba o Rand para `0,80`.
+- **Cosseno ($1 - \cos(x,y)$):** Olha direção e não volume; tem maior silhueta (`0,56`), mas **mistura parados e veteranos**, achatando a saída de todos os grupos entre `11%` e `15%`.
+
+#### Lente 4 — Leitura de Negócio: De Cluster a Segmento ($k=4$ na Vitaliza — Slides 88–92)
+- **Gabarito de Referência da Aula (`k = 4` em `11.688` pagantes ativos em `31/07/2026`, medianas nas unidades originais e saída em 60 dias pós-corte, cuja média geral é `12,5%`):**
+
+| Grupo | Nome de Negócio (Hipótese) | Assinantes ($n$) | Mediana `Treinos/Semana` | Mediana `Dias sem Treino` | Mediana `Tempo de Casa (Dias)` | Mediana `% Ao Ar Livre` | Saída Histórica em 60d (Média: `12,5%`) |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Grupo 1** | **Parados** | `472` (`4,0%`) | `0,0` | `200` | `558` | `1%` | **`28,6%`** *(+129% acima da média)* |
+| **Grupo 2** | **Ativos ao ar livre** | `5.927` (`50,7%`) | `2,0` | `2` | `207` | `81%` | **`13,9%`** |
+| **Grupo 3** | **Ativos em ambiente fechado** | `4.215` (`36,1%`) | `2,0` | `2` | `212` | `15%` | **`10,7%`** |
+| **Grupo 4** | **Veteranos** | `1.074` (`9,2%`) | `2,2` | `2` | `1.750` | `56%` | **`5,5%`** *(-56% abaixo da média)* |
+
+- **Quando um Cluster vira Segmento ("Cluster vira segmento quando tem consequência" — Slide 91):**
+  1. **Distinto:** O perfil se lê em uma frase e não se confunde com o vizinho (*ex.: Parados têm 200 dias sem treino*).
+  2. **Estável:** Os cortes se repetem em outra amostra (*$k=4$: Índice de Rand `0,999`*).
+  3. **Grande o bastante:** Vale uma ação própria (*`472` parados; `1.074` veteranos; nenhum grupo com meia dúzia de pessoas*).
+  4. **Acionável:** A Vitaliza faria algo diferente com ele (*Parados: `28,6%` de saída*).
+- **Decisão pelas 4 Lentes (Slide 92):** $k=4$ é o ponto ótimo porque atende simultaneamente **Inércia/Cotovelo ($\checkmark$)**, **Estabilidade ($\checkmark$)** e **Leitura de Negócio ($\checkmark$)**, enquanto $k=2$ só vence em Silhueta pura mas é pobre para o negócio.
+
+---
+
+### 5. Capítulo 4 da Aula 3: Rito Prático de 7 Passos e Auditoria Crítica (Slides 93–106)
+
+1. **Os 7 Passos da Execução Prática:**
+   - **Passo 1 — Escolher as variáveis:** As 4 variáveis base da aula (`treinos por semana nas 12 semanas até o corte`, `dias desde o último treino`, `tempo de casa em dias` e `% dos treinos ao ar livre [corrida, caminhada e pedal]`), mais até 2 variáveis adicionais escolhidas e justificadas pelo grupo. Salvar base original e padronizada (`StandardScaler`).
+   - **Passo 2 — Padronizar:** Cada variável em desvios-padrão (`StandardScaler`), aplicando teto ou log antes se decidido pelo grupo.
+   - **Passo 3 — Rodar de $k = 2$ a $8$:** Com `n_init = 10` e `random_state = 0` fixo, extraindo inércia e silhueta de cada $k$.
+   - **Passo 4 — Ler as duas curvas:** Identificar onde a inércia dobra e onde a silhueta cai (`saidas/k.png`).
+   - **Passo 5 — Estabilidade e perfis:** Rodar reamostragem com reposição (5 a 10 vezes) no $k$ escolhido e calcular `adjusted_rand_score` (média e mínimo, esperando $> 0,90$); gerar tabela com tamanho, medianas na unidade original e taxa de saída (`saidas/perfis.md`).
+   - **Passo 6 — Registrar as decisões:** Documentar variáveis, escala, semente (`random_state`) e $k$ com o motivo em `decisoes.md`.
+   - **Passo 7 — Nomear e abrir o PR:** Dar um nome e uma frase de negócio por grupo, defender o $k$ pelas 4 lentes numa frase e revisar pelo **Auditor** (que confere se os tamanhos somam a base, se cada grupo cabe numa frase e se outra semente gera os mesmos grupos).
+2. **Dica Complementar de Prompt para Refinamento do Algoritmo:**
+   > *"Quero separar k-grupos para separar minha base de uma forma otimizada e eficiente; e também quero que gere perguntas que podem ser feitas para melhorar o algoritmo (por exemplo: as variáveis escolhidas segregam bem os grupos?)."*
+   - Sempre auditar se todas as variáveis escolhidas realmente mudam de mediana entre os grupos (poder de segregação), se há redundância/colinearidade ou se alguma variável binária/extrema está distorcendo a distância euclidiana.
+3. **Referências Bibliográficas da Aula 3 (Slides 104–106):**
+   - **Arthur, D.; Vassilvitskii, S.** (2007) — *k-means++: the advantages of careful seeding* (SODA).
+   - **Chapman, P. et al.** (2000) / **Wirth, R.; Hipp, J.** (2000) — *CRISP-DM 1.0*.
+   - **Hastie, T.; Tibshirani, R.; Friedman, J.** (2009) / **James, G. et al.** (2023) — *An Introduction to Statistical Learning with Applications in Python* (Cap. 12: *Unsupervised Learning / k-means*).
+   - **Hubert, L.; Arabie, P.** (1985) — *Comparing partitions* (*Journal of Classification* — Índice de Rand Ajustado).
+   - **Kaufman, L.; Rousseeuw, P. J.** (1990) — *Finding Groups in Data: An Introduction to Cluster Analysis* (Faixas da silhueta).
+   - **Lloyd, S. P.** (1982) — *Least squares quantization in PCM* (*IEEE Transactions on Information Theory* — Algoritmo k-means).
+   - **Rousseeuw, P. J.** (1987) — *Silhouettes: a graphical aid to the interpretation and validation of cluster analysis*.
+   - **Soto, J. et al.** (2024) — *Sports center customer segmentation: a case study* (*arXiv:2405.17467*).
+
+---
+
+*Nota de governança: Sempre que novos arquivos `Tech_M2_MBA_IA_Dados_AulaX.pdf` forem adicionados em `materiais-aulas/`, adicione ou complemente a seção correspondente mantendo a numeração e o padrão analítico deste guia.*
 
