@@ -14,7 +14,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 RAW_DIR = "dados/brutos"
-PROC_DIR = "dados/processados"
+PROC_DIR = "dados/processados/prata"
 os.makedirs(PROC_DIR, exist_ok=True)
 
 DATA_CORTE = pd.Timestamp("2026-09-30 23:59:59")
@@ -96,10 +96,13 @@ def auditar_populacao_e_contas_internas():
     print(f"Assinantes pagantes ativos (oficial)      : {len(ativas_pagantes):,}")
     print(f"Pagantes ativos c/ renovação ligada       : {len(ativas_renov_ligada):,}")
 
-    # Higienizar usuarios.csv e salvar usuarios_limpo.csv e assinaturas_limpas.csv
+    # Higienizar e materializar em Parquet na camada Prata.
     df_usr_clean = df_usr.copy()
     df_usr_clean["flag_conta_interna"] = df_usr_clean["user_id"].isin(contas_internas).astype(int)
     df_usr_clean["data_cadastro_dt"] = pd.to_datetime(df_usr_clean["data_cadastro"], errors="coerce")
+    df_usr_clean["flag_cadastro_apos_corte"] = (
+        df_usr_clean["data_cadastro_dt"] > DATA_CORTE
+    ).astype(int)
     df_usr_clean["data_nascimento_dt"] = pd.to_datetime(df_usr_clean["data_nascimento"], errors="coerce")
     mask_nasc_inv = (df_usr_clean["data_nascimento_dt"].dt.year <= 1900) | (df_usr_clean["data_nascimento_dt"].dt.year >= 2026)
     df_usr_clean.loc[mask_nasc_inv, "data_nascimento_dt"] = pd.NaT
@@ -108,11 +111,11 @@ def auditar_populacao_e_contas_internas():
     df_usr_clean["sistema"] = df_usr_clean["sistema"].astype(str).str.lower()
     df_usr_clean["cep_prefixo"] = df_usr_clean["cep_prefixo"].fillna(0).astype(int).astype(str).str.zfill(3)
     df_usr_clean.loc[df_usr["cep_prefixo"].isna(), "cep_prefixo"] = np.nan
-    df_usr_clean.to_csv(os.path.join(PROC_DIR, "usuarios_limpo.csv"), index=False, encoding="utf-8")
+    df_usr_clean.to_parquet(os.path.join(PROC_DIR, "usuarios_limpo.parquet"), index=False)
 
     df_ass_clean = df_ass[(~df_ass["user_id"].isin(contas_internas)) & (df_ass["plano_atual"] != "cortesia")].copy()
-    df_ass_clean.to_csv(os.path.join(PROC_DIR, "assinaturas_limpas.csv"), index=False, encoding="utf-8")
-    print(f"  - Bases salvas: 'dados/processados/usuarios_limpo.csv' e 'dados/processados/assinaturas_limpas.csv'")
+    df_ass_clean.to_parquet(os.path.join(PROC_DIR, "assinaturas_limpas.parquet"), index=False)
+    print("  - Bases salvas na camada Prata: usuarios_limpo.parquet e assinaturas_limpas.parquet")
     return df_usr, df_ass, contas_internas
 
 
@@ -147,10 +150,76 @@ def auditar_dimensao_1_completude():
     df_onb["flag_onb_dias_preenchido"] = df_onb["dias_por_semana"].notna().astype(int)
     df_onb["flag_onb_como_conheceu_preenchido"] = df_onb["como_conheceu"].notna().astype(int)
 
-    out_onb = os.path.join(PROC_DIR, "onboarding_limpo.csv")
-    df_onb.to_csv(out_onb, index=False, encoding="utf-8")
+    out_onb = os.path.join(PROC_DIR, "onboarding_limpo.parquet")
+    df_onb.to_parquet(out_onb, index=False)
     print(f"  - Base limpa salva em '{out_onb}': {len(df_onb):,} linhas e {df_onb.shape[1]} colunas.")
     return df_onb
+
+
+def materializar_fontes_temporais_prata(contas_internas):
+    """Tipa e materializa fontes temporais, sociais e de suporte na Prata."""
+    print("\n" + "=" * 75)
+    print("MATERIALIZAÇÃO PRATA — EVENTOS, USO, CAMPANHA E PESQUISA")
+    print("=" * 75)
+
+    eventos = pd.read_csv(os.path.join(RAW_DIR, "eventos_assinatura.csv"), low_memory=False)
+    eventos = eventos.loc[~eventos["user_id"].isin(contas_internas)].copy()
+    eventos["data_hora_br"] = harmonizar_data_utc_para_br(eventos["data_hora"])
+    eventos = eventos.loc[eventos["data_hora_br"] <= DATA_CORTE].copy()
+    eventos.to_parquet(os.path.join(PROC_DIR, "eventos_assinatura_limpos.parquet"), index=False)
+
+    uso = pd.read_csv(os.path.join(RAW_DIR, "uso_mensal.csv"), low_memory=False)
+    uso = uso.loc[~uso["user_id"].isin(contas_internas)].copy()
+    uso["mes_dt"] = pd.to_datetime(uso["mes"] + "-01", errors="raise")
+    uso = uso.loc[uso["mes_dt"] <= DATA_CORTE].copy()
+    uso.to_parquet(os.path.join(PROC_DIR, "uso_mensal_limpo.parquet"), index=False)
+
+    campanha = pd.read_csv(os.path.join(RAW_DIR, "campanha_ago26.csv"), low_memory=False)
+    campanha = campanha.loc[~campanha["user_id"].isin(contas_internas)].copy()
+    campanha["enviado_em_br"] = harmonizar_data_utc_para_br(campanha["enviado_em"])
+    campanha.to_parquet(os.path.join(PROC_DIR, "campanha_ago26_limpa.parquet"), index=False)
+
+    pesquisa = pd.read_csv(os.path.join(RAW_DIR, "pesquisa_saida.csv"), low_memory=False)
+    pesquisa = pesquisa.loc[~pesquisa["user_id"].isin(contas_internas)].copy()
+    pesquisa["respondido_em_dt"] = pd.to_datetime(pesquisa["respondido_em"], errors="raise")
+    pesquisa.to_parquet(os.path.join(PROC_DIR, "pesquisa_saida_limpa.parquet"), index=False)
+
+    amizades = pd.read_csv(os.path.join(RAW_DIR, "amizades.csv"), low_memory=False)
+    amizades = amizades.loc[
+        (~amizades["seguidor_id"].isin(contas_internas))
+        & (~amizades["seguido_id"].isin(contas_internas))
+    ].copy()
+    amizades["desde_dt"] = pd.to_datetime(amizades["desde"], errors="raise")
+    amizades["flag_apos_corte"] = amizades["desde_dt"] > DATA_CORTE
+    amizades = amizades.loc[~amizades["flag_apos_corte"]].copy()
+    amizades.to_parquet(os.path.join(PROC_DIR, "amizades_limpas.parquet"), index=False)
+
+    feed = pd.read_csv(os.path.join(RAW_DIR, "feed_posts.csv"), low_memory=False)
+    feed = feed.loc[~feed["user_id"].isin(contas_internas)].copy()
+    feed["data_hora_dt"] = pd.to_datetime(feed["data_hora"], errors="raise")
+    feed["flag_apos_corte"] = feed["data_hora_dt"] > DATA_CORTE
+    feed = feed.loc[~feed["flag_apos_corte"]].copy()
+    feed.to_parquet(os.path.join(PROC_DIR, "feed_posts_limpos.parquet"), index=False)
+
+    tickets = pd.read_csv(os.path.join(RAW_DIR, "tickets_suporte.csv"), low_memory=False)
+    tickets = tickets.loc[~tickets["user_id"].isin(contas_internas)].copy()
+    tickets["aberto_em_dt"] = pd.to_datetime(tickets["aberto_em"], errors="raise")
+    tickets["resolvido_em_dt"] = pd.to_datetime(tickets["resolvido_em"], errors="coerce")
+    tickets["flag_aberto_apos_corte"] = tickets["aberto_em_dt"] > DATA_CORTE
+    tickets["flag_resolvido_apos_corte"] = tickets["resolvido_em_dt"] > DATA_CORTE
+    tickets["resolvido_em_ate_corte_dt"] = tickets["resolvido_em_dt"].where(
+        ~tickets["flag_resolvido_apos_corte"]
+    )
+    tickets = tickets.loc[~tickets["flag_aberto_apos_corte"]].copy()
+    tickets.to_parquet(os.path.join(PROC_DIR, "tickets_suporte_limpos.parquet"), index=False)
+
+    print(f"  - eventos_assinatura_limpos.parquet: {len(eventos):,} linhas")
+    print(f"  - uso_mensal_limpo.parquet: {len(uso):,} linhas")
+    print(f"  - campanha_ago26_limpa.parquet: {len(campanha):,} linhas")
+    print(f"  - pesquisa_saida_limpa.parquet: {len(pesquisa):,} linhas")
+    print(f"  - amizades_limpas.parquet: {len(amizades):,} linhas")
+    print(f"  - feed_posts_limpos.parquet: {len(feed):,} linhas")
+    print(f"  - tickets_suporte_limpos.parquet: {len(tickets):,} linhas")
 
 
 def auditar_e_limpar_atividades():
@@ -386,7 +455,7 @@ def auditar_funil_faturamento_setembro2026():
     print(f"  3. Sem duplicatas de cobrança no mesmo dia (BRUTO)      : R$ {soma_3_bruto:>10,.0f}")
     print(f"  4. Descontadas taxas de canal (LÍQUIDO OFICIAL)         : R$ {soma_4_liquido:>10,.0f}")
 
-    # Salvar pagamentos_limpos.csv (com valor_num, data_hora_br, flag_duplicata_dia e valor_liq)
+    # Salvar pagamentos_limpos.parquet (valor, fuso, duplicidade e receita líquida).
     df_pag_clean = df_pag[df_pag["data_hora_br"] <= DATA_CORTE].copy()
     df_pag_clean["dia_br"] = df_pag_clean["data_hora_br"].dt.date
     df_pag_clean = df_pag_clean.sort_values(["user_id", "data_hora_br", "tentativa"])
@@ -400,13 +469,14 @@ def auditar_funil_faturamento_setembro2026():
         (df_pag_clean["valor_num"] * (1.0 - df_pag_clean["taxa_canal"])).round(2),
         0.0,
     )
-    df_pag_clean.to_csv(os.path.join(PROC_DIR, "pagamentos_limpos.csv"), index=False, encoding="utf-8")
-    print(f"  - Base limpa salva em 'dados/processados/pagamentos_limpos.csv': {len(df_pag_clean):,} linhas.")
+    df_pag_clean.to_parquet(os.path.join(PROC_DIR, "pagamentos_limpos.parquet"), index=False)
+    print(f"  - Base limpa salva na camada Prata: pagamentos_limpos.parquet ({len(df_pag_clean):,} linhas).")
 
 
 if __name__ == "__main__":
-    auditar_populacao_e_contas_internas()
+    _, _, contas_internas = auditar_populacao_e_contas_internas()
     auditar_dimensao_1_completude()
+    materializar_fontes_temporais_prata(contas_internas)
     auditar_e_limpar_atividades()
     auditar_dimensao_5_temporalidade_e_vazamento()
     auditar_funil_faturamento_setembro2026()

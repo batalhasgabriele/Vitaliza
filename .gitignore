@@ -7,9 +7,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 .venv/
+.uv-cache/
 env/
 venv/
 .ipynb_checkpoints/
+.pytest_cache/
 
 # Sistemas operacionais e IDEs
 .DS_Store

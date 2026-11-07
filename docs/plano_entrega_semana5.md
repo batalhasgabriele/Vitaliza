@@ -3,6 +3,8 @@
 > **Prazo Oficial de Submissão (Adalove):** `15/11/2026 até 23:59` (Avaliação Formativa / Feedback)
 > **Regra de Governança Operacional:** Este documento é o **painel central de controle da Semana 5**. O agente de IA deve **obrigatoriamente consultar e atualizar este arquivo sempre que concluir uma etapa e/ou antes de iniciar uma nova etapa**, garantindo rastreabilidade ponta a ponta sem perda de contexto.
 
+> **Atualização operacional — 05/11/2026:** 🚧 **Etapa 5 — consolidação executiva iniciada** na branch `codex/plano-mestre-vitaliza`, após conclusão da segmentação dos 14.753 ativos. Foi criado o documento mestre `saidas/resolucao_case_vitaliza_semana5.md`, reunindo resolução executiva, metodologia, resultados, mapa de artefatos, reprodução e protocolo de continuidade para colegas e IAs. Cartões de persona, hipóteses por segmento e priorização de canais permanecem em construção.
+
 ---
 
 ## 1. Visão Geral dos Artefatos Exigidos na Semana 5
@@ -26,11 +28,11 @@
 
 | Etapa | Trilha / Responsável | Nome da Etapa | Status Atual | Arquivos Principais (Isolados por Frente) | ADR Associado |
 | :---: | :---: | :--- | :---: | :--- | :---: |
-| **Etapa 1** | 💻 Tech *(Base Comum)* | **Inventário, Auditoria e Pipeline das 5 Dimensões da Qualidade de Dados + Reconciliação Contábil** | ✅ **Concluído** | `src/limpeza_qualidade_dados.py`<br>`notebooks/01_inventario_dados.ipynb`<br>`dados/processados/*_limpo(s).*` | [ADR 001](../decisoes/001-politica-imutabilidade-dados-brutos.md), [003](../decisoes/003-metodologia-faturamento-setembro-2026.md), [004](../decisoes/004-auditoria-dados-brutos-inconsistencias.md), [007](../decisoes/007-auditoria-qualidade-12-tabelas.md), [009](../decisoes/009-pipeline-5-dimensoes-qualidade-aula2.md) |
+| **Etapa 1** | 💻 Tech *(Base Comum)* | **Inventário, Auditoria e Pipeline das 5 Dimensões da Qualidade de Dados + Reconciliação Contábil** | ✅ **Concluído e reproduzido em 04/11** | `src/auditar_bronze.py`<br>`src/limpeza_qualidade_dados.py`<br>`notebooks/00_gate_reprodutibilidade_bronze.md`<br>`notebooks/01_inventario_dados.ipynb`<br>`dados/processados/prata/*_limpo(s).*` | [ADR 001](../decisoes/001-politica-imutabilidade-dados-brutos.md), [003](../decisoes/003-metodologia-faturamento-setembro-2026.md), [004](../decisoes/004-auditoria-dados-brutos-inconsistencias.md), [007](../decisoes/007-auditoria-qualidade-12-tabelas.md), [009](../decisoes/009-pipeline-5-dimensoes-qualidade-aula2.md), [014](../decisoes/014-arquitetura-medalhao-dados.md), [015](../decisoes/015-gate-reprodutibilidade-bronze-prata.md) |
 | **Etapa 2** | 💻 Tech & 📊 Negócios *(Base Comum)* | **EDA Parte 1: Perfilamento Robusto (Mediana/IQR), Curva de Sobrevivência (Vale da Morte M2/M3), Ponto Cego das Lojas e Ranking AUC-ROC + Árvore MECE Inicial** | ✅ **Concluído** | `src/processar_eda.py`<br>`src/gerar_graficos_eda.py`<br>`notebooks/02_eda_e_hipoteses.ipynb`<br>`saidas/eda_e_hipoteses_vitaliza.md`<br>4 gráficos em `saidas/` | [ADR 005](../decisoes/005-diretrizes-modelagem-e-hipoteses.md), [ADR 006](../decisoes/006-eda-e-portfolio-hipoteses-mece.md) |
-| **Etapa 3** | 💻 **Dupla Tech** (Código/Gráficos)<br>+ 📊 **Trio Negócios** (Análise Marcos/LGPD) | **EDA Parte 2: Investigação da Subida do Churn em 2026, Análise dos 3 Marcos (`01/03`, `01/06`, `10/08`), Correlações com Variáveis de Controle e Padrão *"1 Tabela + 1 Gráfico + 3 Frases"*** | ⏳ **Próxima Etapa (A Iniciar)** | **Tech:** `notebooks/02_eda_e_hipoteses.ipynb`, `src/`, gráficos `.png` em `saidas/` e `saidas/eda_e_hipoteses_vitaliza.md`<br>**Negócios:** Rascunho de marcos e limitações em `saidas/customer_segmentation_report_semana5.md` | `ADR 010` *(a criar)* |
-| **Etapa 4** | 🤝 **Ponte Tech + Negócios**<br>*(Sincronização Obrigatória)* | **Engenharia de Atributos dos `14.753` Pagantes Ativos e Clusterização Não Supervisionada (3 a 4 Segmentos sem Target)** *(Alinhado com Aula 3 de Negócios e Aula 3 de Tech)* | 🔲 **Pendente** | **Tech:** `src/segmentacao_clientes.py`, `notebooks/03_segmentacao_clusters.ipynb`, `dados/processados/features_segmentacao_ativos_set2026.parquet`, gráficos em `saidas/`<br>**Negócios:** Validação nos 5 Critérios e nomes das Personas | `ADR 011` *(a criar)* |
-| **Etapa 5** | 📊 **Trio Negócios** *(Líder)*<br>+ 💻 Tech *(Apoio Gráficos)* | **Redação Executiva do *Customer Segmentation Report* (Semana 5)** *(Cartões de Persona, Hipóteses de Drivers por Segmento, Priorização de Canais/Tetos, Visualizações da EDA e Limitações/LGPD)* | 🔲 **Pendente** | **Exclusivo Negócios:**<br>`saidas/customer_segmentation_report_semana5.md` | `ADR 012` *(a criar)* |
+| **Etapa 3** | 💻 **Dupla Tech** (Código/Gráficos)<br>+ 📊 **Trio Negócios** (Análise Marcos/LGPD) | **EDA Parte 2: Investigação da Subida do Churn em 2026, Análise dos 3 Marcos (`01/03`, `01/06`, `10/08`), Correlações com Variáveis de Controle e Padrão *"1 Tabela + 1 Gráfico + 3 Frases"*** | ✅ **Concluída em 05/11/2026** | **Tech:** `src/analisar_eda_marcos.py`, `notebooks/02_eda_e_hipoteses.ipynb`, `saidas/eda_etapa3_marcos_2026.md`, 4 gráficos e tabelas agregadas<br>**Negócios:** `saidas/customer_segmentation_report_semana5.md` (marcos e limitações) | [ADR 010](../decisoes/010-eda-parte2-churn-marcos-2026.md) |
+| **Etapa 4** | 🤝 **Ponte Tech + Negócios**<br>*(Sincronização Obrigatória)* | **Engenharia de Atributos dos `14.753` Pagantes Ativos e Clusterização Não Supervisionada (3 a 4 Segmentos sem Target)** *(Alinhado com Aula 3 de Negócios e Aula 3 de Tech)* | ✅ **Concluída em 05/11/2026** | **Tech:** `src/segmentacao_clientes.py`, `notebooks/03_segmentacao_clusters.ipynb`, `dados/processados/ouro/features_segmentacao_ativos_set2026.parquet`, `dados/processados/ouro/segmentos_ativos_set2026.parquet`, 4 gráficos e tabelas agregadas<br>**Negócios:** três nomes executivos e validação preliminar nos 5 critérios | [ADR 011](../decisoes/011-segmentacao-pagantes-ativos.md) |
+| **Etapa 5** | 📊 **Trio Negócios** *(Líder)*<br>+ 💻 Tech *(Apoio Gráficos)* | **Redação Executiva do *Customer Segmentation Report* (Semana 5)** *(Cartões de Persona, Hipóteses de Drivers por Segmento, Priorização de Canais/Tetos, Visualizações da EDA e Limitações/LGPD)* | 🚧 **Em andamento desde 05/11/2026** | **Negócios:** `saidas/customer_segmentation_report_semana5.md`<br>**Documento mestre:** `saidas/resolucao_case_vitaliza_semana5.md` | `ADR 012` *(a criar ao fechar a estratégia)* |
 | **Etapa 6** | 💻 **Dupla Tech** *(Líder)*<br>+ 📊 Negócios *(Revisão QA)* | **Construção do *Mini Deck de EDA* e Revisão Final de Qualidade (QA) para Entrega da Semana 5** *(Alinhado com Aula 4 de Tech)* | 🔲 **Pendente** | **Exclusivo Tech:**<br>`saidas/mini_deck_eda_semana5.md`<br>Checklist final dos notebooks `01`, `02` e `03` | `ADR 013` *(a criar)* |
 
 ---
@@ -48,7 +50,7 @@ O grupo está dividido em duas frentes complementares:
    - **Regra de Blindagem:** As Personas de Negócios **devem nascer exatamente dos 3 a 4 clusters gerados na Etapa 4** sobre os `14.753` pagantes ativos. A Dupla de Tech roda o algoritmo e entrega a tabela com o perfil estatístico de cada cluster (tamanho $n$ e %, mediana de treinos, modalidade, plano, canal, engajamento social); o Trio de Negócios batiza cada grupo, monta os Cartões de Persona e desenha a estratégia de retenção.
 2. **Conflito 2 — Divergência de Números entre o Relatório de Negócios e o Mini Deck de Tech:**
    - **Risco:** Integrantes fazerem contas paralelas (ex.: em planilhas separadas sobre dados brutos sem aplicar o expurgo das 60 contas de cortesia, deduplicação de cobranças/treinos ou fuso horário) e reportarem percentuais diferentes nos dois entregáveis.
-   - **Regra de Blindagem (Fonte Única da Verdade):** Nenhum número deve ser calculado fora das bases limpas em `dados/processados/`. Todos os números citados no relatório de Negócios e no Mini Deck de Tech devem vir das tabelas oficiais geradas nos notebooks e documentadas em `saidas/` e nos ADRs em `decisoes/`.
+- **Regra de Blindagem (Fonte Única da Verdade):** Nenhum número deve ser calculado fora das bases Prata e Ouro em `dados/processados/`. Todos os números citados no relatório de Negócios e no Mini Deck de Tech devem vir das tabelas oficiais geradas nos notebooks e documentadas em `saidas/` e nos ADRs em `decisoes/`.
 3. **Conflito 3 — Conflitos de Merge no Git (Edição Simultânea do Mesmo Arquivo):**
    - **Risco:** Duas pessoas editarem o mesmo arquivo `.md` ou `.ipynb` simultaneamente na branch `dev`.
    - **Regra de Blindagem (Isolamento de Arquivos):**
@@ -89,8 +91,8 @@ O grupo está dividido em duas frentes complementares:
 
 ---
 
-### ⏳ Etapa 3 — EDA Parte 2: Subida do Churn em 2026, 3 Marcos, Correlações Controladas e Formato *"1 Tabela + 1 Gráfico + 3 Frases"*
-- **Status:** **Próxima Etapa (Plano elaborado, aguardando início da execução)**
+### ✅ Etapa 3 — EDA Parte 2: Subida do Churn em 2026, 3 Marcos, Correlações Controladas e Formato *"1 Tabela + 1 Gráfico + 3 Frases"*
+- **Status:** **Concluída em 05/11/2026**
 - **Divisão de Trabalho sem Conflito:**
   - **💻 Dupla Tech (2 pessoas):**
     1. Reconstruir e plotar a série mensal de perda (jan/2025 a set/2026) com denominador correto ($\text{perdas no mês} / \text{ativos no início do mês}$), validando `5,6%/mês` em 2025, `6,6%/mês` em 2026 e o pico de **`8,1%` (`1.154` saídas) em abril/2026** (`5,9%` em ago, `5,0%` em set).
@@ -103,8 +105,9 @@ O grupo está dividido em duas frentes complementares:
 
 ---
 
-### 🔲 Etapa 4 — Engenharia de Atributos e Clusterização com K-Means (Sem Target) — 🤝 *Ponto de Encontro Obrigatório*
-- **Status:** **Pendente (iniciar após Etapa 3 — Incorporando diretrizes das Aulas 3 e 4 de Tech e o escopo de `13/11` vs. `18/12`)**
+### ✅ Etapa 4 — Engenharia de Atributos dos `14.753` Pagantes Ativos e Clusterização (Sem Target) — 🤝 *Ponto de Encontro Obrigatório*
+- **Status:** **Concluída em 05/11/2026**
+- **Resultado:** três segmentos selecionados entre as soluções elegíveis (`k=3` e `k=4`): Ativos ao ar livre (`7.457`; `50,55%`), Ativos guiados por vídeo (`5.317`; `36,04%`) e Adormecidos sem hábito (`1.979`; `13,41%`). A solução possui silhouette amostral `0,164`, Davies–Bouldin `2,007` e estabilidade média `ARI=0,998`; a sobreposição entre os grupos ativos foi preservada como limitação.
 - **Divisão de Trabalho e Sincronização:**
   - **💻 Dupla Tech (2 pessoas):**
     1. **Foco da Semana 5 (`13/11` — *"Até a segmentação"*): Criar Ótimos Clusters Comportamentais:** Conforme orientação do professor, na entrega parcial da Semana 5 não precisamos otimizar os clusters para prever o churn (o modelo preditivo de saída e a seleção de variáveis otimizada para explicar o churn são o foco da Semana 10 em `18/12`). O objetivo aqui é formar **grupos comportamentais muito bem segregados, estáveis, interpretáveis e acionáveis** — partindo das **4 variáveis base da Aula 3 de Tech** (`treinos por semana nas 12 semanas até o corte`, `dias desde o último treino`, `tempo de casa em dias` e `% dos treinos ao ar livre [corrida, caminhada e pedal]`) e avaliando até 1–2 variáveis comportamentais adicionais se melhorarem a coesão/separação dos grupos, **sem jamais colocar a variável de `churn`/saída dentro do K-Means**.
@@ -121,8 +124,9 @@ O grupo está dividido em duas frentes complementares:
 
 ---
 
-### 🔲 Etapa 5 — Redação do *Customer Segmentation Report* (Artefato de Negócios da Semana 5)
-- **Status:** **Pendente (iniciar após Etapa 4)**
+### 🚧 Etapa 5 — Redação do *Customer Segmentation Report* (Artefato de Negócios da Semana 5)
+- **Status:** **Em andamento desde 05/11/2026**
+- **Andamento:** documento mestre de resolução e continuidade criado; base empírica do relatório atualizada com os três segmentos. Permanecem pendentes os cartões de persona, hipóteses estruturadas e priorização preliminar de canais/orçamento.
 - **Responsável Principal:** **📊 Trio de Negócios (3 pessoas)** *(editando exclusivamente `saidas/customer_segmentation_report_semana5.md`)*
 - **Escopo Obrigatório:**
   1. Descrição executiva dos **3 a 4 segmentos** com **Cartões de Persona** completos (quem são, tamanho $n$ e %, receita líquida representada, comportamento de uso, canal e vínculo contratual — usando os números exatos da Etapa 4).

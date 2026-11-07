@@ -11,8 +11,9 @@
 - `docs/`: Enunciado oficial do case, dicionário de dados, síntese geral (`aprendizados_aulas.md`) e **guias de referência das aulas de negócios ([`docs/resumo_aulas_negocios.md`](docs/resumo_aulas_negocios.md)) e de tecnologia ([`docs/resumo_aulas_tecnologia.md`](docs/resumo_aulas_tecnologia.md))** — que devem ser consultados sempre que necessário como base conceitual, técnica e metodológica para o projeto, sem restringir análises adicionais. **Regra obrigatória:** ambos os arquivos de resumo devem ser atualizados **SEMPRE** que um novo arquivo de aula for adicionado na pasta `materiais-aulas/`.
 - `instrucoes-case/`: Guia oficial do aluno para entrega de artefatos (Semanas 5 e 10) e enunciado completo do case Vitaliza.
 - `materiais-aulas/`: Apostilas e apresentações das aulas de Negócios e Tecnologia do Módulo 2. Sempre que um novo arquivo de aula entrar nesta pasta, o respectivo resumo em `docs/resumo_aulas_negocios.md` ou `docs/resumo_aulas_tecnologia.md` deve ser imediatamente atualizado.
-- `dados/brutos/`: Arquivos originais exportados dos sistemas (12 tabelas/logs e pasta `heatmaps/`). Nunca devem ser modificados ou sobrescritos.
-- `dados/processados/`: Tabelas intermediárias tratadas e feature stores geradas pelo grupo.
+- `dados/brutos/` (**camada Bronze**): Arquivos originais exportados dos sistemas (12 tabelas/logs e pasta `heatmaps/`). Nunca devem ser modificados ou sobrescritos.
+- `dados/processados/prata/` (**camada Prata**): Tabelas limpas, padronizadas, reconciliadas e historizadas, sempre reproduzíveis a partir da camada Bronze.
+- `dados/processados/ouro/` (**camada Ouro**): Tabelas analíticas, métricas consolidadas, feature stores e datasets prontos para consumo por análises, modelos e relatórios, sempre derivados da camada Prata.
 - `notebooks/`: Notebooks de análise exploratória, modelagem e validação.
 - `src/`: Scripts Python reutilizáveis (funções de limpeza, engenharia de atributos, modelagem).
 - `saidas/`: Relatórios gerados, predições ordenadas para CRM, gráficos e artefatos de entrega.
