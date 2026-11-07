@@ -38,6 +38,7 @@ df_usr["tem_relogio"] = (df_usr["relogio_conectado"] != "nenhum").astype(int)
 df_usr["cep_prefixo_str"] = (
     df_usr["cep_prefixo"].fillna(0).astype(int).astype(str).str.zfill(3)
 )
+df_usr.loc[df_usr["cep_prefixo"].isna(), "cep_prefixo_str"] = np.nan
 
 # 2. Carregar assinaturas (excluindo as 60 contas internas / cortesia)
 df_ass = pd.read_csv("dados/brutos/assinaturas.csv")
@@ -240,8 +241,8 @@ uso_user_ativo = df_uso_ativo.groupby("user_id").agg(
 uso_user = uso_user.join(uso_user_ativo, how="left")
 
 # 7. Carregar atividades detalhadas limpas RESTRITAS ATÉ O DESFECHO DE CADA ASSINATURA
-if os.path.exists("dados/processados/atividades_limpas.parquet"):
-    df_atv = pd.read_parquet("dados/processados/atividades_limpas.parquet")
+if os.path.exists("dados/processados/prata/atividades_limpas.parquet"):
+    df_atv = pd.read_parquet("dados/processados/prata/atividades_limpas.parquet")
 else:
     from limpeza_qualidade_dados import auditar_e_limpar_atividades
     df_atv = auditar_e_limpar_atividades()
@@ -278,8 +279,7 @@ atv_user = df_atv.groupby("user_id").agg(
 )
 
 # 8. Carregar Amizades e Comunidade (até data_desfecho da assinatura)
-df_amiz = pd.read_csv("dados/brutos/amizades.csv")
-df_amiz["desde_dt"] = pd.to_datetime(df_amiz["desde"])
+df_amiz = pd.read_parquet("dados/processados/prata/amizades_limpas.parquet")
 df_amiz = df_amiz[df_amiz["desde_dt"] <= DATA_CORTE].copy()
 
 df_amiz_segd = df_amiz.merge(
@@ -295,8 +295,7 @@ df_amiz_segr = df_amiz_segr[df_amiz_segr["desde_dt"] <= df_amiz_segr["data_desfe
 seguindo = df_amiz_segr.groupby("seguidor_id").size().rename("num_seguindo")
 
 # 9. Feed posts (até data_desfecho da assinatura)
-df_feed = pd.read_csv("dados/brutos/feed_posts.csv")
-df_feed["data_hora_dt"] = pd.to_datetime(df_feed["data_hora"])
+df_feed = pd.read_parquet("dados/processados/prata/feed_posts_limpos.parquet")
 df_feed = df_feed[df_feed["data_hora_dt"] <= DATA_CORTE].copy()
 df_feed = df_feed.merge(
     janela_user[["user_id", "data_desfecho"]], on="user_id", how="inner"
@@ -308,8 +307,7 @@ feed_user = df_feed.groupby("user_id").agg(
 )
 
 # 10. Suporte (até data_desfecho da assinatura)
-df_sup = pd.read_csv("dados/brutos/tickets_suporte.csv")
-df_sup["aberto_em_dt"] = pd.to_datetime(df_sup["aberto_em"])
+df_sup = pd.read_parquet("dados/processados/prata/tickets_suporte_limpos.parquet")
 df_sup = df_sup[df_sup["aberto_em_dt"] <= DATA_CORTE].copy()
 df_sup = df_sup.merge(
     janela_user[["user_id", "data_desfecho"]], on="user_id", how="inner"
@@ -443,7 +441,7 @@ df_master["razao_uso_ultimo_mes"] = df_master["atividades_ultimos_30d"] / (
 )
 
 # Salvar feature store processada
-output_parquet = "dados/processados/features_eda_corte_set2026.parquet"
+output_parquet = "dados/processados/ouro/features_eda_corte_set2026.parquet"
 df_master.to_parquet(output_parquet, index=False)
 print(
     f"Feature store salva com sucesso em: {output_parquet} com {len(df_master):,} registros e {df_master.shape[1]} colunas."

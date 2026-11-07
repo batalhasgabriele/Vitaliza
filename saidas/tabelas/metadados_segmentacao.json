@@ -1,0 +1,40 @@
+{
+  "data_corte": "2026-09-30 23:59:59",
+  "populacao": 14753,
+  "k_escolhido": 3,
+  "features_cluster": [
+    "recencia_treino_dias",
+    "treinos_30d",
+    "delta_treinos_30_60",
+    "regularidade_3m",
+    "n_modalidades_90d",
+    "prop_ar_livre_3m",
+    "prop_video_3m",
+    "posts_90d",
+    "curtidas_90d",
+    "conexoes_sociais",
+    "tickets_90d",
+    "tenure_meses",
+    "dias_semana_pretendidos",
+    "flag_onb_dias_preenchido",
+    "plano_anual",
+    "canal_loja"
+  ],
+  "features_excluidas_governanca": [
+    "churn",
+    "status_atual",
+    "data_fim",
+    "motivo_fim",
+    "pesquisa_saida",
+    "campanha",
+    "idade",
+    "sexo",
+    "uf",
+    "renovacao_automatica"
+  ],
+  "nomes_segmentos": {
+    "1": "Adormecidos sem hábito",
+    "0": "Ativos ao ar livre",
+    "2": "Ativos guiados por vídeo"
+  }
+}

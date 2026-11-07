@@ -1,0 +1,4 @@
+metrica,n,r
+Correlação bruta — todas as contas,56565,0.9212231757152044
+Correlação bruta — contas com treino,15685,0.8834893467683524
+Correlação parcial — controlando atividades,15685,0.015407662007027133

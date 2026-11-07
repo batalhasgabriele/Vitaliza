@@ -48,9 +48,9 @@ print("Ambiente configurado com sucesso!")
 
 # Célula 3: Carga da Feature Store Processada
 c3 = nbf.v4.new_markdown_cell("""## 1. Carga da Feature Store Consolidada e Higienizada (Corte 30/09/2026)
-Carregamos a base processada em `dados/processados/features_eda_corte_set2026.parquet`, gerada após a execução do pipeline das 5 Dimensões da Qualidade e blindagem pós-desfecho (`src/limpeza_qualidade_dados.py` e `src/processar_eda.py`).""")
+Carregamos a base analítica em `dados/processados/ouro/features_eda_corte_set2026.parquet`, gerada após a execução do pipeline das 5 Dimensões da Qualidade e blindagem pós-desfecho (`src/limpeza_qualidade_dados.py` e `src/processar_eda.py`).""")
 
-c4 = nbf.v4.new_code_cell("""df = pd.read_parquet('../dados/processados/features_eda_corte_set2026.parquet')
+c4 = nbf.v4.new_code_cell("""df = pd.read_parquet('../dados/processados/ouro/features_eda_corte_set2026.parquet')
 print(f"Total de assinaturas pagas analisadas: {len(df):,}")
 print(f"Status atual da base: {df['status_atual'].value_counts().to_dict()}")
 print(f"Pagantes ativos em 30/09/2026: {(df['churn'] == 0).sum():,} (sendo {((df['churn'] == 0) & (df['renovacao_automatica'] == 'sim')).sum():,} com renovação automática ligada)")

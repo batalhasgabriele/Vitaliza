@@ -4,7 +4,7 @@
 **Data de Corte Oficial:** 30/09/2026 às 23:59:59 (Horário de Brasília)  
 **Artefatos Relacionados:**
 - Notebook de Código Reproduzível: `notebooks/02_eda_e_hipoteses.ipynb`
-- Feature Store Processada: `dados/processados/features_eda_corte_set2026.parquet`
+- Feature Store Ouro: `dados/processados/ouro/features_eda_corte_set2026.parquet`
 - Log de Governança e Decisões: `decisoes.md`
 
 ---
@@ -301,7 +301,51 @@ Características    Comportamento de                      Ciclo de Vida       Co
 
 ---
 
-## 5. Diretrizes de Governança, Ética e Conformidade com a LGPD
+## 5. EDA Parte 2 — Subida do Churn e Marcos de 2026
+
+A análise reproduzível completa está em [`saidas/eda_etapa3_marcos_2026.md`](eda_etapa3_marcos_2026.md), gerada por `src/analisar_eda_marcos.py`.
+
+### 5.1 Série mensal
+
+![Churn mensal](churn_mensal_2025_2026.png)
+
+1. **O dado diz:** a reconstrução observa churn médio de **5,68% em 2025** e **6,68% em jan–set/2026**, com pico de **8,13% e 1.158 perdas em abril**.
+2. **O dado não diz:** a diferença de quatro perdas frente à referência executiva de 1.154 não autoriza correção manual; preço, sazonalidade e composição de coortes continuam confundidos.
+3. **Próxima pergunta:** quais segmentos comportamentais concentram a elevação sem usar churn para formar os clusters?
+
+### 5.2 Três marcos
+
+![Três marcos de 2026](marcos_2026.png)
+
+- **Reajuste de 01/03:** o plano mensal passou de média de **10,22%** em jan–fev para **12,97%** em mar–abr. É associação antes/depois, não elasticidade causal.
+- **Pesquisa desde 01/06:** foram observadas **3.389 expirações** entre jun–set (**2.271 lojas; 1.118 Web**) e **641 respondentes únicos**, todos Web; **288 respondentes únicos** ainda estavam ativos no corte (**289 respostas**).
+- **Campanha de 10/08:** no ITT de 30 dias, controle teve **5,48%**, desafio **5,18%**, cupom **4,64%** e conteúdo **6,13%**. Cupom ficou **−0,84 p.p.** frente ao controle, mas **p=0,108**; nenhum braço atingiu significância de 5%.
+
+### 5.3 Controles estatísticos
+
+![Outliers por modalidade](outliers_por_modalidade.png)
+
+![Correlação controlada](correlacao_controlada.png)
+
+- A regra global de Tukey marca **81.775** treinos acima de 17,08 km, mas **73.120 são pedal**; distância alta não equivale automaticamente a erro.
+- Entre contas com treino, `r(sessoes_app, minutos)=0,88`; após controlar o número de atividades, a correlação parcial cai para **0,02**.
+- Esses resultados sustentam o uso de variáveis comportamentais controladas por exposição e modalidade na futura segmentação.
+
+---
+
+## 6. Segmentação dos 14.753 pagantes ativos
+
+A clusterização não supervisionada foi executada sem churn, informação de saída, pesquisa ou campanha. Entre `k=3` e `k=4`, a solução de três segmentos apresentou o melhor silhouette elegível (**0,164**) e estabilidade quase perfeita por reamostragem (**ARI=0,998**), mantendo o menor grupo com **13,4%** da base.
+
+- **Ativos ao ar livre:** 7.457 clientes (50,55%), recência mediana de 2 dias e 82,3% das atividades ao ar livre.
+- **Ativos guiados por vídeo:** 5.317 (36,04%), recência de 2 dias e 92,2% das atividades em vídeo.
+- **Adormecidos sem hábito:** 1.979 (13,41%), zero treino mediano em 30 dias e recência de 68 dias.
+
+![Perfis dos segmentos](segmentacao_heatmap_perfis.png)
+
+A separação entre os dois grupos ativos é moderada/baixa e aparece principalmente no modo de treino. A segmentação é descritiva e acionável, mas não deve ser interpretada como modelo de churn ou prova de causalidade.
+
+## 7. Diretrizes de Governança, Ética e Conformidade com a LGPD
 
 O pipeline de retenção preditiva manipula dados pessoais e comportamentais sensíveis (frequência de exercícios, localização geográfica por GPS e interações sociais). A modelagem deve atender aos seguintes mandamentos:
 
@@ -318,10 +362,10 @@ O pipeline de retenção preditiva manipula dados pessoais e comportamentais sen
 
 ---
 
-## 6. Próximos Passos Recomendados para a Squad
+## 8. Próximos Passos Recomendados para a Squad
 
 1. **Validação do Pipeline de Modelagem Preditiva:**
-   - Submeter a base processada `dados/processados/features_eda_corte_set2026.parquet` ao benchmark de algoritmos (LightGBM vs. XGBoost vs. Regressão Logística com regularização).
+- Submeter a base Ouro `dados/processados/ouro/features_eda_corte_set2026.parquet` ao benchmark de algoritmos (LightGBM vs. XGBoost vs. Regressão Logística com regularização).
    - Utilizar validação cruzada temporal (Time-Series Split) para blindagem total contra vazamento de dados.
 2. **Implantação da Régua de Recuperação de Ponto Cego (CRM & Meios de Pagamento):**
    - Desenhar régua de contato emergencial para os 1.321 casos de cancelamento involuntário por falha de cartão/pix antes de entrarem em churn definitivo.

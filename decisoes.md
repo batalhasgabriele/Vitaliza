@@ -19,6 +19,11 @@ Como o projeto é desenvolvido de forma concorrente por **5 integrantes e múlti
 | **007** | Diretrizes Técnicas da Auditoria de Qualidade de Dados (12 Tabelas) | 29/10/2026 | Gabriele Batalha / Agente 2 | `cluster-v1` | Aprovada | [ADR 007](decisoes/007-auditoria-qualidade-12-tabelas.md) |
 | **008** | Consolidação do Guia de Artefatos (Semanas 5 e 10) e Premissas Oficiais do Case | 01/11/2026 | Gabriele Batalha / Gemininha | `dev` | Aprovada | [ADR 008](decisoes/008-guia-artefatos-e-premissas-oficiais-case.md) |
 | **009** | Pipeline de Limpeza pelas 5 Dimensões da Qualidade de Dados e Reconciliação da Aula 2 de Tecnologia | 01/11/2026 | Gabriele Batalha / Antigravity AI | `dev` | Aprovada | [ADR 009](decisoes/009-pipeline-5-dimensoes-qualidade-aula2.md) |
+| **010** | EDA Parte 2 — Churn e Marcos de 2026 | 05/11/2026 | Igor / Codex | `codex/plano-mestre-vitaliza` | Implementada | [ADR 010](decisoes/010-eda-parte2-churn-marcos-2026.md) |
+| **011** | Segmentação Não Supervisionada dos Pagantes Ativos | 05/11/2026 | Igor / Codex | `codex/plano-mestre-vitaliza` | Implementada | [ADR 011](decisoes/011-segmentacao-pagantes-ativos.md) |
+| **014** | Arquitetura Medalhão para a Camada de Dados | 04/11/2026 | Igor / Codex | `codex/plano-mestre-vitaliza` | Aprovada | [ADR 014](decisoes/014-arquitetura-medalhao-dados.md) |
+| **015** | Gate de Reprodutibilidade Bronze → Prata | 04/11/2026 | Igor / Codex | `codex/plano-mestre-vitaliza` | Implementada | [ADR 015](decisoes/015-gate-reprodutibilidade-bronze-prata.md) |
+| **016** | Registro Consolidado de Limpeza e Tratamento de Dados | 05/11/2026 | Igor / Codex | `codex/plano-mestre-vitaliza` | Implementada | [ADR 016](decisoes/016-registro-tratamentos-dados.md) |
 
 ---
 

@@ -153,7 +153,7 @@ Ao perguntar *"Quanto a Vitaliza faturou em setembro de 2026 em `pagamentos.csv`
 ### 2. Governança do Ambiente e Trabalho com Agentes de Código
 - **Modelo vs. Harness:** O modelo (LLM) é o cérebro que raciocina e gera texto/código; o *harness* (Claude Code, Codex, Antigravity) é o ambiente que lê arquivos, roda scripts no terminal, aplica permissões e mantém regras persistentes (`AGENTS.md`), operando no ciclo **Planejar $\rightarrow$ Executar $\rightarrow$ Conferir**.
 - **Regras Inegociáveis de Governança:**
-  - `dados/brutos/` **nunca é editado** (somente leitura). Tudo o que for limpo vai para `dados/processados/`.
+- `dados/brutos/` **nunca é editado** (somente leitura). Dados limpos vão para `dados/processados/prata/` e produtos analíticos para `dados/processados/ouro/`.
   - `.gitignore` protege `dados/` e `.env`. Chaves de API nunca entram em notebooks, scripts, chat ou `AGENTS.md`.
   - **Rede de segurança Git:** Fazer `git commit` na branch de trabalho (`dev`) antes de cada etapa grande.
 - **Anatomia de um Pedido Completo de Análise (5 Elementos):**

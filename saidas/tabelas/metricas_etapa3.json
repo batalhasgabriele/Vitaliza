@@ -1,0 +1,35 @@
+{
+  "media_churn_2025_pct": 5.680191654387965,
+  "media_churn_2026_pct": 6.678635567495794,
+  "pesquisa": {
+    "respostas": 643,
+    "respondentes_unicos": 641,
+    "respondentes_ativos_corte": 288,
+    "respostas_ativas_corte": 289,
+    "perdas_jun_set": 3389
+  },
+  "outliers": {
+    "q1": 4.58,
+    "q3": 9.58,
+    "limiar_tukey": 17.08,
+    "outliers_global": 81775,
+    "outliers_pedal": 73120
+  },
+  "correlacao": [
+    {
+      "metrica": "Correlação bruta — todas as contas",
+      "n": 56565,
+      "r": 0.9212231757152044
+    },
+    {
+      "metrica": "Correlação bruta — contas com treino",
+      "n": 15685,
+      "r": 0.8834893467683524
+    },
+    {
+      "metrica": "Correlação parcial — controlando atividades",
+      "n": 15685,
+      "r": 0.015407662007027133
+    }
+  ]
+}
