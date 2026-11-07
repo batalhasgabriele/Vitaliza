@@ -9,9 +9,17 @@
 
 ## 1. Visão Geral dos Artefatos Exigidos na Semana 5
 
+> **Diretriz Oficial do Professor sobre o Escopo das Entregas de Tecnologia (`13/11` vs. `18/12`):**
+> - **Semana 5 (`13/11` — Entrega Parcial: *"Até a segmentação"*):** A análise exploratória e os segmentos, com perfil, tamanho e saída histórica de cada um. **O foco da Semana 5 é criar ótimos clusters comportamentais** (bem separados, estáveis, interpretáveis pelas medianas e acionáveis, **independentemente de explicarem ou não o churn neste momento**; a taxa de saída histórica em 60 dias entra apenas como leitura descritiva pós-agrupamento).
+> - **Semana 10 (`18/12` — Entrega Final: *"O modelo preditivo de saída"*):** O modelo de churn treinado, avaliado e disponibilizado (onde o foco central será prever o churn e selecionar as variáveis que mais impactam/explicam a saída).
+> - **Os 3 Pilares Obrigatórios nas Duas Entregas de Tech:**
+>   1. **Repositório:** O código do grupo, versionado;
+>   2. **Documentação (`decisoes.md`):** As decisões e o motivo de cada uma;
+>   3. **Apresentação executiva:** O processo analítico e os insights.
+
 | Trilha | Artefato Oficial | Requisitos Obrigatórios (Guia do Aluno + Aulas 1–4) |
 | :--- | :--- | :--- |
-| **Tecnologia** | **Análise Exploratória de Dados (EDA)**<br>*(Código + Visualizações + Mini Deck)* | 1. Carregar, limpar e auditar as 12 tabelas pelas 5 Dimensões da Qualidade;<br>2. Identificar padrões e correlações com churn (investigando a subida de 2026 e os 3 marcos: `01/03/2026`, `01/06/2026` e `10/08/2026`), aplicando variáveis de controle e prevenindo vazamento temporal;<br>3. Gerar os gráficos executivos que entram no relatório;<br>4. Sustentar empiricamente a segmentação (Clusterização não supervisionada sem usar o target de saída);<br>5. Contar a história analítica em um **Mini Deck** no padrão *"1 Tabela + 1 Gráfico + 3 Frases"*. |
+| **Tecnologia** | **Análise Exploratória de Dados (EDA)**<br>*(Repositório + Documentação `decisoes.md` + Apresentação Executiva / Mini Deck)* | 1. Carregar, limpar e auditar as 12 tabelas pelas 5 Dimensões da Qualidade;<br>2. Identificar padrões e correlações na base (investigando a subida de 2026 e os 3 marcos: `01/03/2026`, `01/06/2026` e `10/08/2026`), aplicando variáveis de controle e prevenindo vazamento temporal;<br>3. Gerar os gráficos executivos que entram no relatório;<br>4. Sustentar empiricamente a segmentação (**foco em criar ótimos clusters comportamentais não supervisionados**, apresentando perfil em medianas, tamanho e saída histórica de cada grupo);<br>5. Contar a história analítica em uma **Apresentação Executiva (Mini Deck)** no padrão *"1 Tabela + 1 Gráfico + 3 Frases"*, com repositório versionado e `decisoes.md` atualizado. |
 | **Negócios** | **Customer Segmentation Report**<br>*(Relatório Executivo Descritivo)* | 1. Descrever **3 a 4 segmentos** de clientes com **Cartões de Persona** (construídos sobre os `14.753` pagantes ativos sem usar a informação de quem saiu) e validados nos 5 Critérios de Segmentação;<br>2. Formular **hipóteses estruturadas de *drivers* de churn** por segmento (formato *Ação + Público + Resultado Esperado* cobrindo os 5 galhos da Árvore MECE);<br>3. Definir **priorização preliminar** (*Intervenção Imediata vs. Monitoramento vs. Não Perturbe*), respeitando os tetos operacionais (300 CS, 1.500 WhatsApp e R$ 40.000/mês);<br>4. Incorporar as **visualizações de dados** vindas da EDA;<br>5. Redigir **seção robusta de limitações da análise** (ponto cego dos 70% em lojas, viés Web da pesquisa de saída, mudança de regra em `uso_mensal`, confundidores e conformidade com a **LGPD**). |
 
 ---
@@ -102,12 +110,17 @@ O grupo está dividido em duas frentes complementares:
 - **Resultado:** três segmentos selecionados entre as soluções elegíveis (`k=3` e `k=4`): Ativos ao ar livre (`7.457`; `50,55%`), Ativos guiados por vídeo (`5.317`; `36,04%`) e Adormecidos sem hábito (`1.979`; `13,41%`). A solução possui silhouette amostral `0,164`, Davies–Bouldin `2,007` e estabilidade média `ARI=0,998`; a sobreposição entre os grupos ativos foi preservada como limitação.
 - **Divisão de Trabalho e Sincronização:**
   - **💻 Dupla Tech (2 pessoas):**
-    1. Construir a matriz de atributos comportamentais, contratuais e sociais exclusivamente para os **`14.753` assinantes pagantes ativos em `30/09/2026`**, **sem utilizar nenhuma variável de desfecho/saída** (aprendizado não supervisionado puro).
-    2. Selecionar e padronizar variáveis com alto sinal e baixo ruído (excluindo demografia pura com AUC ~ 0,50 e variáveis colineares identificadas na Etapa 3).
-    3. Rodar a clusterização para encontrar **3 a 4 segmentos**, gerando a tabela oficial de perfil estatístico de cada cluster e os gráficos em `saidas/`.
+    1. **Foco da Semana 5 (`13/11` — *"Até a segmentação"*): Criar Ótimos Clusters Comportamentais:** Conforme orientação do professor, na entrega parcial da Semana 5 não precisamos otimizar os clusters para prever o churn (o modelo preditivo de saída e a seleção de variáveis otimizada para explicar o churn são o foco da Semana 10 em `18/12`). O objetivo aqui é formar **grupos comportamentais muito bem segregados, estáveis, interpretáveis e acionáveis** — partindo das **4 variáveis base da Aula 3 de Tech** (`treinos por semana nas 12 semanas até o corte`, `dias desde o último treino`, `tempo de casa em dias` e `% dos treinos ao ar livre [corrida, caminhada e pedal]`) e avaliando até 1–2 variáveis comportamentais adicionais se melhorarem a coesão/separação dos grupos, **sem jamais colocar a variável de `churn`/saída dentro do K-Means**.
+    2. Avaliar tratamento de cauda longa (teto ou `log` em variáveis assimétricas como `dias sem treino` ou `km`) e **padronizar obrigatoriamente** com `StandardScaler` ($z = (x - \text{média})/\text{desvio}$) antes de calcular a distância euclidiana.
+    3. Rodar o **K-Means** de $k = 2$ a $8$ (`n_init = 10`, `random_state = 0` fixo) e avaliar o agrupamento pelas **4 Lentes da Aula 3 de Tech**:
+       - *Lente 1:* **Inércia / Método do Cotovelo** (onde a curva dobra, ex.: entre $k=4$ e $k=5$);
+       - *Lente 2:* **Coeficiente de Silhueta** (`silhouette_score` na régua de Kaufman & Rousseeuw);
+       - *Lente 3:* **Estabilidade por Reamostragem** (`adjusted_rand_score` em 5 a 10 reamostras com reposição, validando $\text{Rand} > 0,90$, onde $k=4$ atinge `0,999`);
+       - *Lente 4:* **Leitura de Negócio** (tamanho $n$, **perfil em medianas na unidade original** e cruzamento descritivo pós-agrupamento com a **saída histórica em 60 dias** de cada grupo, como nos 4 grupos de referência da aula: *Parados*, *Ativos ao ar livre*, *Ativos em ambiente fechado* e *Veteranos*).
+    4. Incluir no notebook `03_segmentacao_clusters.ipynb` a seção de **Perguntas Diagnósticas para Melhoria do Algoritmo** e registrar todas as escolhas (variáveis, escala, `random_state` e $k$) em `decisoes/` e `decisoes.md`.
   - **📊 Trio Negócios (3 pessoas):**
-    1. Validar os 3 a 4 clusters gerados por Tech frente aos **5 Critérios de Segmentação de Negócios** (*Acionabilidade, Diferenciação de Resposta, Estabilidade no Tempo, Viabilidade Econômica e Mensurabilidade*).
-    2. Definir em conjunto com Tech os nomes executivos e a interpretação de negócio de cada segmento (garantindo que os mesmos 3–4 segmentos sejam usados tanto no relatório de Negócios quanto no Mini Deck de Tech).
+    1. Validar os 3 a 4 clusters gerados por Tech frente aos **4 Critérios da Aula 3 de Tech** (*Distinto, Estável, Grande o bastante e Acionável*) e aos **5 Critérios de Negócios** (*Acionabilidade, Diferenciação de Resposta, Estabilidade no Tempo, Viabilidade Econômica e Mensurabilidade*).
+    2. Traduzir os números frios dos grupos (`Grupo 1, 2, 3, 4`) para **nomes executivos de perfil e uma frase de negócio por grupo** (*"O nome resume o perfil e é uma hipótese a testar"*), garantindo que os mesmos segmentos alimentem tanto o *Customer Segmentation Report* quanto o *Mini Deck*.
 
 ---
 
