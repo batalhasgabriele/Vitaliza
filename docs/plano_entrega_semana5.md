@@ -1,5 +1,7 @@
 # Roadmap e Controle de Execução — Entregáveis da Semana 5 (Vitaliza)
 
+> **08/11/2026 — execução na `dev`:** Etapas 5 e 6 concluídas no formato local Markdown: personas, hipóteses, piloto, mini deck e validação suplementar. Três notebooks executados sem erro, 13 testes aprovados e 14 hashes Bronze conferidos. Ver `saidas/qa_entrega_semana5.md` para limites. Exportação e submissão externa não realizadas. Registros de 05/11 abaixo preservam o histórico da primeira versão.
+
 > **Prazo Oficial de Submissão (Adalove):** `15/11/2026 até 23:59` (Avaliação Formativa / Feedback)
 > **Regra de Governança Operacional:** Este documento é o **painel central de controle da Semana 5**. O agente de IA deve **obrigatoriamente consultar e atualizar este arquivo sempre que concluir uma etapa e/ou antes de iniciar uma nova etapa**, garantindo rastreabilidade ponta a ponta sem perda de contexto.
 
@@ -32,8 +34,8 @@
 | **Etapa 2** | 💻 Tech & 📊 Negócios *(Base Comum)* | **EDA Parte 1: Perfilamento Robusto (Mediana/IQR), Curva de Sobrevivência (Vale da Morte M2/M3), Ponto Cego das Lojas e Ranking AUC-ROC + Árvore MECE Inicial** | ✅ **Concluído** | `src/processar_eda.py`<br>`src/gerar_graficos_eda.py`<br>`notebooks/02_eda_e_hipoteses.ipynb`<br>`saidas/eda_e_hipoteses_vitaliza.md`<br>4 gráficos em `saidas/` | [ADR 005](../decisoes/005-diretrizes-modelagem-e-hipoteses.md), [ADR 006](../decisoes/006-eda-e-portfolio-hipoteses-mece.md) |
 | **Etapa 3** | 💻 **Dupla Tech** (Código/Gráficos)<br>+ 📊 **Trio Negócios** (Análise Marcos/LGPD) | **EDA Parte 2: Investigação da Subida do Churn em 2026, Análise dos 3 Marcos (`01/03`, `01/06`, `10/08`), Correlações com Variáveis de Controle e Padrão *"1 Tabela + 1 Gráfico + 3 Frases"*** | ✅ **Concluída em 05/11/2026** | **Tech:** `src/analisar_eda_marcos.py`, `notebooks/02_eda_e_hipoteses.ipynb`, `saidas/eda_etapa3_marcos_2026.md`, 4 gráficos e tabelas agregadas<br>**Negócios:** `saidas/customer_segmentation_report_semana5.md` (marcos e limitações) | [ADR 010](../decisoes/010-eda-parte2-churn-marcos-2026.md) |
 | **Etapa 4** | 🤝 **Ponte Tech + Negócios**<br>*(Sincronização Obrigatória)* | **Engenharia de Atributos dos `14.753` Pagantes Ativos e Clusterização Não Supervisionada (3 a 4 Segmentos sem Target)** *(Alinhado com Aula 3 de Negócios e Aula 3 de Tech)* | ✅ **Concluída em 05/11/2026** | **Tech:** `src/segmentacao_clientes.py`, `notebooks/03_segmentacao_clusters.ipynb`, `dados/processados/ouro/features_segmentacao_ativos_set2026.parquet`, `dados/processados/ouro/segmentos_ativos_set2026.parquet`, 4 gráficos e tabelas agregadas<br>**Negócios:** três nomes executivos e validação preliminar nos 5 critérios | [ADR 011](../decisoes/011-segmentacao-pagantes-ativos.md) |
-| **Etapa 5** | 📊 **Trio Negócios** *(Líder)*<br>+ 💻 Tech *(Apoio Gráficos)* | **Redação Executiva do *Customer Segmentation Report* (Semana 5)** *(Cartões de Persona, Hipóteses de Drivers por Segmento, Priorização de Canais/Tetos, Visualizações da EDA e Limitações/LGPD)* | 🚧 **Em andamento desde 05/11/2026** | **Negócios:** `saidas/customer_segmentation_report_semana5.md`<br>**Documento mestre:** `saidas/resolucao_case_vitaliza_semana5.md` | `ADR 012` *(a criar ao fechar a estratégia)* |
-| **Etapa 6** | 💻 **Dupla Tech** *(Líder)*<br>+ 📊 Negócios *(Revisão QA)* | **Construção do *Mini Deck de EDA* e Revisão Final de Qualidade (QA) para Entrega da Semana 5** *(Alinhado com Aula 4 de Tech)* | 🔲 **Pendente** | **Exclusivo Tech:**<br>`saidas/mini_deck_eda_semana5.md`<br>Checklist final dos notebooks `01`, `02` e `03` | `ADR 013` *(a criar)* |
+| **Etapa 5** | 📊 Negócios + 💻 Tech | **Customer Segmentation Report** | ✅ **Concluída localmente em 08/11** | `saidas/customer_segmentation_report_semana5.md`, documento mestre | [ADR 012](../decisoes/012-personas-e-priorizacao-semana5.md) |
+| **Etapa 6** | 💻 Tech + 📊 Negócios | **Mini deck e QA** | ✅ **Concluída localmente em 08/11; publicação pendente** | `saidas/mini_deck_eda_semana5.md`, `saidas/qa_entrega_semana5.md` | [ADR 013](../decisoes/013-validacao-e-mini-deck-semana5.md) |
 
 ---
 
@@ -124,9 +126,9 @@ O grupo está dividido em duas frentes complementares:
 
 ---
 
-### 🚧 Etapa 5 — Redação do *Customer Segmentation Report* (Artefato de Negócios da Semana 5)
-- **Status:** **Em andamento desde 05/11/2026**
-- **Andamento:** documento mestre de resolução e continuidade criado; base empírica do relatório atualizada com os três segmentos. Permanecem pendentes os cartões de persona, hipóteses estruturadas e priorização preliminar de canais/orçamento.
+### ✅ Etapa 5 — Redação do *Customer Segmentation Report* (Artefato de Negócios da Semana 5)
+- **Status:** **Concluída localmente em 08/11/2026**
+- **Resultado:** três cartões empíricos, hipóteses nos cinco galhos, prioridade de piloto e monitoramento, orçamento e limitações. Contato condicionado à elegibilidade, sem atribuir uplift individual.
 - **Responsável Principal:** **📊 Trio de Negócios (3 pessoas)** *(editando exclusivamente `saidas/customer_segmentation_report_semana5.md`)*
 - **Escopo Obrigatório:**
   1. Descrição executiva dos **3 a 4 segmentos** com **Cartões de Persona** completos (quem são, tamanho $n$ e %, receita líquida representada, comportamento de uso, canal e vínculo contratual — usando os números exatos da Etapa 4).
@@ -137,8 +139,8 @@ O grupo está dividido em duas frentes complementares:
 
 ---
 
-### 🔲 Etapa 6 — Construção do *Mini Deck de EDA* (Artefato de Tecnologia) e QA Final da Semana 5
-- **Status:** **Pendente (iniciar após Etapa 5 e/ou Aula 4 de Tech)**
+### ✅ Etapa 6 — Construção do *Mini Deck de EDA* (Artefato de Tecnologia) e QA Final da Semana 5
+- **Status:** **Mini deck de oito slides, validação suplementar e execução dos três notebooks concluídos em 08/11. Formato local Markdown; exportação e publicação pendentes.**
 - **Responsável Principal:** **💻 Dupla de Tecnologia (2 pessoas)** *(editando exclusivamente `saidas/mini_deck_eda_semana5.md`)* + **Revisão Cruzada com Negócios**
 - **Escopo Obrigatório:**
   1. Estruturar o **Mini Deck analítico** contando a história completa dos dados (Qualidade e Limpeza $\rightarrow$ Subida do Churn em 2026 e os 3 Marcos $\rightarrow$ Padrões de Comportamento e Correlações Controladas $\rightarrow$ Sustentação Empírica dos Segmentos).

@@ -209,3 +209,13 @@ Ao criar ou alterar um tratamento:
 - [ADR 010 — EDA Parte 2](../decisoes/010-eda-parte2-churn-marcos-2026.md)
 - [ADR 014 — Arquitetura medalhão](../decisoes/014-arquitetura-medalhao-dados.md)
 - [ADR 015 — Gate Bronze→Prata](../decisoes/015-gate-reprodutibilidade-bronze-prata.md)
+
+## Complemento de validação — 08/11/2026
+
+| Registro | Alteração | Camadas afetadas | Evidência |
+|---|---|---|---|
+| VAL-001 | Sensibilidade em três especificações, k=2…8 e bootstrap com reposição | Somente agregados em saídas; Ouro preservada | `src/validar_entrega_semana5.py`, `saidas/validacao_semana5.md` |
+| VAL-002 | ICs de diferenças ITT e correção de três testes | Nova tabela agregada; experimento original preservado | `saidas/tabelas/campanha_ago26_incerteza.csv` |
+| DOC-001 | Personas, orçamento do piloto e qualificações de receita/AUC/sobrevivência | Relatório, documento mestre, mini deck | ADRs 012 e 013 |
+
+Não houve nova limpeza, exclusão de pessoas ou edição dos dados brutos neste fechamento. Validação suplementar não certifica reexecução integral da cadeia.

@@ -1,4 +1,7 @@
 # Relatório Executivo: Análise Exploratória de Dados (EDA) e Portfólio de Hipóteses MECE
+
+> **Qualificação metodológica — 08/11/2026:** este relatório preserva a EDA histórica. As AUCs abaixo são discriminações retrospectivas com janelas alinhadas ao cancelamento/corte; não demonstram acurácia prospectiva. A curva de proporção de cancelados por duração não estima sobrevivência com censura. “Efeito”, “protetor” e “causal” devem ser lidos como associação ou hipótese a testar. Para conclusões executivas vigentes, consultar [o relatório da Semana 5](customer_segmentation_report_semana5.md).
+
 **Projeto:** Vitaliza - Arquitetura de Retenção Preditiva  
 **Liderança:** Camila Ferraz (VP de Crescimento e Retenção) & Cientista de Dados Líder  
 **Data de Corte Oficial:** 30/09/2026 às 23:59:59 (Horário de Brasília)  
