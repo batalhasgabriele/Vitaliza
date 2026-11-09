@@ -75,3 +75,6 @@ uv run --system-certs --with-requirements requirements-data.txt python src/limpe
 ## Definition of Done
 
 O gate é considerado concluído porque as fontes foram inventariadas, a Bronze permaneceu intacta, os resultados anteriores foram reproduzidos, os artefatos Prata foram gerados nos caminhos medalhão e os alertas foram documentados. A próxima etapa autorizável é a EDA Parte 2, começando pela série histórica de churn e pelos três marcos de 2026.
+# Relação com o pipeline completo
+
+Este documento descreve o gate da Bronze. Para seguir até Prata/Ouro, consultar [pipeline ETL e Data Quality](00_pipeline_etl_data_quality.md). A validação de migração e idempotência da EDA é um controle adicional, registrado em [reconciliação](08_reconciliacao_dados_indicadores.md); não deve ser confundido com reexecução integral de todos os produtores.

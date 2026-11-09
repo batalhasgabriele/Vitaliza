@@ -4,6 +4,8 @@ dados/brutos/
 
 # Regra de governança do projeto: dados e credenciais fora do repositório
 /material_estudo/
+/dados/execucoes_engenharia/
+/dados/validacao_engenharia_baseline/
 
 .env
 

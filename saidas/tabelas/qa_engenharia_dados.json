@@ -1,0 +1,508 @@
+{
+  "run_id": "20261109T001700Z_df73ad48",
+  "codigo_sha256": "f26ca61021024a40b9de92c4b84cb45eba22e007506accccb0a26979940b4d70",
+  "entradas_sha256": {
+    "amizades_limpas.parquet": "e2e800d4cfa66d02df2f3b725ec35a2384f93f5b03c148bf8c3a1ab68a1b9c65",
+    "assinaturas_limpas.parquet": "2e2958121c77eaa2a39f531efe4d42064a02e0abf4669bfe74750f6bc27ec42d",
+    "atividades_limpas.parquet": "6f80bb6d08a6b1ab3ef03fae5d549106bc479bdef27869fa8d2f2d853facb809",
+    "campanha_ago26_limpa.parquet": "50f5ff5a5b067197d69710a6febf9a88126bfaf29b7e6295166a66ed8a2ccbbb",
+    "eventos_assinatura_limpos.parquet": "643d15b44d5bf9ded351554efbdf314d4b7173805b45e8bf5035a5ac4c6a2641",
+    "feed_posts_limpos.parquet": "2fb0c820ceba0b17140b4e34de85459c59e5e6a0ca0fda27e6145981e06831ea",
+    "onboarding_limpo.parquet": "2260708e69c1cbf822abd0eb87ae6eab928fb0c903300e3634df71819a6fd3ac",
+    "pagamentos_limpos.parquet": "12e64d7d71ea8d1bf6dc83b72a8cb871290927fdb86c661a04db6651c69a3367",
+    "pesquisa_saida_limpa.parquet": "d92fea116be185f7fe0a2a0323dd6154a193894a5a86b89e66f16d826939b8d3",
+    "tickets_suporte_limpos.parquet": "144d842f4e6e1990fda3f5d1f1ee3b4cc419e4a7946adca06dfcdadd481428be",
+    "uso_mensal_limpo.parquet": "990d33429972b809584d88ce8803d5379f6c0cc2ea128391e5a55beea04a0b3c",
+    "usuarios_limpo.parquet": "7ba00e27ae60862a8dfe9fc185ac7f4180fe39198fc1cd0f85ad28a447caa966"
+  },
+  "checks": [
+    {
+      "tabela": "usuarios_limpo",
+      "teste": "chave_candidata",
+      "status": "PASS",
+      "detalhe": ""
+    },
+    {
+      "tabela": "usuarios_limpo",
+      "teste": "referencia_user_id",
+      "status": "PASS",
+      "quantidade": 0
+    },
+    {
+      "tabela": "assinaturas_limpas",
+      "teste": "chave_candidata",
+      "status": "PASS",
+      "detalhe": ""
+    },
+    {
+      "tabela": "assinaturas_limpas",
+      "teste": "referencia_user_id",
+      "status": "PASS",
+      "quantidade": 0
+    },
+    {
+      "tabela": "onboarding_limpo",
+      "teste": "chave_candidata",
+      "status": "PASS",
+      "detalhe": ""
+    },
+    {
+      "tabela": "onboarding_limpo",
+      "teste": "referencia_user_id",
+      "status": "PASS",
+      "quantidade": 0
+    },
+    {
+      "tabela": "atividades_limpas",
+      "teste": "chave_candidata",
+      "status": "PASS",
+      "detalhe": ""
+    },
+    {
+      "tabela": "atividades_limpas",
+      "teste": "referencia_user_id",
+      "status": "PASS",
+      "quantidade": 0
+    },
+    {
+      "tabela": "pagamentos_limpos",
+      "teste": "chave_candidata",
+      "status": "PASS",
+      "detalhe": ""
+    },
+    {
+      "tabela": "pagamentos_limpos",
+      "teste": "referencia_user_id",
+      "status": "PASS",
+      "quantidade": 0
+    },
+    {
+      "tabela": "uso_mensal_limpo",
+      "teste": "chave_candidata",
+      "status": "PASS",
+      "detalhe": ""
+    },
+    {
+      "tabela": "uso_mensal_limpo",
+      "teste": "referencia_user_id",
+      "status": "PASS",
+      "quantidade": 0
+    },
+    {
+      "tabela": "campanha_ago26_limpa",
+      "teste": "chave_candidata",
+      "status": "PASS",
+      "detalhe": ""
+    },
+    {
+      "tabela": "campanha_ago26_limpa",
+      "teste": "referencia_user_id",
+      "status": "PASS",
+      "quantidade": 0
+    },
+    {
+      "tabela": "pesquisa_saida_limpa",
+      "teste": "chave_candidata",
+      "status": "PASS",
+      "detalhe": ""
+    },
+    {
+      "tabela": "pesquisa_saida_limpa",
+      "teste": "referencia_user_id",
+      "status": "PASS",
+      "quantidade": 0
+    },
+    {
+      "tabela": "feed_posts_limpos",
+      "teste": "chave_candidata",
+      "status": "PASS",
+      "detalhe": ""
+    },
+    {
+      "tabela": "feed_posts_limpos",
+      "teste": "referencia_user_id",
+      "status": "PASS",
+      "quantidade": 0
+    },
+    {
+      "tabela": "tickets_suporte_limpos",
+      "teste": "chave_candidata",
+      "status": "PASS",
+      "detalhe": ""
+    },
+    {
+      "tabela": "tickets_suporte_limpos",
+      "teste": "referencia_user_id",
+      "status": "PASS",
+      "quantidade": 0
+    },
+    {
+      "tabela": "amizades_limpas",
+      "teste": "chave_candidata",
+      "status": "PASS",
+      "detalhe": ""
+    },
+    {
+      "tabela": "amizades_limpas",
+      "teste": "referencia_seguidor_id",
+      "status": "PASS",
+      "quantidade": 0
+    },
+    {
+      "tabela": "amizades_limpas",
+      "teste": "referencia_seguido_id",
+      "status": "PASS",
+      "quantidade": 0
+    },
+    {
+      "tabela": "eventos_assinatura_limpos",
+      "teste": "chave_candidata",
+      "status": "WARNING",
+      "detalhe": "Sem identificador de evento: chave composta requer decisão"
+    },
+    {
+      "tabela": "eventos_assinatura_limpos",
+      "teste": "referencia_user_id",
+      "status": "PASS",
+      "quantidade": 0
+    }
+  ],
+  "contratos_observados": [
+    {
+      "tabela": "usuarios_limpo",
+      "linhas": 64948,
+      "chave_candidata": [
+        "user_id"
+      ],
+      "schema": {
+        "user_id": "str",
+        "email": "str",
+        "data_cadastro": "str",
+        "data_nascimento": "str",
+        "sexo": "str",
+        "cidade": "str",
+        "uf": "str",
+        "cep_prefixo": "str",
+        "canal_aquisicao": "str",
+        "sistema": "str",
+        "versao_app": "str",
+        "relogio_conectado": "str",
+        "flag_conta_interna": "int64",
+        "data_cadastro_dt": "datetime64[us]",
+        "flag_cadastro_apos_corte": "int64",
+        "data_nascimento_dt": "datetime64[us]",
+        "idade": "float64"
+      }
+    },
+    {
+      "tabela": "assinaturas_limpas",
+      "linhas": 32583,
+      "chave_candidata": [
+        "assinatura_id"
+      ],
+      "schema": {
+        "assinatura_id": "str",
+        "user_id": "str",
+        "plano_atual": "str",
+        "canal_cobranca": "str",
+        "inicio": "str",
+        "status_atual": "str",
+        "renovacao_automatica": "str",
+        "data_fim": "str",
+        "motivo_fim": "str"
+      }
+    },
+    {
+      "tabela": "onboarding_limpo",
+      "linhas": 63929,
+      "chave_candidata": [
+        "onboarding_id"
+      ],
+      "schema": {
+        "onboarding_id": "str",
+        "user_id": "str",
+        "respondido_em": "str",
+        "objetivo_texto": "str",
+        "como_conheceu": "str",
+        "nivel": "str",
+        "dias_por_semana": "str",
+        "dias_semana_pretendidos": "float64",
+        "flag_onb_objetivo_preenchido": "int64",
+        "flag_onb_nivel_preenchido": "int64",
+        "flag_onb_dias_preenchido": "int64",
+        "flag_onb_como_conheceu_preenchido": "int64"
+      }
+    },
+    {
+      "tabela": "atividades_limpas",
+      "linhas": 1241461,
+      "chave_candidata": [
+        "atividade_id"
+      ],
+      "schema": {
+        "atividade_id": "str",
+        "user_id": "str",
+        "inicio": "str",
+        "tipo": "str",
+        "duracao_min": "float64",
+        "distancia_km": "float64",
+        "ritmo_min_km": "float64",
+        "fc_media": "float64",
+        "origem": "str",
+        "gps_ok": "bool",
+        "treino_com": "str",
+        "tipo_canonico": "str",
+        "inicio_dt_original": "datetime64[us]",
+        "inicio_dt_br": "datetime64[us]",
+        "flag_duplicata_relogio": "bool",
+        "flag_duracao_zero": "bool",
+        "flag_distancia_acima_200km": "bool",
+        "flag_apos_corte": "bool"
+      }
+    },
+    {
+      "tabela": "pagamentos_limpos",
+      "linhas": 165548,
+      "chave_candidata": [
+        "pagamento_id"
+      ],
+      "schema": {
+        "pagamento_id": "str",
+        "user_id": "str",
+        "data_hora": "str",
+        "valor": "str",
+        "metodo": "str",
+        "status": "str",
+        "tentativa": "int64",
+        "valor_num": "float64",
+        "data_hora_br": "datetime64[ns]",
+        "dia_br": "object",
+        "flag_duplicata_aprovada_dia": "bool",
+        "taxa_canal": "float64",
+        "valor_liquido": "float64"
+      }
+    },
+    {
+      "tabela": "uso_mensal_limpo",
+      "linhas": 591662,
+      "chave_candidata": [
+        "user_id",
+        "mes"
+      ],
+      "schema": {
+        "user_id": "str",
+        "mes": "str",
+        "atividades": "int64",
+        "atividades_ar_livre": "int64",
+        "atividades_video": "int64",
+        "minutos": "int64",
+        "dias_ativos": "int64",
+        "sessoes_app": "int64",
+        "mes_dt": "datetime64[us]"
+      }
+    },
+    {
+      "tabela": "campanha_ago26_limpa",
+      "linhas": 14120,
+      "chave_candidata": [
+        "user_id"
+      ],
+      "schema": {
+        "user_id": "str",
+        "grupo": "str",
+        "enviado_em": "str",
+        "canal": "str",
+        "titulo_mensagem": "str",
+        "oferta": "str",
+        "abriu_push": "bool",
+        "abriu_email": "bool",
+        "clicou": "bool",
+        "enviado_em_br": "datetime64[ns]"
+      }
+    },
+    {
+      "tabela": "pesquisa_saida_limpa",
+      "linhas": 643,
+      "chave_candidata": [
+        "resposta_id"
+      ],
+      "schema": {
+        "resposta_id": "str",
+        "user_id": "str",
+        "respondido_em": "str",
+        "motivo_principal": "str",
+        "comentario": "str",
+        "respondido_em_dt": "datetime64[us]"
+      }
+    },
+    {
+      "tabela": "feed_posts_limpos",
+      "linhas": 119187,
+      "chave_candidata": [
+        "post_id"
+      ],
+      "schema": {
+        "post_id": "str",
+        "user_id": "str",
+        "data_hora": "str",
+        "texto": "str",
+        "curtidas": "int64",
+        "data_hora_dt": "datetime64[us]",
+        "flag_apos_corte": "bool"
+      }
+    },
+    {
+      "tabela": "tickets_suporte_limpos",
+      "linhas": 4422,
+      "chave_candidata": [
+        "ticket_id"
+      ],
+      "schema": {
+        "ticket_id": "str",
+        "user_id": "str",
+        "aberto_em": "str",
+        "canal": "str",
+        "texto_cliente": "str",
+        "categoria_atendente": "str",
+        "status": "str",
+        "resolvido_em": "str",
+        "aberto_em_dt": "datetime64[us]",
+        "resolvido_em_dt": "datetime64[us]",
+        "flag_aberto_apos_corte": "bool",
+        "flag_resolvido_apos_corte": "bool",
+        "resolvido_em_ate_corte_dt": "datetime64[us]"
+      }
+    },
+    {
+      "tabela": "amizades_limpas",
+      "linhas": 113207,
+      "chave_candidata": [
+        "seguidor_id",
+        "seguido_id"
+      ],
+      "schema": {
+        "seguidor_id": "str",
+        "seguido_id": "str",
+        "desde": "str",
+        "desde_dt": "datetime64[us]",
+        "flag_apos_corte": "bool"
+      }
+    },
+    {
+      "tabela": "eventos_assinatura_limpos",
+      "linhas": 275565,
+      "chave_candidata": null,
+      "schema": {
+        "user_id": "str",
+        "data_hora": "str",
+        "evento": "str",
+        "plano": "str",
+        "canal_cobranca": "str",
+        "detalhe": "str",
+        "data_hora_br": "datetime64[ns]"
+      }
+    }
+  ],
+  "comparacao_baseline": [
+    {
+      "populacao_igual": true,
+      "colunas_alteradas": []
+    },
+    {
+      "populacao_igual": true,
+      "colunas_alteradas": []
+    }
+  ],
+  "idempotencia": {
+    "populacao_igual": true,
+    "colunas_alteradas": []
+  },
+  "conservacao_antes_publicacao": [
+    {
+      "arquivo": "ouro/churn_mensal_2025_2026.parquet",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "ouro/churn_mensal_por_plano_2025_2026.parquet",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "ouro/features_eda_corte_set2026.parquet",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "ouro/features_segmentacao_ativos_set2026.parquet",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "ouro/segmentos_ativos_set2026.parquet",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "tabelas/campanha_ago26_incerteza.csv",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "tabelas/campanha_ago26_itt_30d.csv",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "tabelas/centroides_segmentos.csv",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "tabelas/churn_mensal_2025_2026.csv",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "tabelas/churn_mensal_por_plano_2025_2026.csv",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "tabelas/correlacao_controlada.csv",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "tabelas/criterios_segmentacao.csv",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "tabelas/metadados_segmentacao.json",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "tabelas/metricas_clusterizacao.csv",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "tabelas/metricas_etapa3.json",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "tabelas/outliers_por_modalidade.csv",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "tabelas/pca_segmentacao.csv",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "tabelas/perfil_segmentos.csv",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "tabelas/pesquisa_saida_cobertura.csv",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "tabelas/qa_notebooks_semana5.json",
+      "hash_igual": true
+    },
+    {
+      "arquivo": "tabelas/robustez_segmentacao_semana5.csv",
+      "hash_igual": true
+    }
+  ],
+  "aprovado": true,
+  "publicado": true
+}

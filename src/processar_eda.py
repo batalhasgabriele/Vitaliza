@@ -1,6 +1,7 @@
 import sys
 import os
 import re
+from pathlib import Path
 import numpy as np
 import pandas as pd
 from sklearn.metrics import roc_auc_score
@@ -13,7 +14,9 @@ print("Iniciando processamento da EDA Vitaliza (Sem Vazamento Pós-Desfecho)..."
 DATA_CORTE = pd.Timestamp("2026-09-30 23:59:59")
 
 # 1. Carregar usuarios (com higienização demográfica e de casing)
-df_usr = pd.read_csv("dados/brutos/usuarios.csv")
+df_usr = pd.read_parquet("dados/processados/prata/usuarios_limpo.parquet")
+# Preservar o contrato da Ouro histórica; flags adicionais permanecem na Prata.
+df_usr = df_usr.drop(columns=["flag_conta_interna", "flag_cadastro_apos_corte", "idade"], errors="ignore")
 contas_internas = set(
     df_usr[df_usr["email"].str.endswith("@vitaliza.com.br", na=False)]["user_id"]
 )
@@ -35,13 +38,22 @@ df_usr["sexo"] = (
 )
 df_usr["sistema"] = df_usr["sistema"].astype(str).str.lower()
 df_usr["tem_relogio"] = (df_usr["relogio_conectado"] != "nenhum").astype(int)
+# Compatibilidade da Ouro: manter coluna numérica legada e texto com zeros.
+# O identificador canônico continua textual na Prata.
+df_usr["cep_prefixo"] = pd.to_numeric(df_usr["cep_prefixo"], errors="raise")
 df_usr["cep_prefixo_str"] = (
     df_usr["cep_prefixo"].fillna(0).astype(int).astype(str).str.zfill(3)
 )
 df_usr.loc[df_usr["cep_prefixo"].isna(), "cep_prefixo_str"] = np.nan
 
 # 2. Carregar assinaturas (excluindo as 60 contas internas / cortesia)
-df_ass = pd.read_csv("dados/brutos/assinaturas.csv")
+df_ass = pd.read_parquet("dados/processados/prata/assinaturas_limpas.parquet")
+if df_ass["user_id"].isna().any() or df_ass["user_id"].duplicated().any():
+    raise ValueError("A EDA requer uma assinatura por usuário neste snapshot.")
+if df_usr["user_id"].isna().any() or df_usr["user_id"].duplicated().any():
+    raise ValueError("Chave de usuários inválida.")
+if not df_ass["user_id"].isin(df_usr["user_id"]).all():
+    raise ValueError("Assinatura sem usuário correspondente.")
 df_ass = df_ass[
     (~df_ass["user_id"].isin(contas_internas)) & (df_ass["plano_atual"] != "cortesia")
 ].copy()
@@ -95,7 +107,7 @@ print(f"Total assinaturas pagas: {len(df_ass):,} | Churn: {df_ass['churn'].mean(
 janela_user = df_ass[["user_id", "inicio_dt", "data_desfecho", "mes_inicio", "mes_desfecho", "meses_vigencia"]].copy()
 
 # 3. Carregar Onboarding (Dimensão 1 — Completude)
-df_onb = pd.read_csv("dados/brutos/onboarding.csv")
+df_onb = pd.read_parquet("dados/processados/prata/onboarding_limpo.parquet")
 
 
 def extrair_dias(val):
@@ -141,8 +153,8 @@ def harmonizar_data(dt_series):
     return res
 
 
-df_ev = pd.read_csv("dados/brutos/eventos_assinatura.csv")
-df_ev["data_hora_dt"] = harmonizar_data(df_ev["data_hora"])
+df_ev = pd.read_parquet("dados/processados/prata/eventos_assinatura_limpos.parquet")
+df_ev["data_hora_dt"] = df_ev["data_hora_br"]
 df_ev = df_ev[df_ev["data_hora_dt"] <= DATA_CORTE].copy()
 
 ev_user = df_ev.groupby("user_id").agg(
@@ -161,8 +173,8 @@ ev_user = df_ev.groupby("user_id").agg(
 )
 
 # 5. Carregar pagamentos
-df_pag = pd.read_csv("dados/brutos/pagamentos.csv", low_memory=False)
-df_pag["data_hora_dt"] = harmonizar_data(df_pag["data_hora"])
+df_pag = pd.read_parquet("dados/processados/prata/pagamentos_limpos.parquet")
+df_pag["data_hora_dt"] = df_pag["data_hora_br"]
 df_pag = df_pag[df_pag["data_hora_dt"] <= DATA_CORTE].copy()
 
 
@@ -176,7 +188,7 @@ def limpar_valor(v):
         return 0.0
 
 
-df_pag["valor_num"] = df_pag["valor"].apply(limpar_valor)
+# valor_num já foi validado na Prata. Não transformar erro monetário em zero.
 
 df_pag_aprov = df_pag[df_pag["status"] == "aprovado"].copy()
 df_pag_aprov["data_dia"] = df_pag_aprov["data_hora_dt"].dt.date
@@ -212,9 +224,9 @@ pag_falhas = (
 )
 
 # 6. Carregar uso mensal RESTRITO À VIGÊNCIA DE CADA ASSINATURA (Sem vazamento pós-saída!)
-df_uso = pd.read_csv("dados/brutos/uso_mensal.csv")
+df_uso = pd.read_parquet("dados/processados/prata/uso_mensal_limpo.parquet")
 df_uso = df_uso[df_uso["mes"] <= "2026-09"].copy()
-df_uso_vig = df_uso.merge(janela_user, on="user_id", how="inner")
+df_uso_vig = df_uso.merge(janela_user, on="user_id", how="inner", validate="many_to_one")
 # Filtrar estritamente meses dentro da vigência da assinatura (mes_inicio <= mes <= mes_desfecho)
 df_uso_vig = df_uso_vig[
     (df_uso_vig["mes"] >= df_uso_vig["mes_inicio"])
@@ -321,13 +333,13 @@ sup_user = df_sup.groupby("user_id").agg(
 )
 
 # 11. Campanha Agosto 2026
-df_camp = pd.read_csv("dados/brutos/campanha_ago26.csv")
+df_camp = pd.read_parquet("dados/processados/prata/campanha_ago26_limpa.parquet")
 camp_user = df_camp.drop_duplicates(subset=["user_id"]).set_index("user_id")[
     ["abriu_push", "abriu_email", "clicou"]
 ]
 
 # 12. Pesquisa de Saída
-df_pesq = pd.read_csv("dados/brutos/pesquisa_saida.csv")
+df_pesq = pd.read_parquet("dados/processados/prata/pesquisa_saida_limpa.parquet")
 pesq_user = (
     df_pesq.drop_duplicates(subset=["user_id"])
     .set_index("user_id")["motivo_principal"]
@@ -442,7 +454,13 @@ df_master["razao_uso_ultimo_mes"] = df_master["atividades_ultimos_30d"] / (
 
 # Salvar feature store processada
 output_parquet = "dados/processados/ouro/features_eda_corte_set2026.parquet"
-df_master.to_parquet(output_parquet, index=False)
+if len(df_master) != len(df_ass) or not df_master["user_id"].is_unique:
+    raise ValueError("Consolidação alterou a granularidade da população.")
+Path(output_parquet).parent.mkdir(parents=True, exist_ok=True)
+temporario = Path(output_parquet).with_suffix(".tmp.parquet")
+df_master.to_parquet(temporario, index=False)
+pd.read_parquet(temporario, columns=["user_id"])
+os.replace(temporario, output_parquet)
 print(
     f"Feature store salva com sucesso em: {output_parquet} com {len(df_master):,} registros e {df_master.shape[1]} colunas."
 )

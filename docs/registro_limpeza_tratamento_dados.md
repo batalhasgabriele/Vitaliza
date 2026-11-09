@@ -212,6 +212,17 @@ Ao criar ou alterar um tratamento:
 
 ## Complemento de validação — 08/11/2026
 
+### Engenharia de dados e conservação dos resultados
+
+| Registro | Tratamento/controle | Evidência |
+|---|---|---|
+| ENG-001 | Migração de todas as leituras da EDA para Prata; chaves e população verificadas | `src/processar_eda.py` |
+| ENG-002 | Baseline privada, duas execuções em staging e comparação por usuário/atributo | `src/validar_engenharia_dados.py`, `saidas/tabelas/qa_engenharia_dados.json` |
+| ENG-003 | Preservação da coluna numérica legada de CEP na Ouro; texto canônico preservado na Prata e em cep_prefixo_str | ADR 017 |
+| ENG-004 | Auditoria agregada de datas, exposição e candidatos a cobranças duplicadas; sem exclusão automática | `src/auditar_temporalidade.py` |
+
+O resultado de ENG-002 precisa ser lido no JSON da execução: `aprovado` e `publicado` indicam estados distintos. A comparação trata ausente como diferente de zero. Logs e baseline individuais ficam em pastas ignoradas pelo Git. Visão didática: [pipeline ETL e Data Quality](../notebooks/00_pipeline_etl_data_quality.md).
+
 | Registro | Alteração | Camadas afetadas | Evidência |
 |---|---|---|---|
 | VAL-001 | Sensibilidade em três especificações, k=2…8 e bootstrap com reposição | Somente agregados em saídas; Ouro preservada | `src/validar_entrega_semana5.py`, `saidas/validacao_semana5.md` |

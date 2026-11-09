@@ -16,6 +16,8 @@ Remover plano e canal preserva a estrutura (ARI 0,988). A variante compacta de q
 
 ## Como usar este documento
 
+Para entender a engenharia que sustenta os resultados, começar pelo [mapa do pipeline](../notebooks/00_pipeline_etl_data_quality.md). Ele conecta contratos, linhagem, auditoria temporal, reconciliação e reprocessamento. A migração da EDA para Prata é validada contra baseline privada antes de publicar; evidência em `tabelas/qa_engenharia_dados.json` e ADR 017.
+
 Este é o ponto de entrada para quem precisa entender o projeto sem ler primeiro todos os scripts, notebooks e decisões técnicas. Ele reúne:
 
 - o problema de negócio;

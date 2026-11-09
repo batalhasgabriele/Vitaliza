@@ -35,6 +35,7 @@ Como o projeto é desenvolvido de forma concorrente por **5 integrantes e múlti
 |---|---|---|---|---|
 | 012 | [Personas e priorização](decisoes/012-personas-e-priorizacao-semana5.md) | Igor / Codex | dev | Documentada; piloto não executado |
 | 013 | [Validação e mini deck](decisoes/013-validacao-e-mini-deck-semana5.md) | Igor / Codex | dev | Implementada |
+| 017 | [Prata e comparação de resultados](decisoes/017-engenharia-prata-e-comparacao-resultados.md) | Igor / Codex | dev | Implementada; ver QA da execução |
 
 1. Crie um novo arquivo na pasta `decisoes/` seguindo a nomenclatura `NNN-titulo-sucinto.md` (utilize o modelo em [`decisoes/TEMPLATE.md`](decisoes/TEMPLATE.md)).
 2. Preencha os campos obrigatórios: **Data**, **Autor(a)**, **Branch/Worktree**, **Status**, **Contexto**, **Decisão** e **Consequências**.

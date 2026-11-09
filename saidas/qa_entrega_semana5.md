@@ -1,5 +1,7 @@
 # Verificação da entrega — 08/11/2026
 
+> **Complemento de engenharia:** testes ampliados para 16, todos aprovados. Migração da EDA para Prata publicada após duas execuções sem alteração de população ou conteúdo das 101 colunas. O quadro abaixo preserva a verificação anterior; detalhes adicionais em [impacto da engenharia](impacto_engenharia_dados.md).
+
 | Verificação | Resultado observado | Limite |
 |---|---|---|
 | Testes automatizados | 13 passaram | Testes unitários não garantem validade causal |

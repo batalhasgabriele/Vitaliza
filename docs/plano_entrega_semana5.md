@@ -1,5 +1,7 @@
 # Roadmap e Controle de Execução — Entregáveis da Semana 5 (Vitaliza)
 
+> **Engenharia de dados — concluída em 08/11/2026:** EDA migrada para Prata, seis Markdown criados e controles de contratos/relacionamentos executados. Duas execuções preservaram 32.583 usuários e conteúdo das 101 colunas; idempotência confirmada e EDA publicada. Dezesseis testes aprovados. Ver `saidas/impacto_engenharia_dados.md`. Auditoria temporal registra ressalvas; não altera as regras de negócio.
+
 > **08/11/2026 — execução na `dev`:** Etapas 5 e 6 concluídas no formato local Markdown: personas, hipóteses, piloto, mini deck e validação suplementar. Três notebooks executados sem erro, 13 testes aprovados e 14 hashes Bronze conferidos. Ver `saidas/qa_entrega_semana5.md` para limites. Exportação e submissão externa não realizadas. Registros de 05/11 abaixo preservam o histórico da primeira versão.
 
 > **Prazo Oficial de Submissão (Adalove):** `15/11/2026 até 23:59` (Avaliação Formativa / Feedback)
