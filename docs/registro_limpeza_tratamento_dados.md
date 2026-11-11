@@ -209,3 +209,24 @@ Ao criar ou alterar um tratamento:
 - [ADR 010 — EDA Parte 2](../decisoes/010-eda-parte2-churn-marcos-2026.md)
 - [ADR 014 — Arquitetura medalhão](../decisoes/014-arquitetura-medalhao-dados.md)
 - [ADR 015 — Gate Bronze→Prata](../decisoes/015-gate-reprodutibilidade-bronze-prata.md)
+
+## Complemento de validação — 08/11/2026
+
+### Engenharia de dados e conservação dos resultados
+
+| Registro | Tratamento/controle | Evidência |
+|---|---|---|
+| ENG-001 | Migração de todas as leituras da EDA para Prata; chaves e população verificadas | `src/processar_eda.py` |
+| ENG-002 | Baseline privada, duas execuções em staging e comparação por usuário/atributo | `src/validar_engenharia_dados.py`, `saidas/tabelas/qa_engenharia_dados.json` |
+| ENG-003 | Preservação da coluna numérica legada de CEP na Ouro; texto canônico preservado na Prata e em cep_prefixo_str | ADR 017 |
+| ENG-004 | Auditoria agregada de datas, exposição e candidatos a cobranças duplicadas; sem exclusão automática | `src/auditar_temporalidade.py` |
+
+O resultado de ENG-002 precisa ser lido no JSON da execução: `aprovado` e `publicado` indicam estados distintos. A comparação trata ausente como diferente de zero. Logs e baseline individuais ficam em pastas ignoradas pelo Git. Visão didática: [pipeline ETL e Data Quality](../notebooks/00_pipeline_etl_data_quality.md).
+
+| Registro | Alteração | Camadas afetadas | Evidência |
+|---|---|---|---|
+| VAL-001 | Sensibilidade em três especificações, k=2…8 e bootstrap com reposição | Somente agregados em saídas; Ouro preservada | `src/validar_entrega_semana5.py`, `saidas/validacao_semana5.md` |
+| VAL-002 | ICs de diferenças ITT e correção de três testes | Nova tabela agregada; experimento original preservado | `saidas/tabelas/campanha_ago26_incerteza.csv` |
+| DOC-001 | Personas, orçamento do piloto e qualificações de receita/AUC/sobrevivência | Relatório, documento mestre, mini deck | ADRs 012 e 013 |
+
+Não houve nova limpeza, exclusão de pessoas ou edição dos dados brutos neste fechamento. Validação suplementar não certifica reexecução integral da cadeia.

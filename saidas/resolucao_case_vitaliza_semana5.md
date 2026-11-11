@@ -1,12 +1,22 @@
 # Resolução do Case Vitaliza — Semana 5
 
 > **Documento mestre de leitura e continuidade**
-> **Data de atualização:** 05/11/2026
+> **Data de atualização:** 08/11/2026
 > **Data de corte dos dados:** 30/09/2026
-> **Branch da consolidação:** `codex/plano-mestre-vitaliza`
-> **Status:** Etapas 1 a 4 concluídas; Etapa 5 em andamento; Etapa 6 pendente.
+> **Branch da consolidação:** `dev` (versão inicial em `codex/plano-mestre-vitaliza`)
+> **Status:** relatório de negócios e mini deck Markdown concluídos localmente. Validação suplementar e os três notebooks executados. Exportação para PDF/PPTX e submissão permanecem pendentes. Ver [QA e limites](qa_entrega_semana5.md).
+
+## Fechamento executivo em 08/11/2026
+
+Leia o [relatório executivo final](customer_segmentation_report_semana5.md), o [mini deck de oito slides](mini_deck_eda_semana5.md) e a [validação suplementar](validacao_semana5.md). Os três perfis publicados foram preservados. As personas distinguem comportamento observado de motivação hipotética. Propomos apenas um piloto controlado de até 400 elegíveis, com 200 e-mails e 200 controles, custo incremental de envio de R$ 2,00, ainda não executado.
+
+**Correções de interpretação aplicáveis a todo este documento e às versões anteriores:** receita dos segmentos é mensal equivalente estimada, não faturamento de setembro ou receita em risco. AUCs da EDA são associações retrospectivas com janelas diferentes para quem saiu e quem ficou, não validação preditiva prospectiva. A curva por duração não é um estimador de sobrevivência com censura. A divergência de quatro perdas de abril continua sem causa reconciliada. Acessibilidade depende de elegibilidade de contato, não apenas do canal de cobrança.
+
+Remover plano e canal preserva a estrutura (ARI 0,988). A variante compacta de quatro atributos alcança silhueta 0,336 no próprio espaço e ARI 0,931 frente à versão publicada, permanecendo candidata a evolução após auditoria de exposição temporal. Não transplantar a saída histórica do exemplo de julho da aula para as personas de setembro. Ainda não existe observação completa do churn em 60 dias destas personas.
 
 ## Como usar este documento
+
+Para entender a engenharia que sustenta os resultados, começar pelo [mapa do pipeline](../notebooks/00_pipeline_etl_data_quality.md). Ele conecta contratos, linhagem, auditoria temporal, reconciliação e reprocessamento. A migração da EDA para Prata é validada contra baseline privada antes de publicar; evidência em `tabelas/qa_engenharia_dados.json` e ADR 017.
 
 Este é o ponto de entrada para quem precisa entender o projeto sem ler primeiro todos os scripts, notebooks e decisões técnicas. Ele reúne:
 
@@ -326,7 +336,7 @@ O relatório técnico completo está em [`saidas/segmentacao_etapa4.md`](segment
 | Ativos guiados por vídeo | Trabalhar progressão, variedade e aderência de conteúdo. | Não presumir monotonia sem teste específico. |
 | Adormecidos sem hábito | Avaliar reativação controlada, pausa ou conteúdo personalizado. | Risco de “acordar sleeping dogs”; contato deve ser testado, não disparado indiscriminadamente. |
 
-Cartões de persona, hipóteses no formato completo e alocação de canais serão concluídos na Etapa 5.
+Cartões de persona, hipóteses e piloto com orçamento estão concluídos no relatório executivo, seções 6 a 9.
 
 ---
 
@@ -352,7 +362,7 @@ Cartões de persona, hipóteses no formato completo e alocação de canais serã
 | 2. EDA Parte 1 | Concluída | Perfil, sobrevivência, ponto cego e hipóteses MECE. |
 | 3. EDA Parte 2 | Concluída | Churn mensal, três marcos e controles estatísticos. |
 | 4. Segmentação | Concluída | Três segmentos sobre 14.753 ativos. |
-| 5. Relatório de negócios | Em andamento | Base empírica pronta; personas e priorização pendentes. |
+| 5. Relatório de negócios | Concluído localmente | Personas, hipóteses, priorização e orçamento documentados. |
 | 6. Mini deck e QA | Pendente | Deve consolidar a história e validar todos os números. |
 
 O painel operacional oficial é [`docs/plano_entrega_semana5.md`](../docs/plano_entrega_semana5.md).
@@ -511,7 +521,7 @@ Quais números, testes, links e validações provam que a tarefa terminou?
 
 ## 14. Próximos passos objetivos
 
-### Etapa 5 — em andamento
+### Etapa 5 — concluída localmente em 08/11/2026
 
 1. transformar os três segmentos em cartões de persona baseados somente em evidências;
 2. formular hipóteses de drivers no formato ação + público + resultado esperado;
@@ -521,7 +531,7 @@ Quais números, testes, links e validações provam que a tarefa terminou?
 6. revisar limitações e LGPD;
 7. finalizar o Customer Segmentation Report.
 
-### Etapa 6 — pendente
+### Etapa 6 — mini deck e validação suplementar concluídos; empacotamento pendente
 
 1. criar o mini deck;
 2. aplicar o formato “1 tabela + 1 gráfico + 3 frases”;
@@ -547,6 +557,6 @@ Quais números, testes, links e validações provam que a tarefa terminou?
 
 ## Conclusão
 
-O projeto já possui uma base auditada, pipelines reproduzíveis, EDA documentada e três segmentos sustentados pelos dados. O trabalho restante da Semana 5 é principalmente de tradução executiva: transformar os perfis em personas, hipóteses e priorização, e contar a história em um mini deck consistente.
+O projeto possui EDA documentada, três segmentos, personas, hipóteses, priorização e mini deck Markdown. A validação suplementar explicita separação baixa e incerteza experimental. Os três notebooks foram executados. Permanecem eventual exportação para formato de apresentação e publicação/submissão. Auditoria temporal adicional é necessária antes de promover a variante compacta ou afirmar desempenho prospectivo.
 
 A regra para continuar é simples: **números vêm das tabelas estruturadas; interpretação vem dos documentos; decisões novas entram em ADR; e qualquer alteração deve permanecer reproduzível desde a Bronze.**

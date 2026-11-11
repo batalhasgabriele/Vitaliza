@@ -1,0 +1,20 @@
+[
+  {
+    "notebook": "01_inventario_dados.ipynb",
+    "status": "executado_sem_erros",
+    "celulas_codigo": 9,
+    "sha256_fonte": "943f66ef742470dd53866a32d5a1f2618f11213d84edc069b3c816e8e623f0c6"
+  },
+  {
+    "notebook": "02_eda_e_hipoteses.ipynb",
+    "status": "executado_sem_erros",
+    "celulas_codigo": 8,
+    "sha256_fonte": "02c99cf62dd55753f12fa4737812e2330a2c4dbe525f8d1b3b77dd54f0ea3dde"
+  },
+  {
+    "notebook": "03_segmentacao_clusters.ipynb",
+    "status": "executado_sem_erros",
+    "celulas_codigo": 5,
+    "sha256_fonte": "698f335959ca51915572a7378df70e2bf475d68cc13c639f8d74ff1e44c7855e"
+  }
+]

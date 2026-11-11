@@ -1,5 +1,12 @@
+
+# Regra de governança do projeto: dados brutos e credenciais fora do repositório
+dados/brutos/
+
 # Regra de governança do projeto: dados e credenciais fora do repositório
-dados/
+/material_estudo/
+/dados/execucoes_engenharia/
+/dados/validacao_engenharia_baseline/
+
 .env
 
 # Python / Ambientes virtuais / Caches

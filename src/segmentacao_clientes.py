@@ -505,7 +505,7 @@ def _plot_tamanho_receita(perfil: pd.DataFrame) -> None:
     axes[0].barh(data["segmento"], data["n"], color="#146C94")
     axes[0].set(title="Clientes por segmento", xlabel="Assinantes ativos")
     axes[1].barh(data["segmento"], data["receita_liquida_mensal"] / 1_000, color="#F39C12")
-    axes[1].set(title="Receita líquida mensal representada", xlabel="R$ mil/mês")
+    axes[1].set(title="Receita líquida mensal equivalente estimada", xlabel="R$ mil/mês")
     for ax in axes:
         ax.spines[["top", "right"]].set_visible(False)
     fig.tight_layout()
@@ -549,9 +549,10 @@ def gerar_relatorio(
     m = metricas.loc[metricas["k"].eq(k_escolhido)].iloc[0]
     linhas = [
         "# Segmentação dos Pagantes Ativos — Etapa 4",
+        "> Receita mensal equivalente estimada, não faturamento ou receita em risco. Acessibilidade depende de elegibilidade de contato. Consulte [a validação suplementar](validacao_semana5.md) para sensibilidade em k=2…8 e limitações.",
         "",
-        "**Data de corte:** 30/09/2026  ",
-        f"**População:** {POPULACAO_OFICIAL:,} pagantes ativos  ".replace(",", "."),
+        "**Data de corte:** 30/09/2026",
+        f"**População:** {POPULACAO_OFICIAL:,} pagantes ativos".replace(",", "."),
         "**Método:** K-Means sobre atributos comportamentais, sociais, contratuais e de necessidade; sem churn ou informação de saída.",
         "",
         "## 1. Escolha do número de segmentos",
@@ -614,8 +615,8 @@ def main() -> None:
             {"criterio": "Mensurável", "avaliacao": "Atende", "evidencia": "Tamanho, participação e receita calculados para os 14.753 ativos."},
             {"criterio": "Substancial", "avaliacao": "Atende", "evidencia": f"Menor grupo representa {perfil['pct_base'].min():.1f}% da base."},
             {"criterio": "Diferenciável", "avaliacao": "Atende com ressalva", "evidencia": f"Silhouette={metricas.loc[metricas.k.eq(k_escolhido), 'silhouette_amostra'].iloc[0]:.3f}; interpretar junto aos centroides."},
-            {"criterio": "Acessível", "avaliacao": "Atende", "evidencia": "Todos são assinantes ativos alcançáveis por canais próprios; canal de cobrança é perfilado."},
-            {"criterio": "Acionável", "avaliacao": "Atende preliminarmente", "evidencia": "Recência, hábito, modalidade, social e suporte permitem hipóteses distintas; ações serão formalizadas na Etapa 5."},
+            {"criterio": "Acessível", "avaliacao": "Condicional", "evidencia": "Canal de cobrança não comprova elegibilidade ou permissão de contato; verificar antes do piloto."},
+            {"criterio": "Acionável", "avaliacao": "Atende preliminarmente", "evidencia": "Hipóteses e piloto documentados no relatório executivo; eficácia ainda não demonstrada."},
         ]
     )
 

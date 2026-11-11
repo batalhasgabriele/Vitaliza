@@ -1,4 +1,5 @@
 # Segmentação dos Pagantes Ativos — Etapa 4
+> Receita mensal equivalente estimada, não faturamento ou receita em risco. Acessibilidade depende de elegibilidade de contato. Consulte [a validação suplementar](validacao_semana5.md) para sensibilidade em k=2…8 e limitações.
 
 **Data de corte:** 30/09/2026
 **População:** 14.753 pagantes ativos
@@ -32,13 +33,13 @@ A solução selecionada possui **k=3**, silhouette amostral de **0.164**, Davies
 
 ## 3. Validação nos cinco critérios de negócio
 
-| criterio      | avaliacao              | evidencia                                                                                                         |
-|:--------------|:-----------------------|:------------------------------------------------------------------------------------------------------------------|
-| Mensurável    | Atende                 | Tamanho, participação e receita calculados para os 14.753 ativos.                                                 |
-| Substancial   | Atende                 | Menor grupo representa 13.4% da base.                                                                             |
-| Diferenciável | Atende com ressalva    | Silhouette=0.164; interpretar junto aos centroides.                                                               |
-| Acessível     | Atende                 | Todos são assinantes ativos alcançáveis por canais próprios; canal de cobrança é perfilado.                       |
-| Acionável     | Atende preliminarmente | Recência, hábito, modalidade, social e suporte permitem hipóteses distintas; ações serão formalizadas na Etapa 5. |
+| criterio      | avaliacao              | evidencia                                                                                        |
+|:--------------|:-----------------------|:-------------------------------------------------------------------------------------------------|
+| Mensurável    | Atende                 | Tamanho, participação e receita calculados para os 14.753 ativos.                                |
+| Substancial   | Atende                 | Menor grupo representa 13.4% da base.                                                            |
+| Diferenciável | Atende com ressalva    | Silhouette=0.164; interpretar junto aos centroides.                                              |
+| Acessível     | Condicional            | Canal de cobrança não comprova elegibilidade ou permissão de contato; verificar antes do piloto. |
+| Acionável     | Atende preliminarmente | Hipóteses e piloto documentados no relatório executivo; eficácia ainda não demonstrada.          |
 
 ## 4. Regras de governança
 

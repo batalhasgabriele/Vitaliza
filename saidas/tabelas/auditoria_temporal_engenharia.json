@@ -1,0 +1,10 @@
+{
+  "corte": "2026-09-30 23:59:59",
+  "cadastros_apos_corte": 119,
+  "atividades_vinculadas_anteriores_assinatura": 34390,
+  "usuarios_com_atividade_antes_assinatura": 9471,
+  "ativos_com_menos_90_dias_assinatura": 2994,
+  "grupos_pagamento_aprovado_mesmo_usuario_valor_dia": 1941,
+  "flags_pagamento_duplicado": 1941,
+  "observacao": "Atividade antes da assinatura pode ser freemium legítimo; não excluída. Grupos de pagamento são candidatos segundo a regra atual, não ciclos comprovados. Nenhum dado foi alterado."
+}
