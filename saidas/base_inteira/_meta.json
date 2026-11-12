@@ -1,0 +1,18 @@
+{
+ "variaveis": [
+  "dias_semana_pretendidos",
+  "treinos_mes",
+  "regularidade",
+  "n_modalidades",
+  "pct_ar_livre",
+  "pct_acompanhado",
+  "posts_mes",
+  "conexoes"
+ ],
+ "k": 4,
+ "silhueta": 0.1871639954202168,
+ "silhueta_embaralhada": 0.1472143521155315,
+ "clientes": 23152,
+ "ajuste": 21024,
+ "provisorios": 2128
+}

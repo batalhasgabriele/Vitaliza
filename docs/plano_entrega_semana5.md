@@ -38,6 +38,7 @@
 | **Etapa 4** | 🤝 **Ponte Tech + Negócios**<br>*(Sincronização Obrigatória)* | **Engenharia de Atributos dos `14.753` Pagantes Ativos e Clusterização Não Supervisionada (3 a 4 Segmentos sem Target)** *(Alinhado com Aula 3 de Negócios e Aula 3 de Tech)* | ✅ **Concluída em 05/11/2026** | **Tech:** `src/segmentacao_clientes.py`, `notebooks/03_segmentacao_clusters.ipynb`, `dados/processados/ouro/features_segmentacao_ativos_set2026.parquet`, `dados/processados/ouro/segmentos_ativos_set2026.parquet`, 4 gráficos e tabelas agregadas<br>**Negócios:** três nomes executivos e validação preliminar nos 5 critérios | [ADR 011](../decisoes/011-segmentacao-pagantes-ativos.md) |
 | **Etapa 5** | 📊 Negócios + 💻 Tech | **Customer Segmentation Report** | ✅ **Concluída localmente em 08/11** | `saidas/customer_segmentation_report_semana5.md`, documento mestre | [ADR 012](../decisoes/012-personas-e-priorizacao-semana5.md) |
 | **Etapa 6** | 💻 Tech + 📊 Negócios | **Mini deck e QA** | ✅ **Concluída localmente em 08/11; publicação pendente** | `saidas/mini_deck_eda_semana5.md`, `saidas/qa_entrega_semana5.md` | [ADR 013](../decisoes/013-validacao-e-mini-deck-semana5.md) |
+| **Etapa 7** | 📊 Negócios + 💻 Tech | **Proposta: personas k=3 da base inteira e deck executivo de 7 slides** | 🟡 **Proposta em 11/11; aguarda discussão com o time** | `src/personas_k3_deck.py`, `saidas/deck_executivo/tabelas/`, `notebooks/11_personas_k3_deck_executivo.md` | [ADR 018](../decisoes/018-segmentacao-base-inteira.md), [ADR 019](../decisoes/019-personas-k3-deck-executivo.md) |
 
 ---
 

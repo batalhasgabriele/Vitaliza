@@ -1,0 +1,6 @@
+,clientes,pct_base,churn_mensal_pct,saiu_na_janela_pct,saida_voluntaria_pct,saida_involuntaria_pct,renov_desligada_ativos_pct,sem_treino_30d_antes_saida_pct,anual_pct,churn_mensal_mensalistas_pct,churn_mensal_anuais_pct,com_prazo_pct,saiu_evento_recente_pct,relogio_pct,indicacao_pct,pag_recusado_pct,tickets_cobranca_pct,receita_mensal_equiv_media,receita_mensal_ativos,ativos_no_corte,pct_receita,provisorios
+Ativo ao Ar Livre,7366.0,35.04,4.83,29.38,90.16,9.8,9.63,6.38,40.56,8.51,0.87,18.99,59.2,38.26,13.79,7.37,2.19,29.65,145654.22,5202.0,39.15,266.0
+Treino Indoor Guiado,9370.0,44.57,5.15,31.14,91.19,8.81,15.82,15.76,43.17,9.51,1.25,17.14,65.65,38.57,13.78,6.96,2.33,29.28,178070.66,6452.0,47.87,728.0
+Hábito Fraco,3202.0,15.23,11.6,62.62,96.86,1.65,50.88,51.72,81.57,51.48,8.99,24.61,70.0,39.04,12.52,1.28,0.62,23.77,26388.26,1197.0,7.09,1067.0
+Treina em Companhia,1086.0,5.17,4.54,27.9,93.73,6.27,13.41,22.44,43.37,7.78,1.34,14.36,54.0,37.38,35.45,6.35,2.76,29.3,21883.82,783.0,5.88,67.0
+Base,21024.0,100.0,5.89,35.15,92.53,7.05,16.4,23.04,48.12,9.8,2.9,18.78,62.55,38.47,14.71,6.21,2.04,28.57,371996.96,13634.0,100.0,2128.0

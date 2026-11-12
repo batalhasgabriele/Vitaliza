@@ -25,3 +25,8 @@ venv/
 Thumbs.db
 .vscode/
 .idea/
+
+# GOV-004: artefatos intermediários por cliente das análises de segmentação
+saidas/**/_*.pkl
+saidas/**/_*.npy
+saidas/base_inteira/tabelas/personas_clientes.csv

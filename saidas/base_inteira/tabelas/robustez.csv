@@ -1,0 +1,12 @@
+cenario,ari,Hábito Fraco,Treino Indoor Guiado,Ativo ao Ar Livre,Treina em Companhia
+MinMaxScaler,0.174,0.407,0.322,0.401,0.054
+RobustScaler,0.314,0.776,0.496,0.397,0.056
+Sem log1p,0.679,0.873,0.795,0.752,0.911
+hiit unido a funcional (sensibilidade),0.929,0.93,0.95,0.964,0.991
+Outra semente,0.984,0.999,0.99,0.988,0.997
+Sem contas duplicadas,0.979,0.994,0.986,0.985,0.997
+Só casos completos,0.8,0.868,0.863,0.876,0.988
+Ajuste só com ativos no corte,0.253,0.703,0.313,0.412,0.936
+Ajuste só com quem saiu na janela,0.758,0.878,0.836,0.848,0.849
+"Bootstrap 20x, Jaccard médio",,0.986,0.968,0.965,0.986
+"Bootstrap 20x, Jaccard mínimo",,0.972,0.943,0.938,0.965
