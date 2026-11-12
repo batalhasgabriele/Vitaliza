@@ -11,7 +11,7 @@ gerar_graficos_eda consolidar_semana5 metricas_semana5 executar_semana5
 auditar_divergencias_semana5 atualizar_documentacao_semana5 fechar_qa_semana5
 revisar_notebooks_semana5 segmentacao_clientes validar_entrega_semana5
 validar_engenharia_dados montar_pacote_semana5 validar_portabilidade_semana5'''.split()
-DOCS = '''plano_entrega_semana5 registro_limpeza_tratamento_dados matriz_requisitos_semana5'''.split()
+DOCS = '''plano_entrega_semana5 registro_limpeza_tratamento_dados matriz_requisitos_semana5 resolucao_mestre_semana5.template'''.split()
 NOTES = ['00_gate_reprodutibilidade_bronze.md','00_pipeline_etl_data_quality.md',
          '12_consolidacao_semana5.md','13_fechamento_entrega_semana5.md']
 REPORTS = ['customer_segmentation_report_semana5.md','mini_deck_eda_semana5.md',
@@ -121,6 +121,8 @@ Prazo do guia: 15/11/2026, até 23:59. Corte analítico: 30/09/2026.
 **Fechamento local concluído:** {testes_aprovados} testes aprovados, três notebooks executados, 14 arquivos brutos preservados e sete tabelas analíticas equivalentes na reprodução independente. Permaneceram os mesmos 14.753 ativos, segmentos atribuídos e valores de receita da consolidação.
 
 ## Ordem de leitura
+Começar pela [resolução mestre em leitura consolidada](03_codigo_documentacao/saidas/resolucao_case_vitaliza_semana5.md), que reúne contexto, método, resultados, interpretação e próximos passos em um único texto.
+
 1. [Negócios: relatório executivo, seis páginas](01_relatorio_executivo.pdf).
 2. [Tecnologia: mini deck, cinco slides](02_mini_deck.pdf).
 3. [Matriz de requisitos e evidências](03_codigo_documentacao/docs/matriz_requisitos_semana5.md).

@@ -40,6 +40,7 @@ Como o projeto é desenvolvido de forma concorrente por **5 integrantes e múlti
 | 019 | [Personas k=3 e deck executivo](decisoes/019-personas-k3-deck-executivo.md) | Lorena | dev | Proposta histórica; consolidada pela ADR 020 |
 | 020 | [Consolidação temporal Semana 5](decisoes/020-consolidacao-temporal-semana5.md) | Igor / Codex | dev | Implementada e validada localmente |
 | 021 | [Fechamento e pacote de entrega](decisoes/021-fechamento-pacote-entrega-semana5.md) | Igor / Codex | dev | Implementada; reprodução independente aprovada |
+| 022 | [Resolução mestre consolidada](decisoes/022-resolucao-mestre-consolidada.md) | Igor / Codex | dev | Implementada; alteração documental |
 
 1. Crie um novo arquivo na pasta `decisoes/` seguindo a nomenclatura `NNN-titulo-sucinto.md` (utilize o modelo em [`decisoes/TEMPLATE.md`](decisoes/TEMPLATE.md)).
 2. Preencha os campos obrigatórios: **Data**, **Autor(a)**, **Branch/Worktree**, **Status**, **Contexto**, **Decisão** e **Consequências**.

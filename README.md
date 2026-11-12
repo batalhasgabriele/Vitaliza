@@ -1,6 +1,7 @@
 # Vitaliza — Semana 5
 
 ## Entrega atual (ADR 020)
+- [Resolução mestre — leitura consolidada do case](saidas/resolucao_case_vitaliza_semana5.md).
 - Pacote final: `saidas/entrega_semana5/` e `saidas/entrega_semana5.zip` (gerados localmente, fora do Git).
 - [Matriz dos requisitos](docs/matriz_requisitos_semana5.md) e [fechamento/reprodução independente](notebooks/13_fechamento_entrega_semana5.md).
 - [Relatório executivo PDF — seis páginas](saidas/semana5_consolidada/relatorio_executivo.pdf)
