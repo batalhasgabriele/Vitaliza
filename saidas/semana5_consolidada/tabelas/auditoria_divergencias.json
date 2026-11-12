@@ -1,0 +1,34 @@
+{
+  "renovacao": {
+    "divergentes": 5,
+    "snapshot_ligada": 5,
+    "eventos_ligada": 0,
+    "renovaram_apos_ultimo_toggle": 5,
+    "ultimo_evento": {
+      "renovacao": 5
+    },
+    "toggles_por_tipo": {
+      "renovacao_automatica_desligada": 6,
+      "renovacao_automatica_religada": 5
+    }
+  },
+  "abril": {
+    "enunciado": 1154,
+    "expiracoes_br": 1158,
+    "usuarios_distintos": 1158,
+    "snapshot_data_fim_abril": 1158,
+    "eventos_brutos_mes_textual": 1160,
+    "internos_nos_brutos": 0,
+    "planos": {
+      "mensal": 936,
+      "anual": 222
+    },
+    "motivos": {
+      "sem detalhe": 754,
+      "renovacao_desligada": 355,
+      "falha_pagamento": 41,
+      "chargeback": 7,
+      "reembolso": 1
+    }
+  }
+}

@@ -1,5 +1,7 @@
 # Execução, logs e reprocessamento
 
+> **Escopo após 12/11/2026:** Entrada vigente: `python src/executar_semana5.py`, seguida de `python src/revisar_notebooks_semana5.py`, conforme [README](../README.md). Comandos antigos de segmentação reproduzem versões históricas e não devem substituir os artefatos atuais.
+
 ## Pré-requisitos
 Executar da raiz do repositório, na branch dev, com Python/dependências de `requirements-data.txt`. Ter as bases Prata e a baseline privada disponíveis. Nunca editar a Bronze para corrigir resultados.
 

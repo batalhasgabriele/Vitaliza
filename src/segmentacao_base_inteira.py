@@ -371,6 +371,7 @@ def final(b: pd.DataFrame) -> None:
 
 
 if __name__ == "__main__":
+    raise SystemExit("Análise histórica arquivada (ADR 020). Execute python src/consolidar_semana5.py para a entrega vigente.")
     ap = argparse.ArgumentParser(); ap.add_argument("--explorar", action="store_true"); args = ap.parse_args()
     TAB.mkdir(parents=True, exist_ok=True)
     base = construir()

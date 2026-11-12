@@ -1,0 +1,5 @@
+tratados,controle,horizonte_meses,delta_retencao_assumido,receita_liquida_mensal_assumida,custo_servir_mensal,custo_contato,custo_oferta,custo_api,contribuicao_incremental
+200,200,3,-0.02,27.49,4.2,2.0,0,0,-281.48
+200,200,3,0.0,27.49,4.2,2.0,0,0,-2.0
+200,200,3,0.02,27.49,4.2,2.0,0,0,277.48
+200,200,3,0.05,27.49,4.2,2.0,0,0,696.6999999999999

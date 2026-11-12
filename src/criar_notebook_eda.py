@@ -1,5 +1,7 @@
 import subprocess
 import sys
+if __name__ == '__main__':
+    raise SystemExit('Gerador histórico desativado pela ADR 020. Execute src/atualizar_documentacao_semana5.py.')
 import nbformat as nbf
 
 if hasattr(sys.stdout, "reconfigure"):

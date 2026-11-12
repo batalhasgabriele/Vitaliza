@@ -1,5 +1,16 @@
 # Guia Consolidado — Aulas de Tecnologia (Módulo 2 MBA IA e Dados — Inteli)
 
+> Atualização cruzada em 12/11/2026: inclusão de `Negócio_M2_MBA_IA_Dados_Aula4.pdf`. O resumo completo está na abertura de `resumo_aulas_negocios.md`; implicações técnicas e conteúdo da nova aula seguem abaixo. O enunciado atual usa setembro/2026 e 14.753 ativos; a comparação antiga com narrativa de 2025 mais abaixo é histórica, não descreve o PDF vigente.
+
+## Integração da Aula 4 de Negócios — storytelling e personas
+A aula (03/11/2026, Prof. Fábio Cássio-de-Souza) diferencia persona arquetípica de persona baseada em dados; exige avaliar separação e cobertura do churn e comunicar seis campos: setup, conflito, resolução, evidência, decisão e limite. O exemplo de Roberto demonstra que condição de entrada não mede efeito de mudança e que recortes pequenos não sustentam inferência. Cada atributo precisa de data de disponibilidade.
+
+Para cada hipótese, produzir n, taxa de quem atende à regra, taxa do restante, diferença em pontos percentuais e cobertura das saídas. Combinar critérios pode aumentar separação e reduzir cobertura; nenhum dos dois substitui avaliação de incerteza. Personas devem nascer da análise, ter nome comportamental e não inferir biografia. Idade/gênero não são gatilho de ação. Efeito de uma ação deve ser formulado como hipótese testável, sem converter associação em causalidade. Frequência durante o desfecho e informações futuras de contrato precisam ser excluídas da previsão.
+
+Formatos: mini deck técnico de 3–5 slides, cartão executivo por persona e relatório de 4–6 páginas. Cartão deve ser lido rapidamente, com número verificável, gatilho/ação e limite explícito. A tarefa final pede 3–4 personas com indicador de valor ao lado do churn; a aula seguinte cruza valor/risco (proteger, priorizar, manter, monitorar).
+
+Aplicação técnica na ADR 020: construir atributos em cortes anteriores ao seguimento; ajustar transformações e clusters antes do desfecho; gerar tabelas e apresentação da mesma fonte; separar denominadores de coorte, carteira ativa e pessoa-tempo. Cinco slides e cartões preservam narrativa e evidência. A avaliação histórica de segmentos não substitui o modelo supervisionado da Semana 10.
+
 > **Diretriz de Uso deste Documento:**
 > 1. **Base de Referência:** Este arquivo consolida toda a fundamentação técnica, metodológica, estatística e os achados empíricos oficiais das aulas da trilha de **Tecnologia** (Prof. Cesar Almiñana) aplicadas ao case **Vitaliza**. Ele deve ser consultado sempre que necessário como **base de referência para o projeto** (regras de limpeza, auditoria de dados, estatística descritiva, prevenção de vazamento temporal e arquitetura preditiva/generativa), **sem restringir ou limitar** investigações, hipóteses e análises adicionais.
 > 2. **Regra de Atualização Contínua (Documento Vivo):** **Este arquivo DEVE ser atualizado SEMPRE que um novo arquivo de aula de Tecnologia for adicionado na pasta [`materiais-aulas/`](../materiais-aulas/)** (assim como [`docs/resumo_aulas_negocios.md`](resumo_aulas_negocios.md) deve ser atualizado sempre que entrar uma nova aula de Negócios).

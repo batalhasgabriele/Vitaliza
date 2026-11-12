@@ -1,149 +1,129 @@
 # Customer Segmentation Report — Semana 5
 
-> **Versão executiva — 08/11/2026.** Corte em 30/09/2026. Personas descritivas e piloto proposto, ainda não executado. Complemento técnico: [validação e sensibilidade](validacao_semana5.md).
+> Versão consolidada autoritativa, ADR 020. Corte: 30/09/2026. Gerado por src/consolidar_semana5.py.
 
-## 1. Evidências de contexto para a segmentação
+## Retenção: segmentar, medir e testar
 
-### Subida do churn
+A série mensal reconstruída observa médias de 5,68% em 2025 e 6,68% em jan–set/2026. Abril registra 1.158 perdas contra 1.154 no case; divergência preservada, ainda sem causa reconciliada. O aumento após o reajuste não demonstra efeito causal de preço.
 
-A reconstrução por eventos harmonizados para Brasília observa churn médio de **5,68% ao mês em 2025** e **6,68% em jan–set/2026**, com pico de **8,13% e 1.158 perdas em abril**. A referência executiva informa 5,6%, 6,6% e 1.154; a causa da diferença de quatro perdas em abril permanece não reconciliada, sem ajuste artificial.
+Cinco atributos: intenção de dias/semana, treinos por mês observado, regularidade, diversidade e proporção ao ar livre. Janela de 84 dias até cada corte; somente atividade dentro da assinatura. Mediana/P99/log1p/z-score são ajustados sem churn. Pessoas com menos de 30 dias são classificadas provisoriamente, mas permanecem nas contagens e desfechos.
 
-### Reajuste de março
+| Perfil                |   Ativos |   Provisórios | Receita equivalente (R$/mês)   |
+|:----------------------|---------:|--------------:|:-------------------------------|
+| Atleta ao Ar Livre    |    6.797 |           524 | 193.706,80                     |
+| Treino em Casa Guiado |    5.109 |           387 | 147.295,52                     |
+| Hábito Fraco          |    2.847 |           208 | 64.548,77                      |
 
-No plano mensal, a média observada passou de **10,22% em jan–fev** para **12,97% em mar–abr**. Isso sustenta uma hipótese de sensibilidade a preço para teste por coorte e tempo de casa, mas não demonstra causalidade: sazonalidade, composição de clientes e vencimentos mudam simultaneamente.
+![Retenção: segmentar, medir e testar](semana5_consolidada/personas.png)
 
-### Ponto cego da pesquisa de saída
+## Atleta ao Ar Livre
 
-Entre junho e setembro foram observadas **3.389 expirações**, sendo **2.271 nas lojas** e **1.118 na Web**. Os **641 respondentes únicos** da pesquisa são 100% Web; **288 respondentes únicos** ainda estavam ativos no corte, correspondendo a **289 respostas**. Motivos declarados não podem ser generalizados para os aproximadamente 70% que pagam pelas lojas.
+Contexto: Rotina predominantemente ao ar livre.
 
-### Campanha randomizada de agosto
+Conflito e limite: Hipótese: concluir uma meta pode reduzir o valor percebido da assinatura mesmo com treino frequente. Os registros atuais não comprovam esse motivo; a extração textual ainda requer validação humana.
 
-No horizonte ITT completo de 30 dias, o churn foi:
+Aprendizado: combinar comportamento com estado da assinatura; o perfil orienta a hipótese, mas não determina a resposta ao contato.
 
-| Braço | Sorteados | Churn 30d | Diferença vs. controle | p-valor |
-|:---|---:|---:|---:|---:|
-| Controle | 3.579 | 5,48% | 0,00 p.p. | — |
-| Desafio | 3.515 | 5,18% | −0,30 p.p. | 0,576 |
-| Cupom | 3.472 | 4,64% | −0,84 p.p. | 0,108 |
-| Conteúdo | 3.554 | 6,13% | +0,66 p.p. | 0,235 |
+Decisão: Para elegíveis com renovação desligada, testar continuidade de treino versus controle, sem desconto automático; medir assinatura ativa com renovação ligada após 60 dias.
 
-Nenhuma comparação atingiu significância estatística de 5%. Portanto, ainda não é válido classificar indivíduos como “persuadíveis” ou “não perturbe” com base apenas nesses resultados agregados. Abertura e clique são variáveis pós-tratamento e não foram usados para selecionar participantes na análise causal.
+Evidência abaixo: carteira de setembro. A comparação de saída usa outra população, a coorte histórica da seção seguinte. Ampliar uma ação exige benefício líquido e ausência de dano; o piloto pequeno avalia viabilidade.
 
-## 2. Método de segmentação
+|   Ativos | Treinos/mês (mediana)   | Semanas com treino (%)   |   Renovação desligada |
+|---------:|:------------------------|:-------------------------|----------------------:|
+|    6.797 | 10,54                   | 91,67                    |                   319 |
 
-Os clusters foram construídos exclusivamente sobre os **14.753 pagantes ativos no corte**, sem churn, status de saída, pesquisa de saída, campanha ou informação posterior como entrada. Idade, sexo, UF e renovação automática também não determinaram os grupos.
 
-Foram combinadas 16 variáveis de recência, frequência, tendência, regularidade, diversidade, modo de treino, social, suporte, tempo de casa, onboarding e contrato. Valores assimétricos receberam transformação logarítmica e limite no percentil 99; todas as variáveis foram padronizadas antes do K-Means.
 
-Entre as soluções elegíveis, `k=3` apresentou silhouette amostral de **0,164**, Davies–Bouldin de **2,007**, estabilidade média **ARI=0,998** e menor grupo com **13,4%** da base. A separação é moderada/baixa, mas muito estável: os segmentos são úteis como estrutura descritiva e acionável, não como fronteiras naturais rígidas.
+## Treino em Casa Guiado
 
-## 3. Segmentos empíricos
+Contexto: Treinos registrados predominantemente em ambiente fechado; o nome da persona não prova uso de orientação guiada.
 
-| Segmento | Clientes | Base | Receita líquida mensal equivalente estimada | Evidência dominante |
-|:---|---:|---:|---:|:---|
-| **Ativos ao ar livre** | 7.457 | 50,55% | R$ 209.995,60 | Mediana de 10 treinos em 30 dias, recência de 2 dias e 82,3% das atividades ao ar livre. |
-| **Ativos guiados por vídeo** | 5.317 | 36,04% | R$ 152.203,80 | Mediana de 10 treinos em 30 dias, recência de 2 dias e 92,2% das atividades em vídeo. |
-| **Adormecidos sem hábito** | 1.979 | 13,41% | R$ 43.351,69 | Mediana de zero treino em 30 dias, recência de 68 dias e regularidade de apenas 12,3% nos três meses. |
+Conflito e limite: Hipótese: conteúdo pouco relevante ou dificuldade de encaixar a rotina pode reduzir a continuidade. A modalidade observada, sozinha, não comprova essas causas.
 
-![Perfis relativos dos segmentos](segmentacao_heatmap_perfis.png)
+Aprendizado: combinar comportamento com estado da assinatura; o perfil orienta a hipótese, mas não determina a resposta ao contato.
 
-![Tamanho e receita dos segmentos](segmentacao_tamanho_receita.png)
+Decisão: Para elegíveis com queda de regularidade, testar seleção editorial de conteúdo versus controle; medir retomada em 30 dias, saída em 60 dias e descadastro.
 
-O grupo adormecido concentra **98,2% de planos anuais** e **59,6% com renovação desligada** no corte, contra 9,5% nos ativos ao ar livre e 6,8% nos ativos por vídeo. A renovação desligada foi observada apenas depois da formação dos clusters; ela não participou da distância do algoritmo.
+Evidência abaixo: carteira de setembro. A comparação de saída usa outra população, a coorte histórica da seção seguinte. Ampliar uma ação exige benefício líquido e ausência de dano; o piloto pequeno avalia viabilidade.
 
-## 4. Validação preliminar nos cinco critérios
+|   Ativos | Treinos/mês (mediana)   | Semanas com treino (%)   |   Renovação desligada |
+|---------:|:------------------------|:-------------------------|----------------------:|
+|    5.109 | 10,15                   | 91,67                    |                   221 |
 
-1. **Mensurável:** tamanho, participação e receita estão calculados para toda a população ativa.
-2. **Substancial:** o menor segmento ainda reúne 1.979 clientes e 13,4% da base.
-3. **Diferenciável:** o grupo adormecido é claramente distinto; os dois grupos ativos se sobrepõem em intensidade e se diferenciam principalmente pelo modo de treino.
-4. **Acessível, sob condição:** canal de cobrança foi perfilado, mas não comprova permissão de contato, telefone válido ou push habilitado. A elegibilidade precisa ser verificada antes de qualquer campanha.
-5. **Acionável:** recência, formação de hábito e preferência por ar livre ou vídeo permitem os testes distintos descritos abaixo. Eficácia permanece uma hipótese.
 
-## 5. Limitações e governança
 
-1. **Correlação não é causa:** o aumento após o reajuste é observacional e não estima elasticidade isolada.
-2. **Viés de canal:** a pesquisa de saída cobre Web e exclui estruturalmente as lojas.
-3. **Viés de seleção:** responder à pesquisa é uma escolha; respondentes podem diferir dos não respondentes.
-4. **Janela experimental:** o data room oferece 30 dias completos após 10/08, mas não 60 dias completos.
-5. **Pós-tratamento:** abertura e clique não podem definir a comparação ITT principal.
-6. **LGPD e minimização:** textos, GPS e imagens não devem ser expostos nos cartões; personas devem usar agregados e evitar discriminação demográfica.
-7. **Não perturbe:** a alternativa de não contato permanece legítima, mas a identificação individual desse grupo exige evidência incremental mais robusta na Semana 10.
-8. **Separação dos clusters:** silhouette de 0,164 e a PCA mostram sobreposição relevante entre os dois grupos ativos; nomes resumem centroides, não tipos humanos absolutos.
-9. **Segmentação não é risco:** o grupo adormecido possui mais renovação desligada, mas cluster não substitui probabilidade de churn nem estima uplift causal.
+## Hábito Fraco
 
-## 6. Cartões de persona ancorados em dados
+Contexto: Pouca frequência e regularidade registradas.
 
-Os cartões representam grupos estatísticos, não pessoas reais. Não inferimos profissão, renda, idade, saúde ou motivações individuais. Percentuais de modalidade são médias das proporções individuais, não participação agregada de todos os treinos.
+Conflito e limite: Hipótese: dificuldade em formar rotina reduz valor percebido. Ausência de registro não revela lesão, motivação ou abandono de atividade física; contratos anuais adiam a perda financeira.
 
-### Ativos ao ar livre — manter a rotina externa
+Aprendizado: combinar comportamento com estado da assinatura; o perfil orienta a hipótese, mas não determina a resposta ao contato.
 
-- **Evidência:** 7.457 pessoas (50,55%), mediana de 10 treinos em 30 dias e recência de 2 dias. Média individual de 82,3% ao ar livre. Plano anual em 52,5% e lojas em 70,8%.
-- **Valor representado:** R$ 209.995,60 de receita líquida mensal equivalente estimada.
-- **Necessidade hipotética:** manter continuidade e variedade da rotina. A base não comprova insatisfação ou desejo de competir.
-- **Driver a investigar:** interrupção do hábito, fricção no registro do treino e perda de relevância do conteúdo.
-- **Ação proposta:** monitorar queda de atividade e testar convite opcional a treino ao ar livre. Sucesso: recuperação de atividade e retenção incremental contra controle.
+Decisão: Separar mensal em formação de hábito, renovação já desligada e anual que renova. Testar rotina inicial de treino entre elegíveis versus controle; medir retomada em 30 dias e continuidade em 60 dias.
 
-### Ativos guiados por vídeo — preservar a conveniência
+Evidência abaixo: carteira de setembro. A comparação de saída usa outra população, a coorte histórica da seção seguinte. Ampliar uma ação exige benefício líquido e ausência de dano; o piloto pequeno avalia viabilidade.
 
-- **Evidência:** 5.317 pessoas (36,04%), mediana de 10 treinos em 30 dias e recência de 2 dias. Média individual de 92,2% em vídeo. Plano anual em 49,3% e lojas em 70,3%.
-- **Valor representado:** R$ 152.203,80 de receita líquida mensal equivalente estimada.
-- **Necessidade hipotética:** encontrar sessões úteis e manter regularidade. Não inferimos falta de tempo a partir da modalidade.
-- **Driver a investigar:** fadiga de catálogo ou dificuldade para encontrar uma sessão adequada.
-- **Ação proposta:** monitorar e testar seleção editorial de vídeos. Sucesso: atividade incremental em 30 dias, sem aumento de descadastro ou churn.
+|   Ativos | Treinos/mês (mediana)   | Semanas com treino (%)   |   Renovação desligada |
+|---------:|:------------------------|:-------------------------|----------------------:|
+|    2.847 | 0,36                    | 8,33                     |                 1.715 |
 
-### Adormecidos sem hábito — investigar antes de ampliar contato
 
-- **Evidência:** 1.979 pessoas (13,41%), mediana de zero treino em 30 dias e 68 dias desde o último treino. Plano anual em 98,2%. Renovação desligada em 59,6%, observada apenas após agrupar.
-- **Valor representado:** R$ 43.351,69 de receita líquida mensal equivalente estimada.
-- **Necessidade hipotética:** retomar com menor esforço ou ajustar a assinatura a uma pausa. Ausência de registro não comprova abandono de atividade física.
-- **Driver a investigar:** hábito não formado e descompasso entre contrato e uso. Não é possível distinguir individualmente persuadíveis de pessoas prejudicadas pelo contato.
-- **Ação proposta:** intervenção imediata significa preparar um piloto controlado e verificar elegibilidade, não disparar para todo o grupo. Sucesso: retenção incremental com custo sustentável e sem dano aos participantes.
 
-## 7. Hipóteses por segmento e mecanismos de aprendizado
+## Evidência histórica e campanha
 
-| Galho da árvore | Público | Ação a testar | Resultado esperado e como verificar |
-|---|---|---|---|
-| Características de entrada | Adormecidos com onboarding antigo | Reconfirmar preferências voluntariamente | Mais sessões em 30 dias versus controle; resposta não define a população ITT |
-| Comportamento de uso | Adormecidos | Oferecer rotina curta com conteúdo existente | Retomada de treino e menor saída em 60 dias versus controle |
-| Comportamento de uso | Ativos por vídeo com queda de uso | Seleção editorial alinhada à modalidade | Recuperação de atividade, sem presumir causa da queda |
-| Ciclo de vida e contrato | Mensais de ambos os grupos ativos | Testar comunicação de valor antes de testar desconto | Menor saída com margem incremental positiva; estratificar por plano |
-| Comunidade e social | Ativos ao ar livre | Convite opcional a atividade compartilhada | Maior regularidade versus controle; não interpretar associação social como causalidade |
-| Experiência e suporte | Qualquer grupo com problema documentado | Resolver a fricção identificada | Redução da reincidência e melhora da retenção; atendimento necessário nunca é negado ao controle |
+Maio ajusta transformações e K-Means; julho usa o modelo congelado antes de observar os 60 dias seguintes, até 29/09. População primária: ativos com renovação ligada no início. Saída composta: sem acesso ou renovação desligada no fim. As taxas são históricas, sob as campanhas que ocorreram no período, não risco individual atual nem efeito causal. Setembro tem seu próprio ajuste descritivo; não transferimos automaticamente as taxas de julho à carteira atual.
 
-Hipóteses são mecanismos concorrentes e podem coexistir na mesma pessoa. A árvore organiza investigação, sem provar causas mutuamente exclusivas.
+Campanha primária: todos os sorteados em 10/08, expiração no intervalo [10/08,09/09). ICs não simultâneos; p ajustado para três comparações. Não significância não comprova ausência de efeito. Sensibilidades por plano, 51 dias e saída composta constam nas tabelas e têm correção separada para múltiplas comparações.
 
-## 8. Priorização e orçamento preliminar
+| Perfil                |   Pessoas |   Saídas | Taxa (%)   | IC95 inferior   | IC95 superior   | Cobertura das saídas (%)   |
+|:----------------------|----------:|---------:|:-----------|:----------------|:----------------|:---------------------------|
+| Atleta ao Ar Livre    |     5.957 |  730     | 12,25      | 11,45           | 13,11           | 49,73                      |
+| Treino em Casa Guiado |     4.458 |  437     | 9,80       | 8,96            | 10,71           | 29,77                      |
+| Hábito Fraco          |     1.27  |  301     | 23,70      | 21,44           | 26,12           | 20,50                      |
+| Base                  |    11.685 |    1.468 | 12,56      | 11,97           | 13,18           | 100,00                     |
 
-**Proposta de piloto, não lista de envio:** selecionar até 400 adormecidos elegíveis, estratificar por plano e canal de cobrança e sortear 200 para uma única mensagem por e-mail com conteúdo existente e 200 para controle sem campanha adicional. Manter atendimento solicitado em ambos. Se houver menos elegíveis, reduzir simetricamente. A seleção não usa abertura/clique posterior. O piloto pequeno verifica viabilidade e possíveis danos; não foi dimensionado para comprovar uma redução pequena de churn.
+![Evidência histórica e campanha](semana5_consolidada/coorte_60d.png)
 
-| Prioridade | Público | Conduta |
-|---|---|---|
-| Imediata | Adormecidos elegíveis | Piloto limitado e diagnóstico, com revisão humana |
-| Monitoramento | Ambos os grupos ativos | Acompanhar recência e frequência. Desenhar testes específicos sem desconto automático |
-| Sem campanha adicional | Controle, recusas de contato e pessoas sem elegibilidade comprovada | Preservar atendimento habitual. Esta é uma regra operacional, não uma classificação causal de “sleeping dog” |
+## Prioridades, viabilidade e limites
 
-| Recurso do piloto mensal | Quantidade máxima | Custo | Teto do case |
-|---|---:|---:|---:|
-| E-mail | 200 envios | R$ 2,00 | Sem limite prático |
-| Push | 0 | R$ 0,00 | 1 por semana por assinante |
-| WhatsApp | 0 | R$ 0,00 | 1.500 mensagens/mês |
-| CS proativo adicional | 0 | R$ 0,00 | 300 atendimentos/mês |
-| Descontos e API GenAI | 0 | R$ 0,00 | Integram o orçamento global |
-| **Total incremental planejado** | | **R$ 2,00** | **R$ 40.000/mês** |
+Prioridades são regras operacionais, não classes causais de persuadíveis ou sleeping dogs. Verificar elegibilidade e preferências de contato; atendimento necessário não é negado.
 
-Saldo de R$ 39.998,00 não é autorização de gasto. Usamos texto editorial existente, sem API de produção. Custos habituais de atendimento não foram estimados e devem ser reconciliados pelo operador antes da execução. Não é necessário consumir os tetos para demonstrar viabilidade.
+Piloto proposto: até 400 elegíveis com renovação desligada, estratificados por plano e persona; 200 e-mails editoriais e 200 controles. Custo R$ 2; sem desconto, WhatsApp, CS proativo ou API. Desfecho: ativa com renovação ligada em 60 dias; retomada em 30 dias e reclamações são secundários. Não executado. Se faltarem elegíveis, reduzir os dois braços igualmente. Dimensionar amostra antes de expandir. Cenários financeiros são hipóteses, não ROI comprovado.
 
-**Protocolo antes do envio:** registrar população elegível, semente e atribuição, conteúdo, datas, consentimento aplicável e supressões. Definir churn em 60 dias como desfecho primário, retomada em 30 dias como secundário e descadastro/reclamações como guardrails. Acompanhar ambos os braços por janela completa e analisar por intenção de tratar. Dimensionar a amostra para uma expansão com baseline e efeito mínimo relevante acordados. Suspender novos envios diante de reclamação grave e revisar diferenças com incerteza, sem declarar vitória por inspeções repetidas de p-valor.
+Pesquisa: 353 respondentes entre 3.389 saídas de junho–setembro (~10,4%); 641 respondentes totais incluem ativos. Motivos Web não representam lojas. Datas em textos não orientam ação até validação manual. Receita equivalente não é margem nem receita em risco.
 
-## 9. Limites adicionais para uma interpretação responsável
+Qualidade: silhueta 0.350; bootstrap com todo pré-processamento reajustado, ARI médio 0.998. Cinco atributos não descrevem necessidades individuais; cortes com menos de 30 dias têm atribuição provisória.
 
-- Receita equivalente divide pagamentos anuais por 12 e aplica taxas, com fallback quando falta pagamento. Não é faturamento contábil de setembro, margem, LTV, nem receita em risco. Risco financeiro requer probabilidade de saída e horizonte compatíveis, ainda não estimados.
-- Os 16 atributos incluem plano e canal. A [sensibilidade](validacao_semana5.md) compara sua remoção e uma especificação comportamental compacta. Estabilidade alta não elimina a separação baixa nem valida causalidade.
-- A base ativa de setembro não contém a janela completa de 60 dias até 29/11. Não inventamos churn futuro por persona. Os exemplos da aula em julho são outra população e não devem ser copiados como resultados próprios.
-- A EDA antiga alinha janelas ao cancelamento de quem saiu e ao corte de quem ficou. Suas AUCs são associações retrospectivas, não desempenho de previsão prospectiva. A curva antiga por duração não substitui Kaplan–Meier com censura.
-- Medidas agregadas de uso incluem períodos com regras de registro diferentes. Novos assinantes têm exposições distintas, e janelas de atividades e uso mensal não são idênticas. Validar esse efeito antes de promover uma nova segmentação.
-- O piloto proposto exige revisão das preferências de contato e minimização dos dados. O pacote público deve conter agregados, nunca GPS, textos pessoais ou linhas identificáveis.
+| Prioridade operacional               |   Clientes | Receita equivalente (R$/mês)   |
+|:-------------------------------------|-----------:|:-------------------------------|
+| 1 Diagnóstico da renovação desligada |      2.255 | 51.065,27                      |
+| 2 Formação de hábito mensal          |    208     | 7.344,00                       |
+| 3 Investigar antes de contato        |    924     | 20.015,80                      |
+| 4 Monitorar continuidade             |     11.366 | 327.126,01                     |
 
-## 10. Rastreabilidade
 
-Perfis: `tabelas/perfil_segmentos.csv`; método: `../src/segmentacao_clientes.py`; experimentos de robustez e ICs: `../src/validar_entrega_semana5.py`; contexto: `eda_etapa3_marcos_2026.md`; decisões: ADRs 011, 012 e 013. Cada regeneração da segmentação exige revisão conjunta deste relatório, do documento mestre e do mini deck.
+
+## Campanha primária
+
+| Braço    |   Pessoas |   Expirações | Taxa (%)   | Diferença (p.p.)   | IC95 inferior   | IC95 superior   | p ajustado   |
+|:---------|----------:|-------------:|:-----------|:-------------------|:----------------|:----------------|:-------------|
+| controle |     3.579 |          196 | 5,48       | 0,00               | 0,00            | 0,00            | —            |
+| cupom    |     3.472 |          161 | 4,64       | -0,84              | -1,86           | 0,18            | 0,32         |
+| desafio  |     3.515 |          182 | 5,18       | -0,30              | -1,34           | 0,75            | 1,00         |
+| conteudo |     3.554 |          218 | 6,13       | 0,66               | -0,43           | 1,74            | 0,71         |
+
+## Cenários de contribuição — hipóteses, não previsão
+
+| tratados   | controle   | horizonte_meses   | delta_retencao_assumido   | receita_liquida_mensal_assumida   | custo_servir_mensal   | custo_contato   | custo_oferta   | custo_api   | contribuicao_incremental   |
+|:-----------|:-----------|:------------------|:--------------------------|:----------------------------------|:----------------------|:----------------|:---------------|:------------|:---------------------------|
+| 200,00     | 200,00     | 3,00              | -0,02                     | 27,49                             | 4,20                  | 2,00            | 0,00           | 0,00        | -281,48                    |
+| 200,00     | 200,00     | 3,00              | 0,00                      | 27,49                             | 4,20                  | 2,00            | 0,00           | 0,00        | -2,00                      |
+| 200,00     | 200,00     | 3,00              | 0,02                      | 27,49                             | 4,20                  | 2,00            | 0,00           | 0,00        | 277,48                     |
+| 200,00     | 200,00     | 3,00              | 0,05                      | 27,49                             | 4,20                  | 2,00            | 0,00           | 0,00        | 696,70                     |
+
+Receita líquida mensal assumida R$ 27,49; custo de servir R$ 4,20; permanência incremental assumida de três meses. Não somar CAC evitado sem demonstrar redução real de aquisição. API e ofertas são zero porque este piloto é editorial. Uma expansão exige custo oficial de API e contabilização dos compromissos futuros.
+
+## Rastreabilidade
+
+Tabelas completas e QA em `semana5_consolidada/tabelas/`. Método e reprodução em `../notebooks/12_consolidacao_semana5.md`. Gráficos, modelos e números anteriores são históricos, não devem ser misturados com esta versão.

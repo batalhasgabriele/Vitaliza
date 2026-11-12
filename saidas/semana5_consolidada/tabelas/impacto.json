@@ -1,0 +1,11 @@
+{
+  "populacao_preservada": true,
+  "ativos": 14753,
+  "ari_vs_16_atributos": 0.8280981807929219,
+  "comparacao_individual": "executada",
+  "motivo_mudanca": "Janela comum 84 dias; cinco variáveis; regularidade nos logs de todas as origens; estados por eventos.",
+  "fontes_codigo": {
+    "consolidar_semana5.py": "64c73017124f11052b611823ab584c0ceeed266fb92ee624cd7a0e9670627c4b",
+    "metricas_semana5.py": "1d4566944f807a164cbea0d277f8cf797d6b57814ac1f5488579613b7e654cd7"
+  }
+}

@@ -1,5 +1,7 @@
 # Reconciliação e avaliação de impacto
 
+> **Escopo após 12/11/2026:** Para a carteira consolidada, usar [12_consolidacao_semana5.md](12_consolidacao_semana5.md): mesmos 14.753 ativos, novas contagens por segmento e 2.255 renovações desligadas por eventos versus 2.250 no snapshot. As reconciliações abaixo conservam seu escopo/data original.
+
 ## Referência preservada
 Antes da alteração, a Ouro e os agregados foram copiados para `dados/validacao_engenharia_baseline/`, fora do Git. Não compartilhar essa pasta: contém dados individuais. A EDA anterior também foi preservada para consulta.
 

@@ -1,5 +1,7 @@
 # ADR 018 — Segmentação sobre a base inteira de clientes (proposta)
 
+> **Escopo após 12/11/2026:** Proposta histórica preservada com autoria original. A [ADR 020](020-consolidacao-temporal-semana5.md) consolida e corrige população, temporalidade e interpretação para a entrega vigente.
+
 - **Status:** Proposta, aguardando discussão com o time
 - **Autora:** Lorena
 - **Branch:** dev

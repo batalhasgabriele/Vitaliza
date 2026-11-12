@@ -1,4 +1,6 @@
 # Segmentação dos Pagantes Ativos — Etapa 4
+
+> **Escopo após 12/11/2026:** Segmentação histórica de 16 atributos. Substituída na entrega pela [consolidação ADR 020](customer_segmentation_report_semana5.md). Base/gráficos antigos foram preservados para comparação, não representam os grupos vigentes.
 > Receita mensal equivalente estimada, não faturamento ou receita em risco. Acessibilidade depende de elegibilidade de contato. Consulte [a validação suplementar](validacao_semana5.md) para sensibilidade em k=2…8 e limitações.
 
 **Data de corte:** 30/09/2026

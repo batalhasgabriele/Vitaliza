@@ -135,4 +135,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit("Revisão histórica preservada. A execução vigente está em src/executar_semana5.py (ADR 020).")

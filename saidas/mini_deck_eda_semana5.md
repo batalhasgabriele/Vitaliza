@@ -1,146 +1,95 @@
-# Vitaliza — segmentação para orientar a retenção
+# Mini deck — versão consolidada
 
-Mini deck da Semana 5 • 08/11/2026 • Corte: 30/09/2026
-
-Roteiro de apresentação: 8 slides, cerca de 8 minutos. Cada `---` inicia um slide. Abrir no preview Markdown para apresentar com os gráficos. Fonte: tabelas agregadas em `saidas/tabelas/`. Relatório completo: [Customer Segmentation Report](customer_segmentation_report_semana5.md).
-
-## 1. Três segmentos descrevem os 14.753 pagantes
-
-| Segmento | Pessoas | Base |
-|---|---:|---:|
-| Ao ar livre | 7.457 | 50,55% |
-| Por vídeo | 5.317 | 36,04% |
-| Adormecidos | 1.979 | 13,41% |
-
-![Tamanho e receita equivalente](segmentacao_tamanho_receita.png)
-
-1. O agrupamento usa dados disponíveis no corte, sem churn como entrada.
-2. O grupo adormecido demanda investigação, sem presunção de resposta positiva ao contato.
-3. A receita no gráfico é mensal equivalente estimada, não receita em risco.
+> Cinco slides. Abrir `semana5_consolidada/mini_deck.html`; tabelas completas no relatório.
 
 ---
 
-## 2. A qualidade dos dados muda a leitura do comportamento
+## Três perfis para orientar a retenção
 
-| Tratamento | Registros |
-|---|---:|
-| Pares de atividades duplicadas removidos | 9.383 |
-| Atividades de duração zero removidas | 3.649 |
-| Distâncias acima de 200 km tratadas como ausentes | 951 |
+A carteira tem 14.753 pagantes; a segmentação usa cinco atributos em 84 dias, sem churn.
 
-![Distâncias por modalidade](outliers_por_modalidade.png)
+O churn mensal subiu de 5,68% em 2025 para 6,68% em jan–set/2026; a série não isola o efeito do preço.
 
-1. A camada Bronze permanece imutável e a Prata contém as transformações rastreáveis.
-2. Uma régua global de outliers confunde pedais longos com erros.
-3. Fuso de Brasília e deduplicação também afetam a reconciliação financeira.
+Os grupos descrevem comportamento; não são tipos humanos fixos nem scores de risco.
 
-Fonte: registro de tratamento e `tabelas/outliers_por_modalidade.csv`.
+| Perfil                |   Ativos |   Provisórios |
+|:----------------------|---------:|--------------:|
+| Atleta ao Ar Livre    |    6.797 |           524 |
+| Treino em Casa Guiado |    5.109 |           387 |
+| Hábito Fraco          |    2.847 |           208 |
 
----
-
-## 3. O churn aumentou, mas o reajuste não explica sozinho a mudança
-
-| Período | Churn mensal médio reconstruído |
-|---|---:|
-| 2025 | 5,68% |
-| Jan–set/2026 | 6,68% |
-| Abril/2026 | 8,13% |
-
-![Churn reconstruído](churn_mensal_2025_2026.png)
-
-1. O denominador é a população ativa no início de cada mês.
-2. Preço, sazonalidade e composição de contratos mudam simultaneamente.
-3. Abril tem 1.158 perdas reconstruídas versus 1.154 no case, diferença ainda não reconciliada.
-
-Fonte: `tabelas/churn_mensal_2025_2026.csv`. Médias aritméticas mensais, não taxa anual.
+![Três perfis para orientar a retenção](semana5_consolidada/personas.png)
 
 ---
 
-## 4. Pesquisa e campanha respondem perguntas diferentes
+## Qualidade muda a interpretação
 
-| Braço randomizado | Pessoas | Churn em 30 dias | Diferença para controle |
-|---|---:|---:|---:|
-| Controle | 3.579 | 5,48% | Referência |
-| Desafio | 3.515 | 5,18% | −0,30 p.p. |
-| Cupom | 3.472 | 4,64% | −0,84 p.p. |
-| Conteúdo | 3.554 | 6,13% | +0,66 p.p. |
+Bronze preservada; exposição e ausência de cobertura são diferentes de zero uso.
 
-![Marcos de 2026](marcos_2026.png)
+A coorte de entrada inclui todos com 90 dias completos, mesmo quem saiu cedo; não é churn mensal.
 
-1. Os 641 respondentes únicos da pesquisa são Web e não representam as lojas.
-2. Os intervalos de 95% das três diferenças experimentais incluem zero.
-3. A análise mantém todos os sorteados e ainda não identifica uplift individual.
+A pesquisa cobre Web: 353 respondentes entre 3.389 saídas desde junho, cerca de 10,4%.
 
-Fonte: `tabelas/campanha_ago26_incerteza.csv`. ICs não simultâneos, com p-valores corrigidos disponíveis no anexo.
+| Plano   |   Pessoas |   Saídas em 90 dias | Saída em 90 dias (%)   |
+|:--------|----------:|--------------------:|:-----------------------|
+| mensal  |    11.778 |               3.353 | 28,47                  |
+| anual   |     7.308 |              63     | 0,86                   |
+
+![Qualidade muda a interpretação](semana5_consolidada/saida_90d.png)
 
 ---
 
-## 5. A correlação depende da atividade que estamos controlando
+## Hábito fraco concentra maior taxa, mas não todas as saídas
 
-| Sessões e minutos | Correlação |
-|---|---:|
-| Bruta entre ativos | 0,883 |
-| Parcial, controlando atividades | 0,015 |
+Julho foi projetado no modelo de maio; atributos anteriores aos 60 dias de acompanhamento.
 
-![Correlação controlada](correlacao_controlada.png)
+O alvo inclui perda de acesso ou renovação desligada, entre quem renovava no início.
 
-1. Mais sessões acompanham maior volume de atividade.
-2. Após o controle linear, a associação residual é pequena.
-3. Esse ajuste não prova causalidade nem elimina confundidores não observados.
+A leitura é histórica, sob as campanhas do período; não é previsão para setembro nem efeito causal.
 
-Fonte: `tabelas/correlacao_controlada.csv`.
+| Perfil                |   Pessoas | Taxa (%)   | Cobertura das saídas (%)   |
+|:----------------------|----------:|:-----------|:---------------------------|
+| Atleta ao Ar Livre    |     5.957 | 12,25      | 49,73                      |
+| Treino em Casa Guiado |     4.458 | 9,80       | 29,77                      |
+| Hábito Fraco          |     1.27  | 23,70      | 20,50                      |
+| Base                  |    11.685 | 12,56      | 100,00                     |
 
----
-
-## 6. Os grupos se repetem, mas há sobreposição
-
-| Especificação, k=3 | Silhueta em amostra de 2.500 | ARI versus publicado |
-|---|---:|---:|
-| 16 atributos | 0,164 | 1,000 |
-| Sem plano e canal | 0,193 | 0,988 |
-| Quatro atributos comportamentais, proxy | 0,336 | 0,931 |
-
-![Projeção dos grupos publicados](segmentacao_pca.png)
-
-1. Testamos k de 2 a 8 em três especificações, sem selecionar pelo churn.
-2. A solução compacta melhora a silhueta no seu próprio espaço, mas isso não prova superioridade operacional.
-3. Mantemos a versão publicada rastreável e registramos a compacta como candidata a evolução após auditoria temporal.
-
-Fonte: `tabelas/robustez_segmentacao_semana5.csv`. A projeção PCA representa a solução publicada de 16 atributos. ARI alto mede concordância, não separação.
+![Hábito fraco concentra maior taxa, mas não todas as saídas](semana5_consolidada/coorte_60d.png)
 
 ---
 
-## 7. As personas orientam testes diferentes
+## A campanha exige distinguir intenção e perda financeira
 
-| Persona | Evidência de uso | Prioridade |
-|---|---|---|
-| Ao ar livre | 10 treinos/30d, mediana | Monitorar continuidade |
-| Por vídeo | 10 treinos/30d, mediana | Monitorar relevância do conteúdo |
-| Adormecidos | 0 treino/30d, mediana | Preparar piloto controlado |
+ITT: todos os sorteados, expiração em 30 dias; ICs individuais e p ajustado para três contrastes.
 
-![Perfis padronizados](segmentacao_heatmap_perfis.png)
+Os intervalos incluem zero; isso não comprova ausência de efeito ou equivalência.
 
-1. Preferência observada sustenta a diferenciação da mensagem.
-2. Motivação e eficácia da oferta permanecem hipóteses.
-3. Dados demográficos, GPS e relatos pessoais não são necessários para esses cartões.
+Desfecho composto, planos e 51 dias são sensibilidades exploratórias, sem identificação de uplift individual.
 
-Fonte: `tabelas/perfil_segmentos.csv` e relatório executivo.
+| Braço    |   Pessoas | Taxa (%)   | Diferença (p.p.)   | p ajustado   |
+|:---------|----------:|:-----------|:-------------------|:-------------|
+| controle |     3.579 | 5,48       | 0,00               | —            |
+| cupom    |     3.472 | 4,64       | -0,84              | 0,32         |
+| desafio  |     3.515 | 5,18       | -0,30              | 1,00         |
+| conteudo |     3.554 | 6,13       | 0,66               | 0,71         |
+
+![A campanha exige distinguir intenção e perda financeira](semana5_consolidada/campanha.png)
 
 ---
 
-## 8. O próximo passo é aprender com um piloto limitado
+## Priorizar diagnóstico e aprender antes de ampliar
 
-| Proposta, ainda não executada | Limite |
-|---|---:|
-| Adormecidos elegíveis | Até 400 |
-| Mensagem por e-mail / controle | 200 / 200 |
-| Custo incremental de envios | R$ 2,00 |
-| Orçamento mensal global do case | R$ 40.000,00 |
+Renovação desligada exige diagnóstico; mensal com hábito fraco pode receber teste de formação de rotina.
 
-![População de referência do piloto](segmentacao_tamanho_receita.png)
+Piloto editorial proposto: 200 e-mails e 200 controles, custo R$ 2; não comprova pequenos efeitos.
 
-1. Verificar elegibilidade e preferências de contato antes do sorteio.
-2. Medir saída em 60 dias e retomada em 30 dias, preservando atendimento nos dois braços.
-3. O piloto testa viabilidade, e uma expansão exige cálculo de poder e revisão de danos e custos.
+Validar elegibilidade e danos; ampliar com efeito e economia sustentáveis. Cenários não são retorno observado.
 
-Limites da entrega: churn futuro de setembro indisponível, causalidade do reajuste não identificada, exposição temporal ainda requer aprofundamento. Fonte: relatório executivo, seções 8 e 9. Repetição do gráfico é intencional para retomar a população de referência.
+| Prioridade operacional               |   Clientes | Receita equivalente (R$/mês)   |
+|:-------------------------------------|-----------:|:-------------------------------|
+| 1 Diagnóstico da renovação desligada |      2.255 | 51.065,27                      |
+| 2 Formação de hábito mensal          |    208     | 7.344,00                       |
+| 3 Investigar antes de contato        |    924     | 20.015,80                      |
+| 4 Monitorar continuidade             |     11.366 | 327.126,01                     |
+
+![Priorizar diagnóstico e aprender antes de ampliar](semana5_consolidada/prioridades.png)

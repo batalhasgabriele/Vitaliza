@@ -8,13 +8,13 @@
   {
     "notebook": "02_eda_e_hipoteses.ipynb",
     "status": "executado_sem_erros",
-    "celulas_codigo": 8,
-    "sha256_fonte": "02c99cf62dd55753f12fa4737812e2330a2c4dbe525f8d1b3b77dd54f0ea3dde"
+    "celulas_codigo": 6,
+    "sha256_fonte": "6438b18dfa52a50ef57b1f32c662a8bfb3b32d6ad97fb4154e169a1fd2f1f3eb"
   },
   {
     "notebook": "03_segmentacao_clusters.ipynb",
     "status": "executado_sem_erros",
-    "celulas_codigo": 5,
-    "sha256_fonte": "698f335959ca51915572a7378df70e2bf475d68cc13c639f8d74ff1e44c7855e"
+    "celulas_codigo": 4,
+    "sha256_fonte": "090296b0506fdfef0693585ae10ec45aaad8f0d2a8c3630ffd531ae2711b53fe"
   }
 ]

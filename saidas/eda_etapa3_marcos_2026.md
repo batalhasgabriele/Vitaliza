@@ -1,6 +1,7 @@
 # EDA Parte 2 — Churn e Marcos de 2026
 
 **Data de corte:** 30/09/2026
+
 **Regra de comunicação:** 1 tabela + 1 gráfico + 3 frases por achado.
 
 ## 1. Série mensal de churn

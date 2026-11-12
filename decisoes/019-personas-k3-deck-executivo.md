@@ -1,5 +1,7 @@
 # ADR 019: Personas k=3 da base inteira e deck executivo
 
+> **Escopo após 12/11/2026:** Proposta histórica preservada com autoria original. A [ADR 020](020-consolidacao-temporal-semana5.md) consolida os três perfis em janela comum e gera o relatório e o mini deck efetivos.
+
 - **Data:** 11/11/2026
 - **Autor(a) / Responsável:** Lorena
 - **Branch / Worktree:** dev

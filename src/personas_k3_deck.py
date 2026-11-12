@@ -221,4 +221,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit("Proposta histórica substituída pela ADR 020. Execute python src/consolidar_semana5.py; não regenere números antigos na entrega atual.")
