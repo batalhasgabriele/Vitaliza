@@ -1,5 +1,7 @@
 # Matriz de requisitos — entrega da Semana 5
 
+A [resolução mestre](../saidas/resolucao_case_vitaliza_semana5.md) agora explicita todos os requisitos em sua abertura: definições de churn na seção 3, padrões na 5.4, hipóteses de drivers por segmento na 7.4, prioridade imediata versus monitoramento na 10 e relação com código e mini deck na 15. Evidências e hipóteses estão separadas; as limitações permanecem na seção 12.
+
 Fonte: `[Inteli MBA] Guia de Projeto - Entrega de Artefatos - Módulo 2 (2026.2B).pdf`, seção de artefatos da trilha obrigatória. A Semana 5 é formativa; os critérios de nota e o aplicativo preditivo-generativo pertencem à Semana 10.
 
 | Área | Pedido do guia | Evidência entregue | Localização |

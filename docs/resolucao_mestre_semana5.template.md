@@ -4,6 +4,25 @@
 
 ## 1. Resposta executiva ao desafio
 
+### Atendimento explícito ao guia da Semana 5
+
+O problema central é o **churn: a perda de assinantes e os sinais de descontinuidade da assinatura**. Os segmentos organizam a investigação desse problema. Este quadro mostra onde cada requisito é respondido na própria resolução.
+
+| Área | Requisito do guia | Resposta nesta leitura |
+|---|---|---|
+| Negócios | 3–4 segmentos com cartões de persona | Seção 7: três personas, tamanho, comportamento, tensão, ação e limite |
+| Negócios | Hipóteses de drivers de churn por segmento | Seção 7.4: matriz de hipóteses, evidências, lacunas e testes |
+| Negócios | Priorização imediata versus monitoramento | Seção 10: públicos, gatilhos e ações preliminares |
+| Negócios | Visualizações da EDA | Gráficos incorporados nas seções 5, 7, 8 e 9 |
+| Negócios | Limitações da análise | Seção 12 e limites junto de cada achado |
+| Tecnologia | Código para carregar, limpar e visualizar | Seções 4 e 15: engenharia, código e reprodução |
+| Tecnologia | Padrões e correlações com churn | Seções 5 e 8: período, plano, comportamento e diferenças de saída; seção 9: campanha |
+| Tecnologia | Gráficos gerados pelo código | Seção 5.4: ligação entre pergunta, evidência e implementação |
+| Tecnologia | Sustentar empiricamente a segmentação | Seções 6–8: atributos, escolha de k, estabilidade, perfis e avaliação histórica |
+| Tecnologia | História analítica em mini deck | Seção 15: sequência dos cinco slides e acesso ao artefato |
+
+As hipóteses são **explicações candidatas para churn**, não causas comprovadas. Associação histórica ajuda a priorizar investigação, mas não demonstra, sozinha, que uma ação reduzirá perdas.
+
 A Vitaliza precisa entender por que seus assinantes deixam de perceber valor no serviço e organizar uma estratégia de retenção que possa ser testada. A resolução da Semana 5 é dividir a carteira atual em três perfis comportamentais, verificar como perfis semelhantes se relacionaram com a saída em um período histórico e propor ações coerentes com as evidências disponíveis.
 
 Encontramos **6.797 integrantes no perfil Atleta ao Ar Livre, 5.109 no perfil Treino em Casa Guiado e 2.847 no perfil Hábito Fraco**, totalizando os **14.753 pagantes ativos** no corte. O perfil de hábito fraco apresentou a maior taxa de saída composta na avaliação histórica, mas os outros perfis responderam pela maior parte das saídas em números absolutos. Portanto, priorizar retenção exige olhar conjuntamente comportamento, estado da assinatura e tamanho do público.
@@ -19,6 +38,19 @@ O plano mensal passou de R$ 34,90 para R$ 39,90 em 01/03/2026. O plano anual cus
 A Semana 5 pede dois artefatos conectados: um relatório de segmentação com três ou quatro personas, hipóteses, prioridade e limitações; e uma EDA com código, visualizações e mini deck. Modelo supervisionado, aplicativo com IA generativa e ROI final são entregas da Semana 10. Esta resolução chega até a segmentação e a formulação de uma estratégia preliminar de aprendizado.
 
 ## 3. Quais dados foram usados e por que existem populações diferentes
+
+### Definição de churn e dos sinais relacionados
+
+| Medida | Definição e denominador | Uso na resolução |
+|---|---|---|
+| Churn mensal por expiração | Expirações no mês ÷ ativos no início do mês | Subida de 2026 e reajuste; não é uma coorte fechada, pois pode incluir perdas de entradas do próprio mês |
+| Renovação desligada | Estado da renovação futura desligada no corte, mesmo com acesso ativo | Sinal para diagnóstico; não equivale a perda financeira já realizada |
+| Saída composta em 60 dias | Sem acesso **ou** renovação desligada ao fim, entre ativos com renovação ligada no início | Comparação histórica dos perfis em horizonte comum |
+| Expiração em 30 dias na campanha | Sorteados com expiração na janela ÷ todos os sorteados no braço | Comparação principal por intenção de tratar |
+
+Logo, **23,70% de saída composta no perfil Hábito Fraco em julho não significa 23,70% de churn mensal**, nem previsão desse percentual para setembro. Toda taxa deve ser acompanhada de desfecho, horizonte e população.
+
+### Fontes e populações
 
 O data room reúne usuários, assinaturas, eventos de assinatura, pagamentos, uso mensal, atividades, onboarding, amizades, publicações, suporte, pesquisa de saída e campanha de agosto, além dos arquivos de mapas de calor. Cada fonte responde a uma pergunta diferente: pagamentos ajudam a calcular receita; atividades descrevem comportamento; eventos reconstroem o estado contratual; campanha permite comparar grupos sorteados.
 
@@ -70,6 +102,18 @@ A coorte de entrada com 90 dias completos de acompanhamento encontrou saída em 
 
 Também foram retiradas interpretações de AUC retrospectiva como se fossem desempenho de previsão futura. Para prever, os atributos precisam estar disponíveis antes do desfecho e a avaliação deve respeitar o tempo.
 
+### 5.4 Padrões relacionados a churn: da pergunta à evidência
+
+| Pergunta | Evidência e interpretação | Código / visualização |
+|---|---|---|
+| As perdas aumentaram em 2026? | Média mensal reconstruída de 5,68% para 6,68%; investigar composição e marcos | `src/analisar_eda_marcos.py`; série da seção 5.1 |
+| O reajuste pode estar relacionado às perdas? | Aumento no mensal após março; antes/depois não isola causalidade | Mesmo script; EDA dos marcos |
+| A pesquisa explica todos os cancelamentos? | 353 respondentes entre 3.389 perdas de junho–setembro; viés de canal e seleção | `src/gerar_graficos_eda.py`; gráfico da seção 5.2 |
+| Quais perfis se associam à saída? | Na coorte de julho, saída composta de 12,25%, 9,80% e 23,70%; denominadores e intervalos na seção 8 | `src/consolidar_semana5.py`; gráfico histórico |
+| A campanha reduziu expiração? | Cupom com −0,84 p.p. versus controle, mas comparação ainda inconclusiva quanto a efeito diferente de zero | Mesmo script; gráfico da seção 9 |
+
+A correlação entre sessões e minutos da seção 5.3 avalia redundância de atributos; **não é uma correlação direta com churn**. A evidência específica sobre churn vem das comparações por período, plano e perfil e do experimento. A relação entre segmento e saída é uma associação entre grupos, não uma causa individual identificada.
+
 ## 6. Como os segmentos foram construídos
 
 A segmentação usa cinco atributos comportamentais: dias de treino pretendidos no onboarding, treinos por mês observado, regularidade, número de modalidades e proporção de atividades ao ar livre. Churn, desligamento de renovação e desfecho futuro não entram no agrupamento.
@@ -110,6 +154,20 @@ O perfil apresenta pouca frequência e baixa regularidade nos registros. A hipó
 
 A ação precisa separar mensais em formação de hábito, pessoas que já desligaram a renovação e anuais que continuam renovando. Um teste de rotina inicial pode medir retomada em 30 dias e continuidade em 60 dias. O contrato anual também exige cuidado: acesso ativo pode persistir mesmo quando a intenção de renovar já mudou.
 
+### 7.4 Hipóteses de drivers de churn por segmento
+
+Cada hipótese distingue **evidência observada**, **mecanismo possível** e **validação necessária**. A taxa histórica do perfil não valida automaticamente o motivo proposto.
+
+| Persona | Hipótese de driver de churn | Evidência disponível | Limite da evidência | Ação e teste propostos |
+|---|---|---|---|---|
+| Atleta ao Ar Livre | **H1 — perda de valor após concluir uma meta:** continuar treinando não exige necessariamente manter a assinatura | Carteira atual: mediana de 10,54 treinos/mês e 319 renovações desligadas. Coorte de julho: 12,25% de saída composta | Não foi demonstrado que essas pessoas concluíram metas ou saíram por esse motivo | Validar motivos em amostra; para elegíveis com renovação desligada, testar continuidade de treino versus controle e medir permanência em 60 dias |
+| Treino em Casa Guiado | **H2 — conteúdo perde relevância ou deixa de caber na rotina**, reduzindo valor percebido | Carteira atual: mediana de 10,15 treinos/mês e 221 renovações desligadas. Coorte de julho: 9,80% de saída composta | Modalidade não mede fadiga de catálogo, falta de tempo ou uso guiado. Frequência elevada não prova queda individual | Confirmar consumo de conteúdo, queda de regularidade e motivos; testar seleção editorial entre elegíveis, medindo retomada, saída e descadastro |
+| Hábito Fraco | **H3 — dificuldade de formar hábito reduz valor percebido**, favorecendo descontinuidade | Carteira atual: 0,36 treino/mês, 8,33% de semanas com treino e 1.715 renovações desligadas. Coorte de julho: 23,70% de saída composta | Há associação entre perfil e saída, mas não prova do mecanismo; exercício fora do app e cobertura dos logs podem explicar parte do baixo uso | Verificar cobertura e separar plano/estado contratual; testar rotina inicial versus controle, com retomada em 30 dias e continuidade em 60 dias |
+
+**H4 — hipótese transversal de sensibilidade a preço:** o reajuste pode reduzir a relação entre valor percebido e custo, sobretudo no mensal. O aumento observado após março justifica investigação, mas não identifica a persona afetada nem valida desconto generalizado. Comparar coortes, canal, tempo de casa e vencimento; a campanha de cupom também mantém incerteza.
+
+As contagens atuais e as taxas históricas pertencem a **populações diferentes**, identificadas na tabela. H1 e H2 são mecanismos plausíveis ainda não validados. H3 tem associação observada com o perfil, mas a explicação causal permanece em aberto. Nenhuma das hipóteses deve ser apresentada como motivo comprovado de cancelamento.
+
 ## 8. O que a avaliação histórica acrescenta
 
 Para verificar a relação entre perfis e saída sem usar o futuro para formar os grupos, ajustamos o modelo histórico em maio e aplicamos esse mesmo modelo aos clientes de julho. Depois observamos os 60 dias seguintes, até 29/09. O público primário são os ativos com renovação ligada no início.
@@ -131,6 +189,7 @@ O modelo de setembro foi ajustado separadamente para descrever a carteira atual.
 
 ## 9. O que aprendemos com a campanha de agosto
 
+
 A comparação principal usa todos os sorteados em 10/08, independentemente de terem aberto ou clicado na mensagem. Essa abordagem, chamada intenção de tratar, preserva a comparação criada pelo sorteio. O desfecho principal é expiração nos 30 dias de 10/08 até antes de 09/09.
 
 | Grupo | Sorteados | Expirações | Taxa | Diferença versus controle | p ajustado |
@@ -147,6 +206,16 @@ Os valores de p foram ajustados para as três comparações contra controle. Os 
 Abertura e clique acontecem depois da atribuição do tratamento; selecionar somente essas pessoas mudaria a comparação. Também não é possível identificar com essa tabela quais indivíduos são persuadíveis ou seriam prejudicados pelo contato. As análises por plano, por desfecho composto e por 51 dias estão separadas como sensibilidades exploratórias.
 
 ## 10. Priorização e proposta de ação
+
+### Imediata versus monitoramento, conforme o guia
+
+| Persona | Quando priorizar de imediato | Quando monitorar | Hipótese associada |
+|---|---|---|---|
+| Atleta ao Ar Livre | Renovação desligada: diagnosticar motivo, elegibilidade e preferência de contato | Renovação ligada e continuidade de uso: acompanhar sinais; não oferecer desconto automaticamente | H1 — possível perda de valor após uma meta |
+| Treino em Casa Guiado | Renovação desligada: diagnóstico; queda de regularidade confirmada pode motivar elegibilidade a teste | Renovação ligada e rotina preservada: acompanhar consumo e dificuldades | H2 — relevância de conteúdo e rotina |
+| Hábito Fraco | Renovação desligada: diagnóstico; mensal com renovação ligada: priorizar teste de formação de hábito | Anual com renovação ligada: investigar antes de contatar, pois baixo uso não prova urgência financeira | H3 — formação de hábito |
+
+**Prioridade imediata significa agir no diagnóstico e preparar um teste elegível**, não executar disparos indiscriminados. A tabela por persona traduz a decisão de negócio; os totais operacionais abaixo usam regras mutuamente exclusivas para evitar dupla contagem. A hipótese H4 de preço só justifica oferta financeira após validação adicional.
 
 A priorização atual é operacional. Primeiro vem o estado da renovação; depois, o perfil de hábito e o plano. As regras são aplicadas em ordem, sem colocar uma pessoa em dois públicos.
 
@@ -211,6 +280,19 @@ Na Semana 10, será necessário construir e avaliar o modelo supervisionado de c
 Para continuar com colegas ou outras IAs, manter as definições de população, janela e desfecho; consultar as ADRs vigentes; regenerar tabelas e apresentações juntas quando houver alteração; e nunca editar a Bronze. Publicação no Drive e submissão individual na Adalove são etapas externas, ainda não realizadas pelos scripts.
 
 ## 15. Referências e reprodução
+
+### Como a tecnologia entrega a história analítica
+
+O mini deck segue cinco passos: (1) três perfis da carteira; (2) como a qualidade dos dados muda a interpretação; (3) diferenças históricas de saída e cobertura; (4) o que a campanha permite concluir; (5) prioridade operacional e próximo teste. A leitura mestre explica o racional desses slides, mas não substitui os arquivos de código e a apresentação exigidos pelo guia.
+
+| Parte da entrega técnica | Arquivo principal | Papel |
+|---|---|---|
+| Carga e qualidade | `src/auditar_bronze.py`, `src/limpeza_qualidade_dados.py` | Auditar e tratar entradas |
+| EDA e marcos | `src/processar_eda.py`, `src/analisar_eda_marcos.py` | Explorar padrões, distribuições, períodos e relações |
+| Segmentação e gráficos | `src/consolidar_semana5.py` | Formar perfis sem churn, avaliar coortes e gerar apresentações |
+| Notebooks | `notebooks/01_inventario_dados.ipynb`, `02_eda_e_hipoteses.ipynb`, `03_segmentacao_clusters.ipynb` | Demonstrar inventário, EDA e evidência dos segmentos |
+| Mini deck | [Cinco slides em PDF](semana5_consolidada/mini_deck.pdf) | Comunicar a história analítica |
+
 
 As bases conceituais são o guia oficial de artefatos, o enunciado e o dicionário da Vitaliza, além dos resumos das aulas mantidos no repositório. As fontes numéricas são os agregados da consolidação, a EDA dos marcos e os registros de QA. Este texto não usa a pontuação de avaliação da Semana 10 como se fosse uma nota já obtida na Semana 5.
 

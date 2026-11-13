@@ -6,6 +6,8 @@ Prazo do guia: **15/11/2026, até 23:59**. Cada aluno envia na Adalove o link de
 
 ## Entregas e situação atual
 
+**Revisão do mestre — ADR 023:** requisitos do guia mapeados na abertura; definição de churn, matriz de hipóteses por segmento, prioridades e vínculo com EDA/código/mini deck explícitos. Mudança documental, sem recálculo dos resultados.
+
 **Leitura consolidada — ADR 022:** documento mestre ampliado com contexto, engenharia, EDA, personas, avaliação histórica, campanha, prioridade, economia, limitações e continuidade. Fonte editorial em `docs/resolucao_mestre_semana5.template.md`; versão de leitura em `saidas/resolucao_case_vitaliza_semana5.md`. Alteração documental, sem recálculo de métricas.
 
 **Fechamento autorizado em 12/11 — ADR 021 concluído:** validação independente aprovada, sem Git e sem Prata/Ouro iniciais. Sete tabelas, atribuições e receita preservadas; 28 testes aprovados. Pasta e ZIP de entrega montados com manifesto de integridade. Publicação externa não foi realizada.
