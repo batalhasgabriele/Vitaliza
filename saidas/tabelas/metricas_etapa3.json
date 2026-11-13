@@ -19,12 +19,12 @@
     {
       "metrica": "Correlação bruta — todas as contas",
       "n": 56565,
-      "r": 0.9212231757152044
+      "r": 0.9212231757152105
     },
     {
       "metrica": "Correlação bruta — contas com treino",
       "n": 15685,
-      "r": 0.8834893467683524
+      "r": 0.8834893467683528
     },
     {
       "metrica": "Correlação parcial — controlando atividades",

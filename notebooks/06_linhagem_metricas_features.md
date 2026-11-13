@@ -1,5 +1,7 @@
 # Linhagem de métricas e features
 
+> **Escopo após 12/11/2026:** A linhagem abaixo documenta a versão anterior da segmentação. A EDA de 32.583 históricos permanece descritiva; os cinco atributos e cortes da segmentação vigente estão em [12_consolidacao_semana5.md](12_consolidacao_semana5.md).
+
 | Saída | Origem e transformação | Consumo |
 |---|---|---|
 | População ativa | Assinaturas Prata, status ativo e regras de elegibilidade | Segmentação, personas, tamanho dos grupos |

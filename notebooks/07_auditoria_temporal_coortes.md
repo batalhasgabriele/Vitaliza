@@ -1,5 +1,7 @@
 # Auditoria temporal e coortes
 
+> **Escopo após 12/11/2026:** Auditoria anterior preservada como evidência dos riscos identificados. As coortes de maio/julho e os alvos vigentes estão definidos em [12_consolidacao_semana5.md](12_consolidacao_semana5.md).
+
 ## Pergunta
 Cada atributo descreve o que era conhecido na data da decisão? Pessoas com menos tempo de observação estão sendo comparadas de maneira adequada?
 

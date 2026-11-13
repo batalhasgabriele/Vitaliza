@@ -25,3 +25,13 @@ venv/
 Thumbs.db
 .vscode/
 .idea/
+
+# GOV-004: artefatos intermediários por cliente das análises de segmentação
+saidas/**/_*.pkl
+saidas/**/_*.npy
+saidas/base_inteira/tabelas/personas_clientes.csv
+dados/processados/ouro/segmentos_consolidados_set2026.parquet
+saidas/entrega_semana5/
+saidas/entrega_semana5.zip
+saidas/entrega_semana5_com_resolucao_mestre.zip
+saidas/entrega_semana5_alinhada_ao_guia.zip

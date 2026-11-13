@@ -1,6 +1,6 @@
 # Inventário das Fontes — Camada Bronze
 
-- **Gerado em:** `2026-11-04T23:04:53-03:00`
+- **Gerado em:** `2026-11-12T19:54:44-03:00`
 - **Status:** **ATENCAO**
 - **Política:** auditoria somente leitura; nenhum conteúdo de linha ou dado pessoal é publicado.
 - **Data de corte do case:** `30/09/2026`.

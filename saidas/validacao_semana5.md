@@ -1,5 +1,7 @@
 # Validação suplementar da Semana 5
 
+> **Escopo após 12/11/2026:** Validação histórica anterior à ADR 020. Para resultados e verificações vigentes, usar [qa_entrega_semana5.md](qa_entrega_semana5.md).
+
 A segmentação publicada permanece como referência descritiva. Experimentos abaixo não foram selecionados pelo churn.
 
 | variante               |   k |    inercia |   silhouette |   menor_grupo_pct |   ari_vs_publicado |   bootstrap_ari_media |   bootstrap_ari_min |

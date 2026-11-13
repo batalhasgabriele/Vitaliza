@@ -1,5 +1,7 @@
 # Racional de validação e fechamento
 
+> **Escopo após 12/11/2026:** Registro da validação de 08/11 e da segmentação anterior. Para a entrega vigente, usar [a consolidação ADR 020](12_consolidacao_semana5.md) e [o QA atual](../saidas/qa_entrega_semana5.md). Os números abaixo são históricos.
+
 ## Pergunta
 Os segmentos persistem quando removemos variáveis contratuais? Qual a incerteza dos efeitos experimentais?
 

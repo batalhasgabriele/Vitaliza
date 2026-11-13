@@ -1,0 +1,57 @@
+{
+  "run_id": "20261112T225421Z",
+  "etapas": [
+    {
+      "script": "auditar_bronze",
+      "codigo": 0
+    },
+    {
+      "script": "limpeza_qualidade_dados",
+      "codigo": 0
+    },
+    {
+      "script": "processar_eda",
+      "codigo": 0
+    },
+    {
+      "script": "analisar_eda_marcos",
+      "codigo": 0
+    },
+    {
+      "script": "gerar_graficos_eda",
+      "codigo": 0
+    },
+    {
+      "script": "consolidar_semana5",
+      "codigo": 0
+    },
+    {
+      "script": "atualizar_documentacao_semana5",
+      "codigo": 0
+    }
+  ],
+  "bronze_inalterada": true,
+  "arquivos_bronze": 14,
+  "prata_hashes_iguais": true,
+  "testes": "........................                                                 [100%]\n============================== warnings summary ===============================\ntests/test_consolidacao_semana5.py::test_estado_nao_usa_snapshot_futuro_e_distingue_opt_out\ntests/test_consolidacao_semana5.py::test_atributos_nao_mudam_com_treino_ou_onboarding_futuro\ntests/test_consolidacao_semana5.py::test_atributos_nao_mudam_com_treino_ou_onboarding_futuro\n  C:\\Users\\igorv\\Desktop\\Inteli\\Vitaliza\\src\\metricas_semana5.py:26: Pandas4Warning: 'bool' is not supported as a fill value for str dtype. In a future version, calling fillna with an incompatible value will raise. Explicitly cast to a common dtype before filling.\n    out[\"renovacao_ligada\"] = ligada.reindex(a.index).fillna(True).astype(bool)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n24 passed, 3 warnings in 15.83s",
+  "saidas_alteradas": [
+    "saidas\\semana5_consolidada\\tabelas\\qa_visual.json"
+  ],
+  "hashes_saidas": {
+    "saidas\\semana5_consolidada\\campanha.png": "4c15b222d48b0b107ec60477ef4b00edc0481c3a595c46f41e5e45640a14f575",
+    "saidas\\semana5_consolidada\\coorte_60d.png": "d72a62a55ca0dfaa3a7eb206485c94ed9643c1de4430ccdcf2dcfa6f5d058e32",
+    "saidas\\semana5_consolidada\\mini_deck.html": "4d8745e559a3d946b75f42010f21460c2048aa2602ba7cf83f604da30de82a06",
+    "saidas\\semana5_consolidada\\personas.png": "c8082e0ae4343e87e5347079c3a651dd3a42df9691fa3dc5152c5fb66d4345a6",
+    "saidas\\semana5_consolidada\\relatorio_executivo.html": "9b70d58f562fc05b67e19cd948223458db9a7d6fd6b1dc7e1587e1ad504dc29f",
+    "saidas\\semana5_consolidada\\saida_90d.png": "287e1c9680a636304ab1a47dc72e769f69dd2d15fab6c4243b807224862a78d6",
+    "saidas\\semana5_consolidada\\tabelas\\campanha.csv": "1ff7fba4eef0ae5cbf24f42f7628574444e0b87bf603c25ab0b69ada333f5232",
+    "saidas\\semana5_consolidada\\tabelas\\cenarios_financeiros.csv": "a67d17d858f75baa2245351600dd7833140009c880a8103cb90da95df03245c9",
+    "saidas\\semana5_consolidada\\tabelas\\coorte_90d.csv": "34cb54fd3be395dca86532644bc446bbb2352764811782bc82e2a98700698a52",
+    "saidas\\semana5_consolidada\\tabelas\\coortes_60d.csv": "9cbd5f2bb0e23d6aab4d23fc42c868041e30ee7b5053726520908d15e0aa52bc",
+    "saidas\\semana5_consolidada\\tabelas\\perfil_personas.csv": "0842375069f5392390010da01d1228b22147edce963160409a47d812b46d34c7",
+    "saidas\\semana5_consolidada\\tabelas\\prioridades.csv": "01de93641572250c855324da75d0de5e5d6f9f31ddb09c0cc856d9d4eebbcc02",
+    "saidas\\semana5_consolidada\\tabelas\\qa.json": "e1fb1565fd1290ac90ab56d5661fae25a1b9231337754ba8efd84c4910fb1740",
+    "saidas\\semana5_consolidada\\tabelas\\qa_visual.json": "451986e59566b8ad97b9d6d8587ffb983faa316a231c1cffa127e286c1d8880f",
+    "saidas\\semana5_consolidada\\tabelas\\selecao_k.csv": "be3736c61ccb4f2e01c904a5c7fac1448ad5b92ef07e7f10388b400de2f9d560"
+  }
+}

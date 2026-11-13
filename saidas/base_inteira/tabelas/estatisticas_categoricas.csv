@@ -1,0 +1,68 @@
+variavel,categoria,base_pct,Ativo ao Ar Livre,Treino Indoor Guiado,Hábito Fraco,Treina em Companhia
+Plano,anual,48.12,40.56,43.17,81.57,43.37
+Plano,mensal,51.88,59.44,56.83,18.43,56.63
+Canal de cobrança,app_store,34.98,35.8,34.85,33.85,33.98
+Canal de cobrança,google_play,33.94,32.92,33.95,35.95,34.9
+Canal de cobrança,web_cartao,21.01,20.92,20.88,21.89,20.26
+Canal de cobrança,web_pix,10.06,10.36,10.33,8.31,10.87
+Canal de aquisição,google_ads,10.57,10.55,10.77,10.68,8.75
+Canal de aquisição,indicacao,14.71,13.79,13.78,12.52,35.45
+Canal de aquisição,influenciador,17.02,17.09,17.4,16.61,14.46
+Canal de aquisição,meta_ads,16.68,16.67,16.93,17.61,11.88
+Canal de aquisição,organico,31.42,32.04,31.63,32.82,21.18
+Canal de aquisição,parceria_corporativa,9.6,9.86,9.5,9.74,8.29
+Relógio,apple_watch,18.37,19.14,18.35,17.61,15.56
+Relógio,garmin,20.1,19.11,20.22,21.42,21.82
+Relógio,nenhum,61.53,61.74,61.43,60.96,62.62
+Motivação declarada,estetica,13.81,11.89,14.14,18.58,9.94
+Motivação declarada,nao_informado,32.85,32.54,32.9,32.98,34.16
+Motivação declarada,performance,13.55,17.39,9.96,16.52,9.76
+Motivação declarada,saude_fisica,17.09,17.2,19.04,12.34,13.63
+Motivação declarada,saude_mental,7.44,7.06,8.85,4.56,6.35
+Motivação declarada,so_evento,4.0,4.13,3.56,5.37,2.76
+Motivação declarada,social,11.25,9.79,11.55,9.65,23.39
+Modalidade principal,caminhada,12.02,10.22,12.7,14.12,12.25
+Modalidade principal,corrida,39.89,44.54,36.26,39.38,41.16
+Modalidade principal,forca,17.63,16.9,20.91,9.59,18.05
+Modalidade principal,funcional,10.93,10.34,12.25,8.53,10.59
+Modalidade principal,hiit,6.1,6.3,7.26,1.72,7.73
+Modalidade principal,não informado,2.48,0.0,0.0,16.27,0.0
+Modalidade principal,pedal,9.84,11.31,9.35,8.09,9.21
+Modalidade principal,yoga,1.1,0.38,1.27,2.31,1.01
+Nível,avancado,16.6,20.62,14.2,14.27,16.76
+Nível,iniciante,35.73,32.07,38.5,35.04,38.77
+Nível,intermediario,40.61,40.36,40.25,43.0,38.31
+Nível,não informado,7.07,6.95,7.05,7.68,6.17
+Sexo,F,50.05,49.76,50.05,51.12,48.8
+Sexo,M,45.1,45.26,45.15,44.16,46.22
+Sexo,não informado,4.86,4.98,4.79,4.72,4.97
+UF,BA,2.92,3.08,2.81,2.59,3.78
+UF,CE,2.9,2.77,2.99,2.9,2.95
+UF,DF,5.01,5.25,4.82,5.5,3.5
+UF,GO,3.25,3.26,3.28,3.06,3.5
+UF,MG,6.92,7.41,6.69,6.34,7.18
+UF,PE,2.97,2.66,3.15,3.34,2.49
+UF,PR,6.1,6.08,6.07,6.4,5.62
+UF,RJ,11.51,11.87,11.34,11.18,11.51
+UF,RS,4.98,4.89,4.96,5.43,4.42
+UF,SC,4.22,4.25,3.98,4.81,4.33
+UF,SP,49.22,48.48,49.9,48.44,50.74
+Sistema,android,51.91,50.45,52.1,54.31,53.13
+Sistema,ios,48.09,49.55,47.9,45.69,46.87
+Objetivo com prazo,evento passou há 60+ dias,11.19,10.13,9.18,20.61,8.01
+Objetivo com prazo,evento recente (±60 dias),4.89,6.12,4.88,2.19,4.6
+Objetivo com prazo,evento à frente,2.49,2.5,2.91,1.53,1.57
+Objetivo com prazo,prazo sem data,0.21,0.24,0.17,0.28,0.18
+Objetivo com prazo,sem prazo,81.22,81.01,82.86,75.39,85.64
+Tipo de saída (só quem saiu),involuntaria,7.05,9.8,8.81,1.65,6.27
+Tipo de saída (só quem saiu),reembolso,0.42,0.05,0.0,1.5,0.0
+Tipo de saída (só quem saiu),voluntaria,92.53,90.16,91.19,96.86,93.73
+Motivo na pesquisa de saída,nao_uso,12.56,9.01,13.09,22.78,7.89
+Motivo na pesquisa de saída,outro,34.69,40.09,35.23,15.19,39.47
+Motivo na pesquisa de saída,outro_app,5.18,4.05,5.7,6.33,5.26
+Motivo na pesquisa de saída,preco,41.13,40.54,40.27,43.04,47.37
+Motivo na pesquisa de saída,problema_tecnico,4.24,4.95,2.68,10.13,0.0
+Motivo na pesquisa de saída,saude,2.2,1.35,3.02,2.53,0.0
+Segmento do time (só ativos),Adormecidos sem hábito,14.2,3.09,11.53,79.78,9.71
+Segmento do time (só ativos),Ativos ao ar livre,49.84,61.5,46.76,14.2,52.23
+Segmento do time (só ativos),Ativos guiados por vídeo,35.96,35.41,41.71,6.02,38.06

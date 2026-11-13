@@ -1,562 +1,311 @@
-# Resolução do Case Vitaliza — Semana 5
+# Resolução mestre do case Vitaliza — Semana 5
 
-> **Documento mestre de leitura e continuidade**
-> **Data de atualização:** 08/11/2026
-> **Data de corte dos dados:** 30/09/2026
-> **Branch da consolidação:** `dev` (versão inicial em `codex/plano-mestre-vitaliza`)
-> **Status:** relatório de negócios e mini deck Markdown concluídos localmente. Validação suplementar e os três notebooks executados. Exportação para PDF/PPTX e submissão permanecem pendentes. Ver [QA e limites](qa_entrega_semana5.md).
+**Leitura consolidada de negócios e tecnologia.** Corte dos dados: 30/09/2026. Versão metodológica: ADRs 020 e 021. Este documento explica o problema, o caminho analítico, os resultados e a decisão proposta. Os números pertencem à consolidação atual; as versões anteriores permanecem no histórico do projeto.
 
-## Fechamento executivo em 08/11/2026
+## 1. Resposta executiva ao desafio
 
-Leia o [relatório executivo final](customer_segmentation_report_semana5.md), o [mini deck de oito slides](mini_deck_eda_semana5.md) e a [validação suplementar](validacao_semana5.md). Os três perfis publicados foram preservados. As personas distinguem comportamento observado de motivação hipotética. Propomos apenas um piloto controlado de até 400 elegíveis, com 200 e-mails e 200 controles, custo incremental de envio de R$ 2,00, ainda não executado.
+### Atendimento explícito ao guia da Semana 5
 
-**Correções de interpretação aplicáveis a todo este documento e às versões anteriores:** receita dos segmentos é mensal equivalente estimada, não faturamento de setembro ou receita em risco. AUCs da EDA são associações retrospectivas com janelas diferentes para quem saiu e quem ficou, não validação preditiva prospectiva. A curva por duração não é um estimador de sobrevivência com censura. A divergência de quatro perdas de abril continua sem causa reconciliada. Acessibilidade depende de elegibilidade de contato, não apenas do canal de cobrança.
+O problema central é o **churn: a perda de assinantes e os sinais de descontinuidade da assinatura**. Os segmentos organizam a investigação desse problema. Este quadro mostra onde cada requisito é respondido na própria resolução.
 
-Remover plano e canal preserva a estrutura (ARI 0,988). A variante compacta de quatro atributos alcança silhueta 0,336 no próprio espaço e ARI 0,931 frente à versão publicada, permanecendo candidata a evolução após auditoria de exposição temporal. Não transplantar a saída histórica do exemplo de julho da aula para as personas de setembro. Ainda não existe observação completa do churn em 60 dias destas personas.
+| Área | Requisito do guia | Resposta nesta leitura |
+|---|---|---|
+| Negócios | 3–4 segmentos com cartões de persona | Seção 7: três personas, tamanho, comportamento, tensão, ação e limite |
+| Negócios | Hipóteses de drivers de churn por segmento | Seção 7.4: matriz de hipóteses, evidências, lacunas e testes |
+| Negócios | Priorização imediata versus monitoramento | Seção 10: públicos, gatilhos e ações preliminares |
+| Negócios | Visualizações da EDA | Gráficos incorporados nas seções 5, 7, 8 e 9 |
+| Negócios | Limitações da análise | Seção 12 e limites junto de cada achado |
+| Tecnologia | Código para carregar, limpar e visualizar | Seções 4 e 15: engenharia, código e reprodução |
+| Tecnologia | Padrões e correlações com churn | Seções 5 e 8: período, plano, comportamento e diferenças de saída; seção 9: campanha |
+| Tecnologia | Gráficos gerados pelo código | Seção 5.4: ligação entre pergunta, evidência e implementação |
+| Tecnologia | Sustentar empiricamente a segmentação | Seções 6–8: atributos, escolha de k, estabilidade, perfis e avaliação histórica |
+| Tecnologia | História analítica em mini deck | Seção 15: sequência dos cinco slides e acesso ao artefato |
 
-## Como usar este documento
+As hipóteses são **explicações candidatas para churn**, não causas comprovadas. Associação histórica ajuda a priorizar investigação, mas não demonstra, sozinha, que uma ação reduzirá perdas.
 
-Para entender a engenharia que sustenta os resultados, começar pelo [mapa do pipeline](../notebooks/00_pipeline_etl_data_quality.md). Ele conecta contratos, linhagem, auditoria temporal, reconciliação e reprocessamento. A migração da EDA para Prata é validada contra baseline privada antes de publicar; evidência em `tabelas/qa_engenharia_dados.json` e ADR 017.
+A Vitaliza precisa entender por que seus assinantes deixam de perceber valor no serviço e organizar uma estratégia de retenção que possa ser testada. A resolução da Semana 5 é dividir a carteira atual em três perfis comportamentais, verificar como perfis semelhantes se relacionaram com a saída em um período histórico e propor ações coerentes com as evidências disponíveis.
 
-Este é o ponto de entrada para quem precisa entender o projeto sem ler primeiro todos os scripts, notebooks e decisões técnicas. Ele reúne:
+Encontramos **6.797 integrantes no perfil Atleta ao Ar Livre, 5.109 no perfil Treino em Casa Guiado e 2.847 no perfil Hábito Fraco**, totalizando os **14.753 pagantes ativos** no corte. O perfil de hábito fraco apresentou a maior taxa de saída composta na avaliação histórica, mas os outros perfis responderam pela maior parte das saídas em números absolutos. Portanto, priorizar retenção exige olhar conjuntamente comportamento, estado da assinatura e tamanho do público.
 
-- o problema de negócio;
-- o caminho adotado para tratar e analisar os dados;
-- os resultados já reproduzidos;
-- a segmentação dos clientes ativos;
-- as limitações;
-- o mapa dos artefatos;
-- as instruções para outro integrante ou outra IA continuar o trabalho.
+A recomendação é começar pelo diagnóstico de quem desligou a renovação, distinguir assinantes mensais com dificuldade de formar hábito dos demais públicos e testar ações pequenas antes de ampliar investimentos. O estudo não comprova o motivo individual da saída nem o retorno de uma campanha futura. Essa distinção orienta toda a resolução.
 
-Este documento é vivo e deve acompanhar o projeto. Ele não substitui os dois artefatos oficiais da Semana 5:
+## 2. Empresa, problema e escopo da entrega
 
-1. **Customer Segmentation Report**, da trilha de Negócios;
-2. **EDA com código, visualizações e mini deck**, da trilha de Tecnologia.
+A Vitaliza é um aplicativo freemium brasileiro de bem-estar, com treinos ao ar livre, vídeos e recursos sociais. No retrato oficial, há **64.948 contas cadastradas** e **14.753 assinantes pagantes ativos**. A média de churn informada pelo enunciado aumenta de 5,6% ao mês em 2025 para 6,6% entre janeiro e setembro de 2026. Esse aumento torna necessário entender os padrões de uso e as diferenças entre clientes antes de escolher uma intervenção.
 
-Também não representa a resolução final da Semana 10. Modelo preditivo de churn, uplift individual, ROI completo e aplicação web pertencem à etapa futura.
+O plano mensal passou de R$ 34,90 para R$ 39,90 em 01/03/2026. O plano anual custa R$ 299,90, com possibilidade de preço promocional no primeiro ano. Além do preço, plano, canal de pagamento, tempo de relacionamento e frequência de treino podem influenciar a leitura dos dados. Um contrato anual, por exemplo, pode manter o acesso de alguém que já desligou a renovação futura.
 
----
+A Semana 5 pede dois artefatos conectados: um relatório de segmentação com três ou quatro personas, hipóteses, prioridade e limitações; e uma EDA com código, visualizações e mini deck. Modelo supervisionado, aplicativo com IA generativa e ROI final são entregas da Semana 10. Esta resolução chega até a segmentação e a formulação de uma estratégia preliminar de aprendizado.
 
-## 1. Resumo executivo
+## 3. Quais dados foram usados e por que existem populações diferentes
 
-A Vitaliza é um aplicativo brasileiro freemium de bem-estar, com treinos ao ar livre por GPS, vídeos guiados e recursos sociais. O desafio é construir uma arquitetura de retenção capaz de entender quem são os clientes, por que o churn aumentou e como priorizar ações sem desperdiçar orçamento ou abordar clientes que não responderiam positivamente.
+### Definição de churn e dos sinais relacionados
 
-No corte oficial de **30/09/2026**, a empresa possui:
+| Medida | Definição e denominador | Uso na resolução |
+|---|---|---|
+| Churn mensal por expiração | Expirações no mês ÷ ativos no início do mês | Subida de 2026 e reajuste; não é uma coorte fechada, pois pode incluir perdas de entradas do próprio mês |
+| Renovação desligada | Estado da renovação futura desligada no corte, mesmo com acesso ativo | Sinal para diagnóstico; não equivale a perda financeira já realizada |
+| Saída composta em 60 dias | Sem acesso **ou** renovação desligada ao fim, entre ativos com renovação ligada no início | Comparação histórica dos perfis em horizonte comum |
+| Expiração em 30 dias na campanha | Sorteados com expiração na janela ÷ todos os sorteados no braço | Comparação principal por intenção de tratar |
 
-- **64.948 contas cadastradas**;
-- **14.753 assinantes pagantes ativos** após retirar 60 contas internas/cortesia;
-- **12.503 ativos com renovação automática ligada**;
-- **2.250 ativos com renovação desligada**;
-- aproximadamente sete em cada dez pagantes nas lojas Apple e Google.
+Logo, **23,70% de saída composta no perfil Hábito Fraco em julho não significa 23,70% de churn mensal**, nem previsão desse percentual para setembro. Toda taxa deve ser acompanhada de desfecho, horizonte e população.
 
-A reconstrução histórica observa churn médio de **5,68% ao mês em 2025** e **6,68% ao mês de janeiro a setembro de 2026**, com pico de **8,13% em abril/2026**. A referência executiva do case informa 5,6%, 6,6% e 1.154 perdas em abril; a reconstrução encontra 1.158. A diferença de quatro casos foi mantida e documentada, sem ajuste artificial.
+### Fontes e populações
 
-Para a entrega da Semana 5, os 14.753 pagantes ativos foram agrupados sem usar churn ou informação de quem saiu. Foram encontrados três segmentos:
+O data room reúne usuários, assinaturas, eventos de assinatura, pagamentos, uso mensal, atividades, onboarding, amizades, publicações, suporte, pesquisa de saída e campanha de agosto, além dos arquivos de mapas de calor. Cada fonte responde a uma pergunta diferente: pagamentos ajudam a calcular receita; atividades descrevem comportamento; eventos reconstroem o estado contratual; campanha permite comparar grupos sorteados.
 
-| Segmento | Clientes | Participação | Receita líquida mensal representada | Característica dominante |
-|:---|---:|---:|---:|:---|
-| **Ativos ao ar livre** | 7.457 | 50,55% | R$ 209.995,60 | Uso frequente, com 82,3% das atividades ao ar livre. |
-| **Ativos guiados por vídeo** | 5.317 | 36,04% | R$ 152.203,80 | Uso frequente, com 92,2% das atividades em vídeo. |
-| **Adormecidos sem hábito** | 1.979 | 13,41% | R$ 43.351,69 | Baixa regularidade, zero treino mediano em 30 dias e recência de 68 dias. |
+As populações não são intercambiáveis:
 
-O principal achado é que intensidade de uso separa claramente o grupo adormecido, enquanto o **modo de treino** separa os dois grupos ativos. A segmentação é muito estável, mas os grupos ativos apresentam sobreposição. Ela deve orientar hipóteses e comunicação, não ser tratada como um modelo de risco ou prova causal.
+| População | Papel na resolução |
+|---|---|
+| 64.948 contas cadastradas | Contexto geral, incluindo usuários gratuitos |
+| 32.583 usuários da base histórica de EDA | Exploração de assinaturas após o tratamento das contas internas; inclui históricos que já saíram |
+| 14.753 pagantes ativos em setembro | Carteira atual que recebe os segmentos e a priorização preliminar |
+| 11.685 ativos com renovação ligada em julho | Público da avaliação histórica primária de saída composta em 60 dias |
+| 14.120 sorteados na campanha de agosto | Público da comparação principal da campanha |
 
----
+Quem já saiu não foi apagado da análise. Essas pessoas aparecem na EDA, nas coortes e nos desfechos históricos. A segmentação atual usa os ativos porque descreve a carteira sobre a qual uma ação de retenção poderia ser planejada no corte. Misturar antigos clientes com ativos em uma única contagem dificultaria interpretar o tamanho de cada público operacional.
 
-## 2. O problema que estamos resolvendo
+## 4. Engenharia de dados: como a base se tornou confiável
 
-### Pergunta executiva
+O projeto adota arquitetura medalhão. A camada **Bronze**, em `dados/brutos/`, conserva os arquivos originais. A **Prata** guarda tabelas tratadas e padronizadas. A **Ouro** organiza atributos, segmentos e métricas para consumo analítico. Todo resultado deve poder ser reconstruído a partir da origem.
 
-Como a Vitaliza pode entender e organizar sua base de assinantes para preparar uma estratégia de retenção personalizada, financeiramente viável e respeitosa aos limites operacionais?
+O trabalho de ETL inclui leitura das fontes, exclusão das contas internas do universo de clientes, padronização de modalidades, tratamento de atividades inválidas e duplicadas, conversão de valores monetários e harmonização de horários para Brasília. Treinos indoor sem GPS são preservados: falta de GPS nessa modalidade não significa necessariamente erro. Distâncias devem ser interpretadas por modalidade; aplicar o mesmo limite a corrida e ciclismo pode remover observações legítimas.
 
-### Entrega da Semana 5
+Na receita, cobranças aprovadas duplicadas pela regra de usuário, valor e dia são sinalizadas para evitar contagem em dobro. Essa regra é uma aproximação do ciclo de cobrança e continua documentada como limitação. Nas junções, as tabelas são agregadas na granularidade adequada para não multiplicar clientes ou receita.
 
-A Semana 5 é descritiva e diagnóstica. Ela deve:
+Os controles de qualidade verificam presença de arquivos, contratos de colunas e chaves, duplicidades, datas, relacionamentos e integridade. Hashes permitem comprovar que a Bronze não foi alterada. O código reutilizável fica em `src/`; os notebooks explicam e demonstram as análises. A reprodução completa é responsabilidade do pipeline, não de executar células avulsas em uma ordem informal.
 
-1. carregar, limpar e auditar o data room;
-2. explicar padrões relacionados ao churn e à subida de 2026;
-3. investigar os marcos de março, junho e agosto;
-4. construir três ou quatro segmentos sem usar a informação de saída;
-5. transformar os segmentos em personas e hipóteses de drivers;
-6. contar a história em um relatório executivo e um mini deck.
+## 5. O que a EDA mostrou
 
-### O que fica para a Semana 10
+### 5.1 A subida de churn exige investigação, mas não identifica uma causa isolada
 
-- previsão de saída nos 60 dias posteriores ao corte;
-- comparação de Regressão Logística, Árvores e ensembles;
-- uplift individual e identificação de persuadíveis, garantidos, perdidos e “não perturbe”;
-- racional financeiro completo com LTV, CAC, custos de contato, ofertas e IA;
-- aplicação web preditivo-generativa.
+A reconstrução pelos eventos de expiração encontra média mensal de **5,68% em 2025** e **6,68% em janeiro–setembro de 2026**. Abril apresenta **1.158 perdas sobre 14.237 ativos no início do mês**, ou aproximadamente **8,13%**. O enunciado informa 1.154 perdas. A auditoria encontrou 1.158 usuários distintos tanto nos eventos quanto no cadastro; a diferença foi preservada como ressalva de fonte.
 
----
+![Série mensal de churn](churn_mensal_2025_2026.png)
 
-## 3. Princípios que orientam a solução
+No plano mensal, a média observada passou de 10,22% em janeiro–fevereiro para 12,97% em março–abril. Isso é compatível com uma hipótese de sensibilidade ao reajuste, mas não mede seu efeito causal: sazonalidade, composição dos clientes e vencimentos também mudam no período. A decisão adequada é investigar o preço junto dessas variáveis, sem atribuir toda a subida a ele.
 
-### 3.1 Imutabilidade
+### 5.2 A pesquisa de saída tem uma cobertura limitada
 
-`dados/brutos/` é a camada Bronze e nunca pode ser editada. Todos os tratamentos geram novos arquivos.
+A pesquisa começou em junho. Entre junho e setembro, houve **3.389 saídas**; **353** dessas pessoas responderam, aproximadamente **10,4%**. Há **641 respondentes únicos no total**, mas 288 ainda estavam ativos no corte. Dividir todos os respondentes pelas saídas misturaria situações diferentes e exageraria a cobertura relevante para explicar perdas concluídas.
 
-### 3.2 Arquitetura medalhão
+Os motivos observados são concentrados no canal Web e não representam automaticamente quem paga pelas lojas de aplicativos. Responder à pesquisa também é uma escolha do usuário, o que cria viés de seleção. Os relatos ajudam a formular hipóteses, mas não autorizam generalizar um motivo para toda a carteira.
 
-```text
-dados/brutos/                    Bronze: fontes originais, somente leitura
-        ↓
-dados/processados/prata/         Prata: tipagem, limpeza, deduplicação e harmonização
-        ↓
-dados/processados/ouro/          Ouro: feature stores, segmentos e métricas analíticas
-        ↓
-saidas/                          Relatórios, tabelas agregadas e gráficos
-```
+![Cobertura da pesquisa](ponto_cego_cancelamentos.png)
 
-### 3.3 Uma fonte de verdade
+### 5.3 Correlação e sobrevivência precisam de interpretação cuidadosa
 
-Nenhum número final deve ser recalculado manualmente em uma planilha isolada. Relatórios e apresentações devem consumir as tabelas agregadas produzidas pelos scripts.
+Entre contas com treino, sessões e minutos apresentam correlação bruta próxima de 0,88. Após controlar linearmente o número de atividades, ela cai para cerca de 0,02. Parte importante da associação reflete o volume de treinos, e não um efeito independente de abrir o aplicativo. Esse exemplo mostra por que correlação bruta não basta para escolher uma ação.
 
-### 3.4 Proteção temporal
+A coorte de entrada com 90 dias completos de acompanhamento encontrou saída em até 90 dias de **28,47% no mensal** e **0,86% no anual**. Clientes que saíram cedo continuam no denominador. Esses percentuais não são churn mensal nem demonstram que migrar para o anual evita a saída: duração contratual e composição dos grupos afetam a comparação. O plano nessa análise auxiliar é cadastral, e não uma intervenção sorteada.
 
-Somente informações observáveis até 30/09/2026 podem entrar nas análises. Em análises históricas, fatos também são limitados ao desfecho individual de cada assinatura.
+Também foram retiradas interpretações de AUC retrospectiva como se fossem desempenho de previsão futura. Para prever, os atributos precisam estar disponíveis antes do desfecho e a avaliação deve respeitar o tempo.
 
-### 3.5 Segmentação sem target
+### 5.4 Padrões relacionados a churn: da pergunta à evidência
 
-Churn, saída, pesquisa de saída, campanha, abertura, clique, renovação automática e demografia não participaram da formação dos clusters.
+| Pergunta | Evidência e interpretação | Código / visualização |
+|---|---|---|
+| As perdas aumentaram em 2026? | Média mensal reconstruída de 5,68% para 6,68%; investigar composição e marcos | `src/analisar_eda_marcos.py`; série da seção 5.1 |
+| O reajuste pode estar relacionado às perdas? | Aumento no mensal após março; antes/depois não isola causalidade | Mesmo script; EDA dos marcos |
+| A pesquisa explica todos os cancelamentos? | 353 respondentes entre 3.389 perdas de junho–setembro; viés de canal e seleção | `src/gerar_graficos_eda.py`; gráfico da seção 5.2 |
+| Quais perfis se associam à saída? | Na coorte de julho, saída composta de 12,25%, 9,80% e 23,70%; denominadores e intervalos na seção 8 | `src/consolidar_semana5.py`; gráfico histórico |
+| A campanha reduziu expiração? | Cupom com −0,84 p.p. versus controle, mas comparação ainda inconclusiva quanto a efeito diferente de zero | Mesmo script; gráfico da seção 9 |
 
-### 3.6 LGPD e minimização
+A correlação entre sessões e minutos da seção 5.3 avalia redundância de atributos; **não é uma correlação direta com churn**. A evidência específica sobre churn vem das comparações por período, plano e perfil e do experimento. A relação entre segmento e saída é uma associação entre grupos, não uma causa individual identificada.
 
-Relatórios não publicam e-mail, texto livre, rota GPS, imagem ou identificador individual. Dados demográficos podem ser usados para auditoria de representação, mas não para determinar ofertas ou prioridade de atendimento.
+## 6. Como os segmentos foram construídos
 
----
+A segmentação usa cinco atributos comportamentais: dias de treino pretendidos no onboarding, treinos por mês observado, regularidade, número de modalidades e proporção de atividades ao ar livre. Churn, desligamento de renovação e desfecho futuro não entram no agrupamento.
 
-## 4. Dados utilizados
+As atividades são medidas em uma janela comum de **84 dias**, limitada ao início da assinatura. A frequência considera os dias efetivamente observados. A regularidade representa a proporção dos blocos semanais observáveis com treino. Usar uma janela comum evita comparar livremente clientes observados por poucos dias com outros acompanhados por muitos meses.
 
-O data room contém 12 fontes tabulares e dois pacotes de heatmaps.
+O pré-processamento trata ausência de intenção com mediana, limita extremos selecionados no percentil 99, aplica `log1p` à frequência e padroniza as escalas com z-score. Padronizar torna os atributos comparáveis; clusterizar agrupa perfis semelhantes. São etapas diferentes. Quando não há treino, a proporção ao ar livre é preenchida com zero apenas na matriz do modelo; isso não deve ser interpretado isoladamente como preferência por ambiente fechado.
 
-| Domínio | Fontes principais | Uso no projeto |
-|:---|:---|:---|
-| Cadastro | `usuarios.csv`, `onboarding.csv` | Perfil cadastral, necessidade declarada e completude. |
-| Contrato | `assinaturas.csv`, `eventos_assinatura.csv` | População, plano, canal e reconstrução histórica. |
-| Receita | `pagamentos.csv` | Receita bruta/líquida, falhas e deduplicação de cobranças. |
-| Uso | `uso_mensal.csv`, `atividades.parquet` | Frequência, recência, intensidade, modalidade e regularidade. |
-| Social | `amizades.csv`, `feed_posts.csv` | Conexões, posts e curtidas. |
-| Atendimento | `tickets_suporte.csv` | Volume e categoria de contato com suporte. |
-| Pesquisa/experimento | `pesquisa_saida.csv`, `campanha_ago26.csv` | Motivos declarados e avaliação ITT da campanha. |
-| Imagem | pacotes `heatmaps` | Auditados, mas ainda não usados na entrega da Semana 5. |
+O K-Means foi comparado para diferentes números de grupos. Entre três e quatro grupos, elegíveis pelo guia, três favoreceram a parcimônia e a silhueta. A silhueta de aproximadamente **0,350** indica separação parcial, não perfis totalmente distintos. Cinco reamostragens bootstrap, reajustando todo o pré-processamento, apresentaram ARI médio de aproximadamente **0,998**. É evidência exploratória de estabilidade, não garantia de generalização.
 
-O inventário completo, com contagens, schemas, nulos e cobertura temporal, está em [`docs/source_inventory.md`](../docs/source_inventory.md).
+Os **1.119 clientes com menos de 30 dias** recebem classificação provisória. Eles não ajustam os centroides, mas permanecem nas contagens e nos desfechos. Assim, a solução não melhora artificialmente seus números excluindo clientes com pouca observação.
 
----
+## 7. As três personas da carteira atual
 
-## 5. Limpeza e preparação dos dados
+| Persona | Ativos | Provisórios | Treinos/mês, mediana | Semanas com treino | Renovação desligada |
+|---|---:|---:|---:|---:|---:|
+| Atleta ao Ar Livre | 6.797 | 524 | 10,54 | 91,67% | 319 |
+| Treino em Casa Guiado | 5.109 | 387 | 10,15 | 91,67% | 221 |
+| Hábito Fraco | 2.847 | 208 | 0,36 | 8,33% | 1.715 |
 
-### 5.1 População
+![Tamanho dos segmentos atuais](semana5_consolidada/personas.png)
 
-- 64.948 usuários foram preservados na dimensão Prata;
-- 60 contas `@vitaliza.com.br`/cortesia foram sinalizadas e excluídas da população pagante;
-- 14.753 pagantes ativos formam a população oficial de segmentação.
+### Atleta ao Ar Livre
 
-### 5.2 Atividades
+O perfil apresenta rotina de treino frequente e predominantemente ao ar livre. A tensão de negócio é que continuar treinando não garante perceber valor na assinatura. Uma hipótese é que a conclusão de uma meta reduza a necessidade percebida do serviço, mas essa motivação ainda não foi validada nos textos.
 
-- 11 rótulos foram consolidados em sete modalidades canônicas;
-- 376.930 atividades em inglês foram integradas às modalidades correspondentes;
-- 9.383 pares app+relógio foram deduplicados após corrigir o fuso do Garmin;
-- 3.649 atividades com duração zero foram excluídas do derivado válido;
-- 951 distâncias acima de 200 km foram anuladas como erro de GPS, preservando as demais informações do treino;
-- 574.835 treinos indoor sem distância foram preservados como nulos legítimos;
-- 1.241.461 atividades válidas foram materializadas na Prata.
+A proposta é monitorar a continuidade de uso e investigar os casos de renovação desligada. Para elegíveis, testar uma proposta de continuidade de treino contra um grupo controle, sem desconto automático. O resultado a observar é a permanência com assinatura ativa e renovação ligada em 60 dias. O nome da persona descreve comportamento registrado; não define biografia, saúde ou motivação individual.
 
-### 5.3 Datas e fusos
+### Treino em Casa Guiado
 
-- eventos de lojas terminados em `Z` foram convertidos de UTC para `America/Sao_Paulo`;
-- registros Web sem `Z` foram interpretados como horário de Brasília;
-- fatos posteriores ao corte foram retirados dos derivados temporais;
-- 119 cadastros futuros foram preservados na dimensão, mas receberam flag explícita.
+O perfil reúne treinos registrados predominantemente em ambiente fechado, com frequência e regularidade elevadas. O nome é um rótulo executivo: os dados usados no agrupamento não comprovam que todo integrante treine em casa ou utilize orientação guiada.
 
-### 5.4 Pagamentos
+A hipótese de negócio é que conteúdo pouco relevante ou dificuldade em encaixar a rotina reduza a continuidade. Para pessoas elegíveis com queda de regularidade, pode-se testar seleção editorial de conteúdo. Retomada em 30 dias, saída em 60 dias e descadastro são medidas relevantes. A modalidade, sozinha, não comprova fadiga de catálogo ou falta de tempo.
 
-O fechamento de setembro foi reconciliado em cinco passos:
+### Hábito Fraco
 
-| Passo | Valor | Regra |
-|:---|---:|:---|
-| Todas as linhas de setembro | R$ 509.588 | Inclui todos os status. |
-| Somente aprovados | R$ 499.503 | Remove recusas, estornos e chargebacks da receita. |
-| Após harmonizar fuso | R$ 499.402 | Corrige pertencimento ao mês contábil. |
-| Bruto deduplicado | R$ 492.572 | Remove 93 aprovações repetidas no mesmo dia/ciclo. |
-| Líquido oficial | R$ 436.442 | Desconta taxas de Apple/Google, cartão e Pix. |
+O perfil apresenta pouca frequência e baixa regularidade nos registros. A hipótese é que a dificuldade de estabelecer uma rotina reduza o valor percebido. Entretanto, ausência de registro pode refletir atividade fora do aplicativo, cobertura incompleta ou outros fatores; não permite concluir lesão ou desinteresse pela atividade física.
 
-### 5.5 Completude
+A ação precisa separar mensais em formação de hábito, pessoas que já desligaram a renovação e anuais que continuam renovando. Um teste de rotina inicial pode medir retomada em 30 dias e continuidade em 60 dias. O contrato anual também exige cuidado: acesso ativo pode persistir mesmo quando a intenção de renovar já mudou.
 
-Campos ausentes do onboarding não foram apagados nem preenchidos com respostas inventadas. Foram criadas flags de preenchimento porque a ausência pode carregar sinal comportamental.
+### 7.4 Hipóteses de drivers de churn por segmento
 
-### 5.6 Registro completo
+Cada hipótese distingue **evidência observada**, **mecanismo possível** e **validação necessária**. A taxa histórica do perfil não valida automaticamente o motivo proposto.
 
-Cada regra, impacto, saída e evidência está documentada em [`docs/registro_limpeza_tratamento_dados.md`](../docs/registro_limpeza_tratamento_dados.md). Esse documento deve ser atualizado sempre que um tratamento mudar.
+| Persona | Hipótese de driver de churn | Evidência disponível | Limite da evidência | Ação e teste propostos |
+|---|---|---|---|---|
+| Atleta ao Ar Livre | **H1 — perda de valor após concluir uma meta:** continuar treinando não exige necessariamente manter a assinatura | Carteira atual: mediana de 10,54 treinos/mês e 319 renovações desligadas. Coorte de julho: 12,25% de saída composta | Não foi demonstrado que essas pessoas concluíram metas ou saíram por esse motivo | Validar motivos em amostra; para elegíveis com renovação desligada, testar continuidade de treino versus controle e medir permanência em 60 dias |
+| Treino em Casa Guiado | **H2 — conteúdo perde relevância ou deixa de caber na rotina**, reduzindo valor percebido | Carteira atual: mediana de 10,15 treinos/mês e 221 renovações desligadas. Coorte de julho: 9,80% de saída composta | Modalidade não mede fadiga de catálogo, falta de tempo ou uso guiado. Frequência elevada não prova queda individual | Confirmar consumo de conteúdo, queda de regularidade e motivos; testar seleção editorial entre elegíveis, medindo retomada, saída e descadastro |
+| Hábito Fraco | **H3 — dificuldade de formar hábito reduz valor percebido**, favorecendo descontinuidade | Carteira atual: 0,36 treino/mês, 8,33% de semanas com treino e 1.715 renovações desligadas. Coorte de julho: 23,70% de saída composta | Há associação entre perfil e saída, mas não prova do mecanismo; exercício fora do app e cobertura dos logs podem explicar parte do baixo uso | Verificar cobertura e separar plano/estado contratual; testar rotina inicial versus controle, com retomada em 30 dias e continuidade em 60 dias |
 
----
+**H4 — hipótese transversal de sensibilidade a preço:** o reajuste pode reduzir a relação entre valor percebido e custo, sobretudo no mensal. O aumento observado após março justifica investigação, mas não identifica a persona afetada nem valida desconto generalizado. Comparar coortes, canal, tempo de casa e vencimento; a campanha de cupom também mantém incerteza.
 
-## 6. Análise exploratória e principais achados
+As contagens atuais e as taxas históricas pertencem a **populações diferentes**, identificadas na tabela. H1 e H2 são mecanismos plausíveis ainda não validados. H3 tem associação observada com o perfil, mas a explicação causal permanece em aberto. Nenhuma das hipóteses deve ser apresentada como motivo comprovado de cancelamento.
 
-### 6.1 Evolução do churn
+## 8. O que a avaliação histórica acrescenta
 
-![Churn mensal](churn_mensal_2025_2026.png)
+Para verificar a relação entre perfis e saída sem usar o futuro para formar os grupos, ajustamos o modelo histórico em maio e aplicamos esse mesmo modelo aos clientes de julho. Depois observamos os 60 dias seguintes, até 29/09. O público primário são os ativos com renovação ligada no início.
 
-- média de **5,68% ao mês em 2025**;
-- média de **6,68% ao mês em jan–set/2026**;
-- pico de **8,13% em abril/2026**;
-- agosto encerra com aproximadamente 5,99% e setembro com 5,01%.
+O desfecho é **saída composta**: estar sem acesso ou com renovação desligada ao fim do horizonte. Portanto, não é sinônimo de expiração financeira. Perda de acesso é analisada separadamente nas tabelas completas.
 
-O aumento após o reajuste é uma associação observacional. Sazonalidade, composição da base e calendário de vencimentos mudam simultaneamente; não foi estimada elasticidade causal.
+| Perfil na coorte de julho | Pessoas | Saídas compostas | Taxa em 60 dias | IC95% | Participação nas saídas |
+|---|---:|---:|---:|---|---:|
+| Atleta ao Ar Livre | 5.957 | 730 | 12,25% | 11,45%–13,11% | 49,73% |
+| Treino em Casa Guiado | 4.458 | 437 | 9,80% | 8,96%–10,71% | 29,77% |
+| Hábito Fraco | 1.270 | 301 | 23,70% | 21,44%–26,12% | 20,50% |
+| Total | 11.685 | 1.468 | 12,56% | 11,97%–13,18% | 100,00% |
 
-### 6.2 Marco de 01/03/2026 — reajuste
+![Saída composta na avaliação histórica](semana5_consolidada/coorte_60d.png)
 
-O plano mensal passou de R$ 34,90 para R$ 39,90. A média observada do churn mensal passou de **10,22% em jan–fev** para **12,97% em mar–abr** nesse plano. O dado sustenta uma hipótese de sensibilidade a preço, mas não prova que o reajuste causou a alta.
+Hábito Fraco tem a maior taxa, mas responde por apenas 20,50% das saídas dessa coorte. Atleta ao Ar Livre responde por 49,73%, em parte por seu tamanho. Taxa e cobertura respondem a perguntas distintas: a primeira indica frequência relativa; a segunda mostra quanto do problema o público representa.
 
-### 6.3 Marco de 01/06/2026 — pesquisa de saída
+O modelo de setembro foi ajustado separadamente para descrever a carteira atual. Não se deve multiplicar automaticamente a taxa de julho pelo segmento atual e chamar o resultado de previsão. O histórico também inclui as campanhas realmente realizadas, inclusive em agosto; não representa um cenário sem intervenção.
 
-Entre junho e setembro foram observadas **3.389 expirações**:
+## 9. O que aprendemos com a campanha de agosto
 
-- 2.271 nas lojas;
-- 1.118 na Web.
 
-A pesquisa possui 643 respostas e 641 respondentes únicos, todos Web. Portanto, os motivos declarados não podem ser generalizados para os clientes das lojas.
+A comparação principal usa todos os sorteados em 10/08, independentemente de terem aberto ou clicado na mensagem. Essa abordagem, chamada intenção de tratar, preserva a comparação criada pelo sorteio. O desfecho principal é expiração nos 30 dias de 10/08 até antes de 09/09.
 
-### 6.4 Marco de 10/08/2026 — campanha randomizada
+| Grupo | Sorteados | Expirações | Taxa | Diferença versus controle | p ajustado |
+|---|---:|---:|---:|---:|---:|
+| Controle | 3.579 | 196 | 5,48% | Referência | — |
+| Cupom | 3.472 | 161 | 4,64% | −0,84 p.p. | 0,32 |
+| Desafio | 3.515 | 182 | 5,18% | −0,30 p.p. | 1,00 |
+| Conteúdo | 3.554 | 218 | 6,13% | +0,66 p.p. | 0,71 |
 
-| Braço | Sorteados | Churn em 30 dias | Diferença contra controle | p-valor |
-|:---|---:|---:|---:|---:|
-| Controle | 3.579 | 5,48% | 0,00 p.p. | — |
-| Desafio | 3.515 | 5,18% | −0,30 p.p. | 0,576 |
-| Cupom | 3.472 | 4,64% | −0,84 p.p. | 0,108 |
-| Conteúdo | 3.554 | 6,13% | +0,66 p.p. | 0,235 |
+Os valores de p foram ajustados para as três comparações contra controle. Os intervalos individuais das diferenças incluem zero. O cupom apresentou a menor taxa observada, mas a evidência não sustenta afirmar um efeito diferente de zero a 5% nessas comparações. Isso também não prova equivalência ou ausência de efeito.
 
-Nenhum braço apresentou diferença estatisticamente significativa a 5%. Abertura e clique são pós-tratamento e não foram usados para selecionar participantes na análise principal.
+![Comparação dos tratamentos](semana5_consolidada/campanha.png)
 
-### 6.5 Correlação não é causalidade
+Abertura e clique acontecem depois da atribuição do tratamento; selecionar somente essas pessoas mudaria a comparação. Também não é possível identificar com essa tabela quais indivíduos são persuadíveis ou seriam prejudicados pelo contato. As análises por plano, por desfecho composto e por 51 dias estão separadas como sensibilidades exploratórias.
 
-A correlação entre sessões no aplicativo e minutos treinados é 0,92 na base completa e 0,88 entre quem treinou. Após controlar pelo número de atividades, cai para aproximadamente **0,02**. Abrir mais o aplicativo não pode ser interpretado isoladamente como causa de mais minutos.
+## 10. Priorização e proposta de ação
 
-### 6.6 Outliers dependem do contexto
+### Imediata versus monitoramento, conforme o guia
 
-A regra global de Tukey marcaria 81.775 distâncias acima de 17,08 km como outliers, mas 73.120 são pedaladas. O resultado demonstra por que modalidades com escalas distintas não devem receber o mesmo corte automático.
+| Persona | Quando priorizar de imediato | Quando monitorar | Hipótese associada |
+|---|---|---|---|
+| Atleta ao Ar Livre | Renovação desligada: diagnosticar motivo, elegibilidade e preferência de contato | Renovação ligada e continuidade de uso: acompanhar sinais; não oferecer desconto automaticamente | H1 — possível perda de valor após uma meta |
+| Treino em Casa Guiado | Renovação desligada: diagnóstico; queda de regularidade confirmada pode motivar elegibilidade a teste | Renovação ligada e rotina preservada: acompanhar consumo e dificuldades | H2 — relevância de conteúdo e rotina |
+| Hábito Fraco | Renovação desligada: diagnóstico; mensal com renovação ligada: priorizar teste de formação de hábito | Anual com renovação ligada: investigar antes de contatar, pois baixo uso não prova urgência financeira | H3 — formação de hábito |
 
-Os detalhes estão em [`saidas/eda_e_hipoteses_vitaliza.md`](eda_e_hipoteses_vitaliza.md) e [`saidas/eda_etapa3_marcos_2026.md`](eda_etapa3_marcos_2026.md).
+**Prioridade imediata significa agir no diagnóstico e preparar um teste elegível**, não executar disparos indiscriminados. A tabela por persona traduz a decisão de negócio; os totais operacionais abaixo usam regras mutuamente exclusivas para evitar dupla contagem. A hipótese H4 de preço só justifica oferta financeira após validação adicional.
 
----
+A priorização atual é operacional. Primeiro vem o estado da renovação; depois, o perfil de hábito e o plano. As regras são aplicadas em ordem, sem colocar uma pessoa em dois públicos.
 
-## 7. Segmentação dos pagantes ativos
+| Prioridade | Público | Pessoas | Receita líquida equivalente mensal |
+|---|---|---:|---:|
+| 1 — Diagnóstico imediato | Renovação desligada, qualquer persona | 2.255 | R$ 51.065,27 |
+| 2 — Formação de hábito | Mensal, hábito fraco e renovação ligada | 208 | R$ 7.344,00 |
+| 3 — Investigar antes de contatar | Anual, hábito fraco e renovação ligada | 924 | R$ 20.015,80 |
+| 4 — Monitoramento | Demais ativos com renovação ligada | 11.366 | R$ 327.126,01 |
 
-### 7.1 Construção
+Diagnóstico imediato não significa oferecer desconto a todos. É preciso verificar elegibilidade, preferências de contato e o motivo conhecido antes de agir. Da mesma forma, monitoramento não significa negar atendimento necessário. Essas prioridades não equivalem às classes causais de resposta a tratamento.
 
-A feature store possui uma linha por pagante ativo e consome exclusivamente a camada Prata. Foram utilizadas 16 variáveis relacionadas a:
+Como primeiro aprendizado, propõe-se um piloto de viabilidade com até 400 elegíveis com renovação desligada, sorteados entre 200 e-mails editoriais e 200 controles, com estratificação por plano e persona. A medida primária é estar ativo com renovação ligada em 60 dias; retomada em 30 dias e reclamações são secundárias. Se faltarem elegíveis, ambos os braços devem ser reduzidos igualmente. A amostra precisa ser dimensionada antes de um teste confirmatório de pequenos efeitos.
 
-- recência e frequência;
-- tendência de uso entre D-30 e D-60;
-- regularidade nos últimos três meses;
-- diversidade e modo de treino;
-- atividade social;
-- tickets de suporte;
-- tempo de casa;
-- intensidade pretendida no onboarding;
-- plano e canal.
+## 11. Viabilidade econômica e o que ainda não é ROI
 
-Contagens assimétricas receberam `log1p`, extremos foram limitados no percentil 99 e todas as variáveis foram padronizadas. Foram comparados `k=3` e `k=4`; `k=5` foi mantido apenas como diagnóstico.
+A receita equivalente usa o último pagamento aprovado não duplicado, líquido da taxa do canal; no anual, divide-se por 12. Há fallback de preço quando necessário. Essa medida permite comparar dimensão econômica, mas não é margem, receita em risco ou receita que uma campanha conseguiria salvar.
 
-### 7.2 Escolha da solução
+O piloto proposto custa **R$ 2 em e-mails**, sem desconto, API, WhatsApp ou CS proativo. O orçamento geral do case é R$ 40 mil por mês, com limites de 1.500 mensagens de WhatsApp e 300 atendimentos de CS. Qualquer expansão deve contabilizar canais, ofertas, API e compromissos futuros no mesmo orçamento.
 
-![Validação de clusters](segmentacao_validacao_k.png)
+Para mostrar como a hipótese de efeito afeta a economia, os cenários usam 200 tratados, receita líquida mensal assumida de R$ 27,49, custo de servir de R$ 4,20 e três meses de permanência incremental. A contribuição é calculada como `200 × efeito assumido × 3 × (27,49 − 4,20) − 2`.
 
-| k | Elegível | Silhouette | Davies–Bouldin | Estabilidade ARI | Menor grupo |
-|---:|:---:|---:|---:|---:|---:|
-| 3 | Sim | 0,164 | 2,007 | 0,998 | 13,41% |
-| 4 | Sim | 0,160 | 1,898 | 0,954 | 12,95% |
-| 5 | Diagnóstico | 0,167 | 1,784 | 0,786 | 8,70% |
+| Efeito de retenção assumido | Contribuição incremental do cenário |
+|---|---:|
+| −2 pontos percentuais | −R$ 281,48 |
+| Zero | −R$ 2,00 |
+| +2 pontos percentuais | R$ 277,48 |
+| +5 pontos percentuais | R$ 696,70 |
 
-Foi escolhido `k=3` por apresentar o melhor silhouette entre as soluções permitidas, estabilidade superior e grupos substanciais.
+Esses valores são cenários, não retorno comprovado. Também não somamos CAC evitado automaticamente: seria necessário demonstrar redução real de aquisição. Nenhuma campanha proposta neste trabalho foi executada.
 
-### 7.3 Perfis
+## 12. Limitações e decisões que precisam permanecer visíveis
 
-![Perfis relativos](segmentacao_heatmap_perfis.png)
+| Limitação | Consequência para a interpretação |
+|---|---|
+| Enunciado informa 1.154 perdas em abril; eventos e cadastro indicam 1.158 | Manter a divergência e confirmar a definição com a fonte |
+| Cinco registros divergem no estado de renovação | Há renovação após o último desligamento sem religamento explícito; eventos indicam 2.255 desligados, cadastro 2.250 |
+| Plano/canal sem evento usam fallback cadastral | A reconstrução histórica não é perfeita em todos os atributos |
+| Pesquisa concentrada em Web e respondentes voluntários | Motivos não representam automaticamente todos os cancelamentos |
+| Texto sem amostra humana validada | Extrações não orientam listas de ação ou inferências causais |
+| Deduplicação financeira por usuário/valor/dia | Aproxima o ciclo; um identificador de ciclo permitiria validação melhor |
+| Cinco bootstrap e separação parcial dos grupos | Estabilidade exploratória não garante generalização ou tipos fixos de pessoa |
+| Clientes novos têm menos observação | Atribuição provisória deve ser reavaliada posteriormente |
+| Sem desfecho futuro completo para o corte de setembro | Não declarar previsão supervisionada validada para essa carteira |
 
-#### Ativos ao ar livre
+Essas ressalvas não invalidam a entrega descritiva. Elas delimitam as conclusões e evitam que uma hipótese seja apresentada como fato ou que uma taxa de outra população seja usada como previsão individual.
 
-- 7.457 clientes — 50,55% da base;
-- receita líquida mensal equivalente: R$ 209.995,60;
-- recência mediana: 2 dias;
-- mediana de 10 treinos em 30 dias e 26 em 90 dias;
-- 82,3% das atividades são ao ar livre;
-- modalidade mais frequente: corrida;
-- 9,47% estavam com renovação desligada no corte.
+## 13. Como verificamos a resolução
 
-#### Ativos guiados por vídeo
+O fechamento da ADR 021 executou o projeto em diretório independente, começando com uma cópia da Bronze e sem Prata/Ouro anteriores, base histórica de segmentação ou histórico Git. Foram aprovados **28 testes** e executados os **três notebooks**. Os 14 arquivos brutos foram preservados; a Prata ficou idêntica; sete tabelas analíticas foram reproduzidas com equivalência numérica.
 
-- 5.317 clientes — 36,04% da base;
-- receita líquida mensal equivalente: R$ 152.203,80;
-- recência mediana: 2 dias;
-- mediana de 10 treinos em 30 dias e 26 em 90 dias;
-- 92,2% das atividades são vídeos;
-- modalidade mais frequente: HIIT;
-- 6,85% estavam com renovação desligada no corte.
+Os mesmos 14.753 ativos mantiveram suas atribuições e receita em relação à consolidação ADR 020. Isso é diferente da mudança metodológica anterior: ao passar da proposta de 11/11 para a janela comum de 84 dias, a composição dos grupos mudou. O histórico está preservado, mas seus números não devem ser misturados com os atuais.
 
-#### Adormecidos sem hábito
+O relatório executivo tem seis páginas e o mini deck cinco slides. Os PDFs foram renderizados e inspecionados, e seus hashes estão vinculados aos HTML correspondentes. O pacote de entrega inclui código, documentação e agregados, com notebooks sem outputs individuais e um manifesto de integridade.
 
-- 1.979 clientes — 13,41% da base;
-- receita líquida mensal equivalente: R$ 43.351,69;
-- recência mediana: 68 dias;
-- mediana de zero treino em 30 dias e um em 90 dias;
-- regularidade média de apenas 12,3% nos três meses;
-- 98,23% estão no plano anual;
-- 59,63% estavam com renovação desligada no corte.
+## 14. Resultado entregue e continuidade do trabalho
 
-`renovacao_automatica` foi observada somente depois da formação dos clusters e não entrou no algoritmo.
+A Semana 5 entrega uma base tratada e auditável, uma descrição coerente da carteira atual, três personas sustentadas por dados, uma avaliação histórica de saída, a leitura da campanha e uma priorização preliminar com hipóteses testáveis. A orientação de negócio é aprender antes de ampliar: usar os perfis para formular ações, verificar estado contratual e medir resultado incremental.
 
-### 7.4 Limitação estatística
+Na Semana 10, será necessário construir e avaliar o modelo supervisionado de churn, testar o ganho de variáveis de texto/imagem, desenhar a política de intervenção, aprofundar a economia e integrar a personalização por GenAI ao aplicativo. Esses passos exigem validação própria; não estão automaticamente resolvidos pela segmentação.
 
-![Projeção PCA](segmentacao_pca.png)
+Para continuar com colegas ou outras IAs, manter as definições de população, janela e desfecho; consultar as ADRs vigentes; regenerar tabelas e apresentações juntas quando houver alteração; e nunca editar a Bronze. Publicação no Drive e submissão individual na Adalove são etapas externas, ainda não realizadas pelos scripts.
 
-O silhouette de 0,164 é baixo. A PCA mostra que o grupo adormecido é relativamente distinto, mas os dois grupos ativos se sobrepõem bastante. A estabilidade elevada significa que o algoritmo repete a divisão; não significa que existam fronteiras humanas rígidas.
+## 15. Referências e reprodução
 
-O relatório técnico completo está em [`saidas/segmentacao_etapa4.md`](segmentacao_etapa4.md).
+### Como a tecnologia entrega a história analítica
 
----
+O mini deck segue cinco passos: (1) três perfis da carteira; (2) como a qualidade dos dados muda a interpretação; (3) diferenças históricas de saída e cobertura; (4) o que a campanha permite concluir; (5) prioridade operacional e próximo teste. A leitura mestre explica o racional desses slides, mas não substitui os arquivos de código e a apresentação exigidos pelo guia.
 
-## 8. Resolução de negócio até este ponto
+| Parte da entrega técnica | Arquivo principal | Papel |
+|---|---|---|
+| Carga e qualidade | `src/auditar_bronze.py`, `src/limpeza_qualidade_dados.py` | Auditar e tratar entradas |
+| EDA e marcos | `src/processar_eda.py`, `src/analisar_eda_marcos.py` | Explorar padrões, distribuições, períodos e relações |
+| Segmentação e gráficos | `src/consolidar_semana5.py` | Formar perfis sem churn, avaliar coortes e gerar apresentações |
+| Notebooks | `notebooks/01_inventario_dados.ipynb`, `02_eda_e_hipoteses.ipynb`, `03_segmentacao_clusters.ipynb` | Demonstrar inventário, EDA e evidência dos segmentos |
+| Mini deck | [Cinco slides em PDF](semana5_consolidada/mini_deck.pdf) | Comunicar a história analítica |
 
-### O que os dados permitem afirmar
 
-1. A base ativa não deve receber uma única estratégia de retenção.
-2. Existe um grupo de 1.979 assinantes sem hábito recente, com forte concentração de planos anuais e renovação desligada.
-3. Os clientes ativos se dividem principalmente pela experiência de produto utilizada: ar livre/GPS ou vídeo guiado.
-4. O aumento do churn em 2026 é real, mas o efeito causal do preço ainda não foi isolado.
-5. A pesquisa de saída descreve clientes Web e não representa as lojas.
-6. A campanha de agosto não oferece evidência suficiente para declarar um tratamento vencedor.
+As bases conceituais são o guia oficial de artefatos, o enunciado e o dicionário da Vitaliza, além dos resumos das aulas mantidos no repositório. As fontes numéricas são os agregados da consolidação, a EDA dos marcos e os registros de QA. Este texto não usa a pontuação de avaliação da Semana 10 como se fosse uma nota já obtida na Semana 5.
 
-### Direções preliminares — ainda não são a priorização final
+- [Relatório executivo](customer_segmentation_report_semana5.md) e [PDF](semana5_consolidada/relatorio_executivo.pdf).
+- [EDA dos marcos](eda_etapa3_marcos_2026.md) e [mini deck](semana5_consolidada/mini_deck.pdf).
+- [Método temporal](../notebooks/12_consolidacao_semana5.md) e [racional do fechamento](../notebooks/13_fechamento_entrega_semana5.md).
+- [Qualidade e impacto](qa_entrega_semana5.md), [requisitos](../docs/matriz_requisitos_semana5.md) e [índice de decisões](../decisoes.md).
 
-| Segmento | Direção a desenvolver na Etapa 5 | Cuidado principal |
-|:---|:---|:---|
-| Ativos ao ar livre | Monitorar manutenção do hábito e testar variedade de rotas, metas e progressão. | Não interromper uma experiência que já funciona. |
-| Ativos guiados por vídeo | Trabalhar progressão, variedade e aderência de conteúdo. | Não presumir monotonia sem teste específico. |
-| Adormecidos sem hábito | Avaliar reativação controlada, pausa ou conteúdo personalizado. | Risco de “acordar sleeping dogs”; contato deve ser testado, não disparado indiscriminadamente. |
-
-Cartões de persona, hipóteses e piloto com orçamento estão concluídos no relatório executivo, seções 6 a 9.
-
----
-
-## 9. Limitações e cuidados de interpretação
-
-1. **Correlação não prova causa.** O reajuste e outros marcos coincidem com mudanças de composição e calendário.
-2. **Pesquisa enviesada por canal.** Respondentes são 100% Web.
-3. **Mudança de instrumentação.** Em 2025, usuários sem uso não geravam linha mensal; em 2026 passaram a gerar zeros.
-4. **Snapshot não é histórico.** `assinaturas.csv` representa o estado final; cortes anteriores exigem reconstrução por eventos.
-5. **Segmentação não é risco.** Clusters descrevem semelhança e não estimam probabilidade de saída.
-6. **Segmentação não é uplift.** Um grupo aparentemente em risco pode não responder positivamente ao contato.
-7. **Sobreposição entre ativos.** Ar livre e vídeo não formam fronteiras perfeitamente separadas.
-8. **Heatmaps ainda não utilizados.** O pacote de julho possui cinco imagens acima do dicionário e permanece preservado para investigação futura.
-9. **LGPD.** Textos, GPS, imagens e demografia exigem finalidade, minimização e revisão humana.
-
----
-
-## 10. Estado atual da entrega da Semana 5
-
-| Etapa | Status | Resultado principal |
-|---:|:---:|:---|
-| 1. Inventário e qualidade | Concluída | Bronze auditada e 12 materializações Prata. |
-| 2. EDA Parte 1 | Concluída | Perfil, sobrevivência, ponto cego e hipóteses MECE. |
-| 3. EDA Parte 2 | Concluída | Churn mensal, três marcos e controles estatísticos. |
-| 4. Segmentação | Concluída | Três segmentos sobre 14.753 ativos. |
-| 5. Relatório de negócios | Concluído localmente | Personas, hipóteses, priorização e orçamento documentados. |
-| 6. Mini deck e QA | Pendente | Deve consolidar a história e validar todos os números. |
-
-O painel operacional oficial é [`docs/plano_entrega_semana5.md`](../docs/plano_entrega_semana5.md).
-
----
-
-## 11. Mapa de artefatos
-
-### Documentos para leitura humana
-
-| Arquivo | Para que serve |
-|:---|:---|
-| [`saidas/resolucao_case_vitaliza_semana5.md`](resolucao_case_vitaliza_semana5.md) | Documento mestre e manual de continuidade. |
-| [`saidas/customer_segmentation_report_semana5.md`](customer_segmentation_report_semana5.md) | Artefato de Negócios em construção. |
-| [`saidas/eda_e_hipoteses_vitaliza.md`](eda_e_hipoteses_vitaliza.md) | EDA consolidada e hipóteses. |
-| [`saidas/eda_etapa3_marcos_2026.md`](eda_etapa3_marcos_2026.md) | Detalhamento dos marcos de 2026. |
-| [`saidas/segmentacao_etapa4.md`](segmentacao_etapa4.md) | Relatório técnico da clusterização. |
-| [`docs/registro_limpeza_tratamento_dados.md`](../docs/registro_limpeza_tratamento_dados.md) | Catálogo de todos os tratamentos. |
-| [`decisoes.md`](../decisoes.md) | Índice dos ADRs e decisões. |
-
-### Notebooks
-
-| Notebook | Conteúdo |
-|:---|:---|
-| [`notebooks/00_gate_reprodutibilidade_bronze.md`](../notebooks/00_gate_reprodutibilidade_bronze.md) | Gate Bronze→Prata e números de controle. |
-| [`notebooks/01_inventario_dados.ipynb`](../notebooks/01_inventario_dados.ipynb) | Inventário e qualidade. |
-| [`notebooks/02_eda_e_hipoteses.ipynb`](../notebooks/02_eda_e_hipoteses.ipynb) | EDA e marcos. |
-| [`notebooks/03_segmentacao_clusters.ipynb`](../notebooks/03_segmentacao_clusters.ipynb) | Segmentação e validação. |
-
-### Scripts principais
-
-| Script | Responsabilidade |
-|:---|:---|
-| [`src/auditar_bronze.py`](../src/auditar_bronze.py) | Inventário, contratos e hashes. |
-| [`src/limpeza_qualidade_dados.py`](../src/limpeza_qualidade_dados.py) | Bronze→Prata. |
-| [`src/processar_eda.py`](../src/processar_eda.py) | Feature store histórica da EDA. |
-| [`src/analisar_eda_marcos.py`](../src/analisar_eda_marcos.py) | Churn e marcos de 2026. |
-| [`src/segmentacao_clientes.py`](../src/segmentacao_clientes.py) | Feature store e clusterização dos ativos. |
-
-### Saídas estruturadas
-
-- `saidas/tabelas/churn_mensal_2025_2026.csv`;
-- `saidas/tabelas/campanha_ago26_itt_30d.csv`;
-- `saidas/tabelas/perfil_segmentos.csv`;
-- `saidas/tabelas/metricas_clusterizacao.csv`;
-- `saidas/tabelas/centroides_segmentos.csv`;
-- `saidas/tabelas/metadados_segmentacao.json`.
-
----
-
-## 12. Como reproduzir o projeto
-
-Execute a partir da raiz do repositório, nunca dentro de `dados/brutos/`.
+Para recalcular com acesso autorizado à Bronze, executar da raiz:
 
 ```powershell
-$env:UV_CACHE_DIR='.uv-cache'
-
-# 1. Testes
-uv run --system-certs --with-requirements requirements-data.txt python -m pytest -q
-
-# 2. Auditoria somente leitura da Bronze
-uv run --system-certs --with-requirements requirements-data.txt python src/auditar_bronze.py
-
-# 3. Materialização da Prata
-uv run --system-certs --with-requirements requirements-data.txt python src/limpeza_qualidade_dados.py
-
-# 4. Feature store e EDA histórica
-uv run --system-certs --with-requirements requirements-data.txt python src/processar_eda.py
-uv run --system-certs --with-requirements requirements-data.txt python src/gerar_graficos_eda.py
-
-# 5. Churn e marcos
-uv run --system-certs --with-requirements requirements-data.txt python src/analisar_eda_marcos.py
-
-# 6. Segmentação
-uv run --system-certs --with-requirements requirements-data.txt python src/segmentacao_clientes.py
-uv run --system-certs --with-requirements requirements-data.txt python src/criar_notebook_segmentacao.py
+uv run --with-requirements requirements-notebooks.txt python src/executar_semana5.py
+uv run --with-requirements requirements-notebooks.txt python src/revisar_notebooks_semana5.py
 ```
 
-### Números mínimos de conferência
-
-Uma reprodução válida deve confirmar:
-
-- 64.948 usuários;
-- 60 contas internas;
-- 14.753 pagantes ativos;
-- 9.383 pares duplicados de atividades;
-- 1.241.461 atividades válidas;
-- R$ 492.572 de receita bruta deduplicada em setembro;
-- R$ 436.442 de receita líquida em setembro;
-- 14.753 linhas únicas na feature store de segmentação;
-- segmentos com 7.457, 5.317 e 1.979 clientes;
-- 11 testes aprovados na versão atual.
-
----
-
-## 13. Protocolo de continuidade para colegas e IAs
-
-### 13.1 Ordem obrigatória de leitura
-
-Antes de alterar qualquer coisa:
-
-1. leia [`AGENTS.md`](../AGENTS.md);
-2. leia este documento;
-3. consulte [`docs/plano_entrega_semana5.md`](../docs/plano_entrega_semana5.md);
-4. consulte [`docs/registro_limpeza_tratamento_dados.md`](../docs/registro_limpeza_tratamento_dados.md);
-5. consulte [`decisoes.md`](../decisoes.md) e o ADR relacionado à tarefa;
-6. confira o script e a tabela estruturada que geram o número que será usado.
-
-### 13.2 Regras que não podem ser quebradas
-
-- nunca editar `dados/brutos/`;
-- nunca trabalhar diretamente na `main`;
-- não recalcular números finais fora da Prata/Ouro;
-- não incluir churn ou saída na formação dos segmentos;
-- não publicar dados pessoais ou amostras de texto/GPS;
-- não alterar um número no relatório sem atualizar todos os artefatos impactados;
-- atualizar o plano ao iniciar ou concluir uma etapa;
-- registrar nova decisão técnica ou de negócio em ADR;
-- atualizar o registro de tratamentos quando uma regra de dados mudar.
-
-### 13.3 Formato recomendado para pedir trabalho a uma IA
-
-Todo pedido deve especificar:
-
-```text
-Pergunta:
-O que precisa ser respondido ou construído?
-
-Arquivos:
-Quais fontes, scripts e documentos são a fonte de verdade?
-
-Regras:
-Qual população, corte temporal, fuso, exclusões e proibições se aplicam?
-
-Formato de saída:
-Qual arquivo deve ser criado ou atualizado? Quais tabelas/gráficos são esperados?
-
-Definition of Done:
-Quais números, testes, links e validações provam que a tarefa terminou?
-```
-
-### 13.4 Checklist antes de entregar uma mudança
-
-- [ ] A tarefa foi executada fora da `main`.
-- [ ] A Bronze permaneceu intacta.
-- [ ] Joins preservaram o grão esperado.
-- [ ] O corte de 30/09/2026 foi respeitado.
-- [ ] Não houve vazamento de target ou pós-tratamento.
-- [ ] Testes passaram.
-- [ ] Três números de controle foram conferidos.
-- [ ] Plano, registro de tratamentos e ADRs foram atualizados quando aplicável.
-- [ ] Relatórios e gráficos não divergem das tabelas estruturadas.
-- [ ] Nenhum dado pessoal foi publicado.
-
----
-
-## 14. Próximos passos objetivos
-
-### Etapa 5 — concluída localmente em 08/11/2026
-
-1. transformar os três segmentos em cartões de persona baseados somente em evidências;
-2. formular hipóteses de drivers no formato ação + público + resultado esperado;
-3. definir intervenção imediata, monitoramento e não perturbe;
-4. distribuir preliminarmente canais dentro dos limites de 300 CS e 1.500 WhatsApps;
-5. respeitar o orçamento mensal de R$ 40.000;
-6. revisar limitações e LGPD;
-7. finalizar o Customer Segmentation Report.
-
-### Etapa 6 — mini deck e validação suplementar concluídos; empacotamento pendente
-
-1. criar o mini deck;
-2. aplicar o formato “1 tabela + 1 gráfico + 3 frases”;
-3. executar QA cruzado de todos os números;
-4. exportar relatório e apresentação;
-5. organizar a pasta pública do Google Drive;
-6. validar o link e submeter na Adalove.
-
----
-
-## 15. Decisões centrais
-
-- [ADR 001 — Imutabilidade da Bronze](../decisoes/001-politica-imutabilidade-dados-brutos.md)
-- [ADR 003 — Faturamento de setembro](../decisoes/003-metodologia-faturamento-setembro-2026.md)
-- [ADR 009 — Pipeline pelas cinco dimensões](../decisoes/009-pipeline-5-dimensoes-qualidade-aula2.md)
-- [ADR 010 — EDA Parte 2 e marcos](../decisoes/010-eda-parte2-churn-marcos-2026.md)
-- [ADR 011 — Segmentação dos pagantes ativos](../decisoes/011-segmentacao-pagantes-ativos.md)
-- [ADR 014 — Arquitetura medalhão](../decisoes/014-arquitetura-medalhao-dados.md)
-- [ADR 015 — Gate Bronze→Prata](../decisoes/015-gate-reprodutibilidade-bronze-prata.md)
-- [ADR 016 — Registro consolidado de tratamentos](../decisoes/016-registro-tratamentos-dados.md)
-
----
-
-## Conclusão
-
-O projeto possui EDA documentada, três segmentos, personas, hipóteses, priorização e mini deck Markdown. A validação suplementar explicita separação baixa e incerteza experimental. Os três notebooks foram executados. Permanecem eventual exportação para formato de apresentação e publicação/submissão. Auditoria temporal adicional é necessária antes de promover a variante compacta ou afirmar desempenho prospectivo.
-
-A regra para continuar é simples: **números vêm das tabelas estruturadas; interpretação vem dos documentos; decisões novas entram em ADR; e qualquer alteração deve permanecer reproduzível desde a Bronze.**
+Para editar somente esta leitura consolidada, alterar `docs/resolucao_mestre_semana5.template.md` e executar `python src/atualizar_documentacao_semana5.py`. Depois, montar novamente o pacote com `python src/montar_pacote_semana5.py`. Se houver mudança numérica ou metodológica, revisar este texto e as demais entregas antes de distribuir uma nova versão.

@@ -1,0 +1,65 @@
+fator,categoria,clientes,saidas,churn_mes,razao_max_min
+fase_evento,evento passou há 60+ dias,2353,756,4.45,4.35
+fase_evento,evento recente (±60 dias),1028,643,19.34,4.35
+fase_evento,evento à frente,523,169,12.24,4.35
+fase_evento,sem prazo,17075,5804,5.61,4.35
+constancia_quintil,Q1,4205,2319,9.41,3.41
+constancia_quintil,Q2,4205,1860,7.69,3.41
+constancia_quintil,Q3,4204,1466,5.59,3.41
+constancia_quintil,Q4,4205,1091,4.08,3.41
+constancia_quintil,Q5,4205,654,2.76,3.41
+plano_atual,anual,10116,2066,2.9,3.38
+plano_atual,mensal,10908,5324,9.8,3.38
+motivacao,estetica,2904,1279,8.34,1.99
+motivacao,nao_informado,6907,2406,5.86,1.99
+motivacao,performance,2849,1088,6.47,1.99
+motivacao,saude_fisica,3594,1029,4.47,1.99
+motivacao,saude_mental,1564,428,4.19,1.99
+motivacao,so_evento,840,320,6.84,1.99
+motivacao,social,2366,840,5.86,1.99
+conexoes_faixa,0,3173,1247,8.82,1.8
+conexoes_faixa,1-2,5885,2124,6.44,1.8
+conexoes_faixa,3-5,7510,2533,5.27,1.8
+conexoes_faixa,6+,4456,1486,4.9,1.8
+pagamento_recusado,False,19719,6688,5.65,1.73
+pagamento_recusado,True,1305,702,9.79,1.73
+canal_aquisicao,google_ads,2223,780,5.68,1.53
+canal_aquisicao,indicacao,3093,1004,5.23,1.53
+canal_aquisicao,influenciador,3578,1407,7.98,1.53
+canal_aquisicao,meta_ads,3507,1242,5.77,1.53
+canal_aquisicao,organico,6605,2283,5.59,1.53
+canal_aquisicao,parceria_corporativa,2018,674,5.36,1.53
+canal_cobranca,app_store,7355,2356,5.26,1.26
+canal_cobranca,google_play,7136,2553,5.98,1.26
+canal_cobranca,web_cartao,4418,1665,6.49,1.26
+canal_cobranca,web_pix,2115,816,6.62,1.26
+relogio_conectado,apple_watch,3862,1313,5.68,1.09
+relogio_conectado,garmin,4226,1566,6.22,1.09
+relogio_conectado,nenhum,12936,4511,5.84,1.09
+sexo,F,10522,3735,5.96,1.07
+sexo,M,9481,3285,5.78,1.07
+sexo,não informado,1021,370,6.17,1.07
+idade_faixa,"(25.0, 35.0]",2234,815,6.35,1.16
+idade_faixa,"(35.0, 45.0]",6217,2190,5.92,1.16
+idade_faixa,"(45.0, 55.0]",6210,2173,5.84,1.16
+idade_faixa,"(55.0, 65.0]",3300,1103,5.49,1.16
+idade_faixa,"(65.0, 120.0]",1734,651,6.26,1.16
+idade_faixa,não informado,1238,426,5.69,1.16
+uf,BA,614,208,5.58,1.17
+uf,CE,609,209,5.76,1.17
+uf,DF,1053,364,5.84,1.17
+uf,GO,683,238,5.68,1.17
+uf,MG,1454,513,6.09,1.17
+uf,PE,625,236,6.35,1.17
+uf,PR,1283,461,6.03,1.17
+uf,RJ,2420,845,5.8,1.17
+uf,RS,1047,372,5.91,1.17
+uf,SC,887,292,5.43,1.17
+uf,SP,10349,3652,5.92,1.17
+nivel,avancado,3489,1244,6.01,1.06
+nivel,iniciante,7512,2587,5.69,1.06
+nivel,intermediario,8537,3037,6.03,1.06
+nivel,não informado,1486,522,5.83,1.06
+persona,Atleta ao Ar Livre,10294,3184,5.1,2.65
+persona,Hábito Fraco,3816,2342,11.54,2.65
+persona,Treino em Casa Guiado,6914,1864,4.36,2.65

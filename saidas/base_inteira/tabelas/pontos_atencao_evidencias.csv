@@ -1,0 +1,28 @@
+ponto,metrica,valor
+1. Segmentação só com sobreviventes,pagantes já vistos / ativos usados no cluster,"32,583 / 14,753"
+1. Segmentação só com sobreviventes,saídas em jan–set/2026 fora da segmentação,"8,399"
+1. Segmentação só com sobreviventes,"das saídas de 2026, % sem treino nos 30 dias antes de sair","27.8% (2,335)"
+1. Segmentação só com sobreviventes,"% sem treino antes de sair, mensal vs anual",16.9% vs 55.5%
+1. Segmentação só com sobreviventes,% anual: ativos vs saídas de 2026,57.5% vs 28.2%
+2. Variáveis de uso na EDA com cobertura desigual,saídas de 2024 sem nenhum mês de uso (uso_mensal começa em 2025),"1,798 de 1,798"
+2. Variáveis de uso na EDA com cobertura desigual,AUC de media_sessoes_mes: todos vs só com cobertura,0.559 vs 0.489
+2. Variáveis de uso na EDA com cobertura desigual,AUC de media_atividades_mes: todos vs só com cobertura,0.627 vs 0.569
+2. Variáveis de uso na EDA com cobertura desigual,AUC de media_minutos_mes: todos vs só com cobertura,0.624 vs 0.565
+2. Variáveis de uso na EDA com cobertura desigual,assinantes de 2025-03 com linha em uso_mensal,85.2%
+2. Variáveis de uso na EDA com cobertura desigual,assinantes de 2025-09 com linha em uso_mensal,83.5%
+2. Variáveis de uso na EDA com cobertura desigual,assinantes de 2026-03 com linha em uso_mensal,97.6%
+2. Variáveis de uso na EDA com cobertura desigual,assinantes de 2026-09 com linha em uso_mensal,97.3%
+3. Relógio e o grupo adormecido,% Garmin: adormecidos vs demais,29.6% vs 18.0%
+3. Relógio e o grupo adormecido,adormecidos com 4+ treinos nos últimos 90 dias,224 (11.3%)
+3. Relógio e o grupo adormecido,mediana de treinos 90d dos adormecidos: com relógio vs sem,1 vs 1
+3. Relógio e o grupo adormecido,"regularidade_3m vem de uso_mensal, que não registra treino de relógio","verificado: 91,5% dos meses batem com origem app"
+4. Taxonomia de modalidade depende da fonte,treinos hiit vindos de relógio,"0 de 109,626"
+4. Taxonomia de modalidade depende da fonte,% de funcional entre treinos de relógio vs app,20.4% vs 7.8%
+5. Campanha A/B: janela e elegibilidade,"cupom vs controle (30 dias, todos (regra CAM-002))",-0.95 p.p. [IC95 -1.99; +0.09]
+5. Campanha A/B: janela e elegibilidade,"cupom vs controle (até 30/09, todos)",-1.91 p.p. [IC95 -3.24; -0.59]
+5. Campanha A/B: janela e elegibilidade,"cupom vs controle (até 30/09, só quem renova na janela)",-3.98 p.p. [IC95 -6.52; -1.43]
+6. Contas duplicadas não tratadas,contas com e-mail repetido após normalizar caixa,"1,918 contas (959 pares)"
+6. Contas duplicadas não tratadas,"dessas, contas com assinatura paga",472
+7. Objetivo com prazo não é usado,"onboardings com objetivo datado (evento, prova, viagem)",20.2%
+7. Objetivo com prazo não é usado,comentários da pesquisa de saída que citam meta cumprida ou evento,50.4% dos comentários
+7. Objetivo com prazo não é usado,quem marcou preço e comentou meta cumprida ou evento,49.2%

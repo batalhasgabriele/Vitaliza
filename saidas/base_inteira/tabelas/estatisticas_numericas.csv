@@ -1,0 +1,91 @@
+variavel,entrada,persona,n,media,dp,p25,mediana,p75
+treinos_mes,True,Base,21024,8.951,6.083,4.751,8.251,12.145
+treinos_mes,True,Ativo ao Ar Livre,7366,14.299,5.593,10.479,13.191,17.026
+treinos_mes,True,Treino Indoor Guiado,9370,7.367,3.018,5.129,6.999,9.116
+treinos_mes,True,Hábito Fraco,3202,1.146,1.137,0.223,0.823,1.784
+treinos_mes,True,Treina em Companhia,1086,9.353,5.136,5.896,8.66,12.154
+regularidade,True,Base,21024,0.715,0.285,0.574,0.81,0.948
+regularidade,True,Ativo ao Ar Livre,7366,0.905,0.121,0.862,0.949,1.0
+regularidade,True,Treino Indoor Guiado,9370,0.741,0.176,0.627,0.769,0.875
+regularidade,True,Hábito Fraco,3202,0.183,0.154,0.051,0.157,0.277
+regularidade,True,Treina em Companhia,1086,0.78,0.216,0.671,0.846,0.955
+minutos_mes,False,Base,21024,418.251,314.613,209.669,368.525,558.926
+minutos_mes,False,Ativo ao Ar Livre,7366,675.025,328.601,464.052,602.925,800.941
+minutos_mes,False,Treino Indoor Guiado,9370,338.556,158.5,227.274,313.27,415.258
+minutos_mes,False,Hábito Fraco,3202,57.003,59.226,11.339,41.222,84.035
+minutos_mes,False,Treina em Companhia,1086,429.35,264.404,253.942,380.99,549.004
+min_por_treino,False,Base,20503,47.58,16.533,40.525,43.464,50.328
+min_por_treino,False,Ativo ao Ar Livre,7366,47.083,11.488,40.979,43.585,50.31
+min_por_treino,False,Treino Indoor Guiado,9370,46.052,10.526,40.436,43.152,48.761
+min_por_treino,False,Hábito Fraco,2681,54.817,34.857,38.55,45.7,57.4
+min_por_treino,False,Treina em Companhia,1086,46.265,12.586,40.125,43.001,49.388
+n_modalidades,True,Base,20503,4.511,1.324,4.0,5.0,5.0
+n_modalidades,True,Ativo ao Ar Livre,7366,5.11,0.827,5.0,5.0,6.0
+n_modalidades,True,Treino Indoor Guiado,9370,4.693,0.941,4.0,5.0,5.0
+n_modalidades,True,Hábito Fraco,2681,2.154,1.12,1.0,2.0,3.0
+n_modalidades,True,Treina em Companhia,1086,4.694,1.118,4.0,5.0,5.0
+pct_ar_livre,True,Base,20503,0.558,0.334,0.167,0.75,0.823
+pct_ar_livre,True,Ativo ao Ar Livre,7366,0.577,0.314,0.173,0.769,0.817
+pct_ar_livre,True,Treino Indoor Guiado,9370,0.518,0.328,0.16,0.714,0.812
+pct_ar_livre,True,Hábito Fraco,2681,0.645,0.382,0.273,0.8,1.0
+pct_ar_livre,True,Treina em Companhia,1086,0.551,0.33,0.16,0.75,0.818
+pct_video_app,False,Base,19940,0.459,0.376,0.2,0.231,0.884
+pct_video_app,False,Ativo ao Ar Livre,7366,0.444,0.343,0.214,0.227,0.878
+pct_video_app,False,Treino Indoor Guiado,9362,0.494,0.386,0.2,0.241,0.892
+pct_video_app,False,Hábito Fraco,2138,0.355,0.418,0.0,0.176,0.922
+pct_video_app,False,Treina em Companhia,1074,0.463,0.374,0.203,0.231,0.883
+pct_relogio,False,Base,20503,0.295,0.383,0.0,0.0,0.724
+pct_relogio,False,Ativo ao Ar Livre,7366,0.293,0.376,0.0,0.0,0.715
+pct_relogio,False,Treino Indoor Guiado,9370,0.296,0.38,0.0,0.0,0.727
+pct_relogio,False,Hábito Fraco,2681,0.301,0.41,0.0,0.0,0.727
+pct_relogio,False,Treina em Companhia,1086,0.289,0.381,0.0,0.0,0.727
+pct_acompanhado,True,Base,20503,0.011,0.044,0.0,0.0,0.0
+pct_acompanhado,True,Ativo ao Ar Livre,7366,0.003,0.013,0.0,0.0,0.0
+pct_acompanhado,True,Treino Indoor Guiado,9370,0.002,0.01,0.0,0.0,0.0
+pct_acompanhado,True,Hábito Fraco,2681,0.0,0.006,0.0,0.0,0.0
+pct_acompanhado,True,Treina em Companhia,1086,0.172,0.088,0.116,0.152,0.2
+sessoes_app_mes,False,Base,21024,10.902,8.948,3.92,8.456,15.553
+sessoes_app_mes,False,Ativo ao Ar Livre,7366,16.368,10.67,6.579,15.711,22.745
+sessoes_app_mes,False,Treino Indoor Guiado,9370,9.231,5.752,4.237,8.495,12.884
+sessoes_app_mes,False,Hábito Fraco,3202,3.084,2.535,1.45,2.23,3.926
+sessoes_app_mes,False,Treina em Companhia,1086,11.282,8.159,4.46,10.067,15.835
+posts_mes,True,Base,21024,0.557,0.422,0.246,0.499,0.781
+posts_mes,True,Ativo ao Ar Livre,7366,0.89,0.41,0.63,0.823,1.078
+posts_mes,True,Treino Indoor Guiado,9370,0.402,0.279,0.223,0.387,0.558
+posts_mes,True,Hábito Fraco,3202,0.25,0.283,0.0,0.223,0.371
+posts_mes,True,Treina em Companhia,1086,0.548,0.397,0.285,0.503,0.781
+conexoes,True,Base,21024,3.487,2.783,1.0,3.0,5.0
+conexoes,True,Ativo ao Ar Livre,7366,3.391,2.733,1.0,3.0,5.0
+conexoes,True,Treino Indoor Guiado,9370,3.388,2.76,1.0,3.0,5.0
+conexoes,True,Hábito Fraco,3202,3.522,2.748,2.0,3.0,5.0
+conexoes,True,Treina em Companhia,1086,4.896,3.028,3.0,5.0,7.0
+dias_semana_pretendidos,True,Base,18552,3.454,1.413,2.0,3.0,4.0
+dias_semana_pretendidos,True,Ativo ao Ar Livre,6523,4.584,1.188,4.0,4.0,5.0
+dias_semana_pretendidos,True,Treino Indoor Guiado,8236,2.669,0.945,2.0,3.0,3.0
+dias_semana_pretendidos,True,Hábito Fraco,2842,3.181,1.352,2.0,3.0,4.0
+dias_semana_pretendidos,True,Treina em Companhia,951,3.308,1.306,2.0,3.0,4.0
+nivel_ord,False,Base,19538,1.794,0.722,1.0,2.0,2.0
+nivel_ord,False,Ativo ao Ar Livre,6854,1.877,0.742,1.0,2.0,2.0
+nivel_ord,False,Treino Indoor Guiado,8709,1.739,0.706,1.0,2.0,2.0
+nivel_ord,False,Hábito Fraco,2956,1.775,0.696,1.0,2.0,2.0
+nivel_ord,False,Treina em Companhia,1019,1.765,0.733,1.0,2.0,2.0
+idade,False,Base,19786,48.027,11.144,39.8,46.95,55.2
+idade,False,Ativo ao Ar Livre,6955,47.845,11.143,39.7,46.7,54.9
+idade,False,Treino Indoor Guiado,8815,48.101,11.151,39.8,47.1,55.2
+idade,False,Hábito Fraco,3005,48.374,11.196,40.1,47.2,55.9
+idade,False,Treina em Companhia,1011,47.589,10.901,39.5,46.0,55.05
+tickets,False,Base,21024,0.148,0.399,0.0,0.0,0.0
+tickets,False,Ativo ao Ar Livre,7366,0.185,0.452,0.0,0.0,0.0
+tickets,False,Treino Indoor Guiado,9370,0.142,0.382,0.0,0.0,0.0
+tickets,False,Hábito Fraco,3202,0.074,0.275,0.0,0.0,0.0
+tickets,False,Treina em Companhia,1086,0.173,0.435,0.0,0.0,0.0
+receita_liquida_mensal_equiv,False,Base,21024,28.571,7.051,21.242,29.66,33.92
+receita_liquida_mensal_equiv,False,Ativo ao Ar Livre,7366,29.651,6.998,21.242,33.92,33.92
+receita_liquida_mensal_equiv,False,Treino Indoor Guiado,9370,29.277,7.031,21.242,33.92,33.92
+receita_liquida_mensal_equiv,False,Hábito Fraco,3202,23.772,5.014,21.242,21.242,24.117
+receita_liquida_mensal_equiv,False,Treina em Companhia,1086,29.304,7.004,21.242,33.92,33.92
+exposicao_meses,False,Base,21024,5.969,2.894,3.088,6.537,8.968
+exposicao_meses,False,Ativo ao Ar Livre,7366,6.086,2.826,3.417,6.636,8.968
+exposicao_meses,False,Treino Indoor Guiado,9370,6.05,2.877,3.219,6.767,8.968
+exposicao_meses,False,Hábito Fraco,3202,5.399,3.051,2.267,5.486,8.968
+exposicao_meses,False,Treina em Companhia,1086,6.151,2.834,3.482,6.833,8.968

@@ -1,0 +1,16 @@
+[
+  {
+    "arquivo": "mini_deck.pdf",
+    "paginas": 5,
+    "sha256": "07fc4ed3840a0d9de2079f5ed5127fcfcfb9ee174d15160f302f23925e419c28",
+    "fonte_html_sha256": "57a07d9c765a32fbca419bba4f07e1b7b90579fdebb43435198a73128fd535ec",
+    "paginas_inspecionadas_visualmente": true
+  },
+  {
+    "arquivo": "relatorio_executivo.pdf",
+    "paginas": 6,
+    "sha256": "182b51be63b0a95a6910677bf0c19b4c7484cb1767afc115b026eb2c37a71c4a",
+    "fonte_html_sha256": "d17563dd910304693141e903fef99c4dd61b810977fde58329fca3ab2847ffb8",
+    "paginas_inspecionadas_visualmente": true
+  }
+]

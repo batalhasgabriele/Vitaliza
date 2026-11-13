@@ -1,9 +1,24 @@
 # Registro de Limpeza e Tratamento de Dados
 
+> **12/11/2026 — ADR 020:** nova consolidação em dev. Bronze/Prata sem novas regras de limpeza. Tabela abaixo registra mudanças analíticas, não exclusões do dado original.
+
+| ID | Regra e motivo | Impacto / destino |
+|---|---|---|
+| ANA-020 | Janela comum de 84 dias antes do corte; vigência paga limita exposição | Novos grupos em Ouro `segmentos_consolidados_set2026.parquet`; comparação em QA |
+| ANA-021 | Menos de 30 dias não ajusta K-Means, mas permanece na descrição e desfechos | Evita excluir quem sai cedo do acompanhamento histórico |
+| EVT-020 | Estado por eventos até o corte; chargeback isolado não encerra acesso | Reconcilia 14.753 ativos; 2.255 opt-outs por evento vs. 2.250 snapshot continuam diferença explícita |
+| MET-020 | Expiração, desligamento, composto e taxa por pessoa-tempo separados | Não usar taxa de incidência como probabilidade de saída mensal |
+| CAM-020 | ITT 30 dias com limite exclusivo e expiração; sensibilidades por plano/horizonte | Reproduz comparação principal anterior; correção de multiplicidade explícita |
+| VIS-020 | Pesquisa por canal/resposta sem sobreposição; coorte com 90 dias completos | Substitui pizza duplicada e interpretação de sobrevivência inadequada |
+| GOV-020 | Relatório/deck gerados de agregados; versões antigas arquivadas como superadas | HTML autossuficiente e PDFs revisados; nenhuma campanha ou publicação automática |
+| GOV-021 | Pacote por lista explícita, notebooks sem outputs, manifesto e validação independente | Código e agregados para entrega; sem dados individuais ou dependência de histórico Git |
+| FIN-021 | Fallback de receita reconhece `cartao` e `pix_automatico` além de aliases Web | Caminho sem pagamento aprovado coberto por teste; reprodução confirmou receita e demais resultados preservados |
+| REC-021 | Abril conferido por usuários distintos, cadastro e fuso; renovação conferida por sequência de eventos | 1.158 perdas nos dados versus 1.154 no case; cinco renovações após último desligamento, sem religamento explícito; ressalvas mantidas |
+
 **Projeto:** Vitaliza — Módulo 2 MBA Inteli
 **Data de corte:** 30/09/2026 23:59:59, Horário de Brasília
-**Última consolidação:** 05/11/2026
-**Branch:** `codex/plano-mestre-vitaliza`
+**Última consolidação:** 12/11/2026 (regras originais preservadas desde 05/11)
+**Branch atual:** `dev` (registro original em `codex/plano-mestre-vitaliza`)
 **Responsável pela consolidação:** Igor / Codex
 
 ## 1. Objetivo e uso do registro

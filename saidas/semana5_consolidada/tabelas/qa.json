@@ -1,0 +1,24 @@
+{
+  "bootstrap_ari_medio": 0.9983269504023585,
+  "bootstrap_ari_min": 0.9975197882079647,
+  "reamostras": 5,
+  "ativos": 14753,
+  "provisorios": 1119,
+  "renovacao_desligada_eventos": 2255,
+  "renovacao_desligada_snapshot": 2250,
+  "divergencias_renovacao": 5,
+  "inputs": {
+    "amizades_limpas.parquet": "e2e800d4cfa66d02df2f3b725ec35a2384f93f5b03c148bf8c3a1ab68a1b9c65",
+    "assinaturas_limpas.parquet": "2e2958121c77eaa2a39f531efe4d42064a02e0abf4669bfe74750f6bc27ec42d",
+    "atividades_limpas.parquet": "6f80bb6d08a6b1ab3ef03fae5d549106bc479bdef27869fa8d2f2d853facb809",
+    "campanha_ago26_limpa.parquet": "50f5ff5a5b067197d69710a6febf9a88126bfaf29b7e6295166a66ed8a2ccbbb",
+    "eventos_assinatura_limpos.parquet": "643d15b44d5bf9ded351554efbdf314d4b7173805b45e8bf5035a5ac4c6a2641",
+    "feed_posts_limpos.parquet": "2fb0c820ceba0b17140b4e34de85459c59e5e6a0ca0fda27e6145981e06831ea",
+    "onboarding_limpo.parquet": "2260708e69c1cbf822abd0eb87ae6eab928fb0c903300e3634df71819a6fd3ac",
+    "pagamentos_limpos.parquet": "12e64d7d71ea8d1bf6dc83b72a8cb871290927fdb86c661a04db6651c69a3367",
+    "pesquisa_saida_limpa.parquet": "d92fea116be185f7fe0a2a0323dd6154a193894a5a86b89e66f16d826939b8d3",
+    "tickets_suporte_limpos.parquet": "144d842f4e6e1990fda3f5d1f1ee3b4cc419e4a7946adca06dfcdadd481428be",
+    "uso_mensal_limpo.parquet": "990d33429972b809584d88ce8803d5379f6c0cc2ea128391e5a55beea04a0b3c",
+    "usuarios_limpo.parquet": "7ba00e27ae60862a8dfe9fc185ac7f4180fe39198fc1cd0f85ad28a447caa966"
+  }
+}

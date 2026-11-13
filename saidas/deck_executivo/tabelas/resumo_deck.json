@@ -1,0 +1,45 @@
+{
+ "qualidade": {
+  "clientes": 23152,
+  "ajuste": 21024,
+  "provisorios": 2128,
+  "silhueta": 0.3293,
+  "silhueta_embaralhada": 0.2251,
+  "davies_bouldin": 1.1664,
+  "ari_outra_semente": 0.9997,
+  "ari_bootstrap_medio": 0.9963,
+  "ari_bootstrap_min": 0.9926,
+  "ari_minmax": 0.9741,
+  "ari_robust": 0.2035,
+  "ari_sem_log1p": 0.2619,
+  "ari_so_ativos": 0.9383,
+  "ari_so_saidos": 0.929,
+  "ari_hiit_funcional": 0.9623
+ },
+ "empresa_e_impacto": {
+  "novas_2025": 12233,
+  "saidas_2025": 7633,
+  "novas_2026_jan_set": 10012,
+  "saidas_2026_jan_set": 8399,
+  "receita_liquida_jan_set_2025": 2843263.0700000003,
+  "receita_liquida_jan_set_2026": 3629337.7,
+  "pct_saidas_voluntarias_2026": 91.24895820931064,
+  "saidas_involuntarias_2026": 703,
+  "saidas_mensal_ate_90d_2026": 1966,
+  "pct_mensal_sai_ate_3_meses": 28.471868094509606,
+  "renovacao_desligada_ativos": 2255,
+  "receita_renovacao_desligada": 51065.27416666667,
+  "ativos_evento_proximos_60d": 313,
+  "impacto_saidas_evitadas_mes": {
+   "habito_90d": 43.7,
+   "proximo_objetivo": 17.4,
+   "renovacao_anual": 12.6,
+   "pagamento": 23.4
+  },
+  "impacto_total_mes": 97.2,
+  "impacto_pp": 0.66,
+  "impacto_receita_ano": 384588.0,
+  "impacto_cac_evitado": 137572.0,
+  "premissas_impacto": "eficácia de 20–30% por ação; excesso de saídas perto do evento de ~58/mês (731 saídas com evento recente, ~81/mês, menos a taxa base); 758 anuais do Hábito Fraco com renovação desligada distribuídos em 12 meses"
+ }
+}

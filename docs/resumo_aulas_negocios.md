@@ -1,6 +1,25 @@
 # Guia de Referência: Resumo das Aulas de Negócios (Módulo 2 — MBA Inteli)
 
-> **Propósito deste Documento:** Consolidar os conceitos, frameworks estratégicos, aprendizados, critérios de decisão e alertas metodológicos apresentados nas **Aulas 1, 2 e 3 da Trilha de Negócios** (Prof. Fábio Cássio de Souza e Tutora Natália Kloekner).
+> Atualizado em 12/11/2026: Aula 4 incluída abaixo. Números didáticos de academia não são resultados da Vitaliza. Fonte vigente da entrega: ADR 020 e `notebooks/12_consolidacao_semana5.md`.
+
+## Aula 4 — Storytelling com dados: do segmento à persona
+Fonte: `materiais-aulas/Negócio_M2_MBA_IA_Dados_Aula4.pdf`, 03/11/2026, Prof. Fábio Cássio-de-Souza.
+
+Objetivos: distinguir persona arquetípica de persona empírica; validar quanto uma hipótese separa grupos e cobre as saídas; comunicar a decisão de forma defensável. Persona é saída da análise, não personagem inventado com foto, profissão ou preferências sem variável correspondente.
+
+O exemplo de Roberto mostra que todo dado tem data: mudança de convênio/localização não pode receber automaticamente o risco observado em pessoas que já entraram nessas condições. Pequenos recortes (n=8 no exemplo) não sustentam conclusão. Documentar o que o cadastro não atualiza e levar a incerteza ao campo Limite.
+
+Uma hipótese deve apresentar tamanho do público, taxa de saída de quem atende à regra, taxa do restante, diferença em pontos percentuais e cobertura do total de saídas. Separação e cobertura são distintas: regras combinadas podem separar mais e atingir menos pessoas. Os percentuais ilustrativos da aula não são transferíveis ao dataset Vitaliza.
+
+O cartão combina seis campos: **Setup** (estado normal), **Conflito** (tensão nos dados), **Resolução** (aprendizado), **Evidência** (número e população), **Decisão** (gatilho, ação e hipótese a testar) e **Limite** (o que não se pode concluir). Nome descritivo do comportamento; idade/gênero podem descrever, mas não são gatilho de oferta. Toda hipótese de efeito permanece a testar, mesmo quando a associação é forte. A aula alerta para frequência medida durante o desfecho e informação de fim de contrato usada com vazamento.
+
+Formatos sugeridos: mini deck analítico de **3–5 slides**, com gráfico no centro, para tecnologia/produto; um cartão por persona, legível rapidamente; relatório executivo de **4–6 páginas** para Conselho/Camila. São orientações de comunicação, complementares à liberdade de formato do guia.
+
+Próximo passo da aula: matriz valor × risco — proteger alto valor/baixo risco; priorizar alto valor/alto risco; manter baixo valor/baixo risco; monitorar baixo valor/alto risco. A tarefa é completar 3–4 personas e associar indicador de valor ao churn. Persona vem antes da prioridade.
+
+Aplicação na ADR 020: cartões agregados, cobertura de saídas por segmento em coorte passada, intervalos de confiança, população explícita e cinco slides. Receita equivalente não é receita em risco; esta exige horizonte e taxa adequados. Métricas históricas não identificam resposta causal ao contato.
+
+> **Propósito deste Documento:** Consolidar os conceitos, frameworks estratégicos, aprendizados, critérios de decisão e alertas metodológicos apresentados nas **Aulas 1 a 4 da Trilha de Negócios** (Prof. Fábio Cássio de Souza e Tutora Natália Kloekner).
 >
 > **Regra de Uso no Projeto:** Este material deve ser **consultado sempre que necessário** para fundamentar nossas análises, escolhas de segmentação, formulação de hipóteses e construção dos artefatos das Semanas 5 e 10. Ele funciona como **base conceitual e metodológica**, sem nos restringir — podemos (e devemos) ir além dele combinando-o com as 12 tabelas reais do *data room* da Vitaliza e técnicas avançadas de Ciência de Dados e IA Generativa.
 >

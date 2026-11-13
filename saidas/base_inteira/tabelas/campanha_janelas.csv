@@ -1,0 +1,10 @@
+janela,grupo,n,churn_pct,controle_pct,dif_pp,ic95_inf,ic95_sup
+"30 dias, todos (regra CAM-002)",cupom,3472,4.75,5.7,-0.95,-1.99,0.09
+"30 dias, todos (regra CAM-002)",desafio,3515,5.26,5.7,-0.44,-1.5,0.62
+"30 dias, todos (regra CAM-002)",conteudo,3554,6.25,5.7,0.55,-0.55,1.65
+"até 30/09, todos",cupom,3472,7.92,9.84,-1.91,-3.24,-0.59
+"até 30/09, todos",desafio,3515,8.71,9.84,-1.13,-2.48,0.22
+"até 30/09, todos",conteudo,3554,9.14,9.84,-0.69,-2.05,0.67
+"até 30/09, só quem renova na janela",cupom,1717,15.9,19.88,-3.98,-6.52,-1.43
+"até 30/09, só quem renova na janela",desafio,1770,17.29,19.88,-2.59,-5.15,-0.02
+"até 30/09, só quem renova na janela",conteudo,1751,18.45,19.88,-1.43,-4.03,1.17
