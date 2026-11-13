@@ -22,6 +22,7 @@ Prazo do guia: **15/11/2026, até 23:59**. Cada aluno envia na Adalove o link de
 | 6 | Tecnologia | Mini deck com história analítica | Concluída localmente. Cinco slides com tabela, gráfico e mensagens centrais | [Mini deck HTML](../saidas/semana5_consolidada/mini_deck.html); [fonte MD](../saidas/mini_deck_eda_semana5.md) |
 | 7 | Ambas | Consistência, reprodução e comparação com versões anteriores | Concluída. 28 testes; três notebooks; reprodução independente desde Bronze; mesmos 14.753 ativos, atribuições e receita da ADR 020 | [QA](../saidas/qa_entrega_semana5.md); `saidas/semana5_consolidada/tabelas/qa_fechamento.json` |
 | 8 | Ambas | Pacote final, código, matriz de requisitos e integridade | Concluída localmente; pasta e ZIP gerados e conferidos | `saidas/entrega_semana5/00_LEIA-ME.md`; `saidas/entrega_semana5.zip` |
+| 8b | Negócios | Deck executivo de 7 slides alinhado à ADR 020 e auditado | Proposta em 12/11, aguardando discussão. Receita de 12 meses, poder do piloto, orçamento em fases e glossário corrigidos | `notebooks/14_auditoria_deck_executivo.md`; `src/numeros_deck_executivo.py`; [ADR 024](../decisoes/024-auditoria-deck-executivo.md) |
 | 9 | Aluno | Drive público e submissão individual | Pendente externamente. Nenhum envio foi realizado | Instruções no `00_LEIA-ME.md` do pacote |
 
 ## Números vigentes e interpretação

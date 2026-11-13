@@ -42,6 +42,7 @@ Como o projeto é desenvolvido de forma concorrente por **5 integrantes e múlti
 | 021 | [Fechamento e pacote de entrega](decisoes/021-fechamento-pacote-entrega-semana5.md) | Igor / Codex | dev | Implementada; reprodução independente aprovada |
 | 022 | [Resolução mestre consolidada](decisoes/022-resolucao-mestre-consolidada.md) | Igor / Codex | dev | Implementada; alteração documental |
 | 023 | [Mestre alinhado ao guia](decisoes/023-alinhamento-mestre-guia-semana5.md) | Igor / Codex | dev | Implementada; alteração documental |
+| 024 | [Auditoria do deck executivo](decisoes/024-auditoria-deck-executivo.md) | Lorena | dev | Proposta |
 
 1. Crie um novo arquivo na pasta `decisoes/` seguindo a nomenclatura `NNN-titulo-sucinto.md` (utilize o modelo em [`decisoes/TEMPLATE.md`](decisoes/TEMPLATE.md)).
 2. Preencha os campos obrigatórios: **Data**, **Autor(a)**, **Branch/Worktree**, **Status**, **Contexto**, **Decisão** e **Consequências**.

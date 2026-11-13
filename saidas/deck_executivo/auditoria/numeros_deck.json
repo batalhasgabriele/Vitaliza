@@ -1,0 +1,30 @@
+{
+ "receita_liquida_set26": 436453.85,
+ "receita_liquida_set26_x12": 5237446.2,
+ "receita_liquida_ultimos_12m": 4705723.44,
+ "receita_liquida_jan_set_2025": 2843263.07,
+ "receita_liquida_jan_set_2026": 3629337.7,
+ "contas": 64948,
+ "contas_internas": 60,
+ "contas_com_email_repetido": 1918,
+ "pct_treinos_de_nao_pagantes_ativos": 23.8,
+ "pct_posts_de_nao_pagantes_ativos": 36.4,
+ "piloto_renovacao_desligada": {
+  "corte_referencia": "2026-07-31",
+  "elegiveis_no_corte_ref": 2347,
+  "taxa_base_ativa_e_religada_60d_pct": 6.4,
+  "mde_pp_200_por_braco": 6.9,
+  "mde_pp_1127_por_braco": 2.9
+ },
+ "mensal_ate_90_dias_renovacao_ligada": {
+  "clientes": 1783,
+  "receita_equivalente": 63149.46
+ },
+ "anual_nao_renova_1o_ano_pct": {
+  "influenciador": 57.9,
+  "demais_canais": 47.1,
+  "n_influenciador": 546,
+  "n_demais": 5016,
+  "entradas": "anuais iniciados de 01/2024 a 08/2025 (aniversário observável até o corte)"
+ }
+}
